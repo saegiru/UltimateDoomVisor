@@ -1,0 +1,11 @@
+class UDVDamage : Actor
+{
+    static void DoDamage (Actor activator, int dmg, name dmgType)
+    {
+        if(activator)
+        {
+			// Passing the DMG_FORCED bypasses the skill damage factor check, among other checks.
+            activator.DamageMobj(null, null, dmg, dmgType, DMG_FORCED);
+        }
+    }
+}

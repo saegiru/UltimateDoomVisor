@@ -1,0 +1,224 @@
+// ACS
+#library "goggles"
+#import "aspect.acs"
+#include "zcommon.acs"
+
+// Defines
+#define MAXPLAYERS 8
+int gogglesOn[MAXPLAYERS];
+int time;
+
+// Scripts
+int gogglesEmpty;
+int gogglesTime;
+
+Script "CheckGoggles" (void) net
+{
+If(GetUserCvar(PlayerNumber(),"udv_gogglesspawn")) SetResultValue(1);
+Else SetResultValue(0);
+}
+
+Script "getgoggleTime" (void)
+{
+	SetResultValue(time);
+}
+
+Script "GoggleSwitch" (void) net
+{
+	if (gogglesOn[PlayerNumber()])
+		{
+		gogglesOn[PlayerNumber()] = 0;
+		LocalAmbientSound("NvgOFF",127);
+		TakeInventory("PowerLightAmp2", 1);
+		ACS_NamedSuspend("GoggleBattery", 0);
+		}
+	else
+		{
+		If(CheckInventory("Infrared2") && !CheckInventory("InfraredUsed"))
+		{
+		GiveInventory("InfraredUsed",1);
+		TakeInventory("Infrared2",1);
+		LocalAmbientSound("NvgON",127);
+		}
+		Else If(CheckInventory("InfraredUsed"))
+		{
+		LocalAmbientSound("NvgON",127);
+		}
+		gogglesOn[PlayerNumber()] = 1;
+		GogglesEmpty = 0;
+		}
+}
+
+Script "GogglesHandling" ENTER
+{
+	GogglesEmpty = 0;
+	While(1)
+	{
+	int sae_ar = GetAspectRatio();
+	SetHudSize(550,370,1);
+	Until (GogglesEmpty == 1)
+	{
+		If(CheckInventory("InfraredUsed") && CheckInventory("PowerLightAmp2"))
+		{
+			If(sae_ar == ASPECT_4_3)
+			{
+				If ( CheckInventory("UDValt") )
+				{
+					If(gogglesTime <= 100 && gogglesTime > 75)
+					{
+					SETFONT("BATT100");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 485.0, 250.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 75 && gogglesTime > 50)
+					{
+					SETFONT("BATT75");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 485.0, 250.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 50 && gogglesTime > 25)
+					{
+					SETFONT("BATT50");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 485.0, 250.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 25 && gogglesTime > 15)
+					{
+					SETFONT("BATT25");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 485.0, 250.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 15 )
+					{
+					TakeInventory("PowerlightAmp2",1);
+					SETFONT("BATT00");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 485.0, 250.0, 0.2, 0.5, 2.0, 0.50);
+					}
+					Delay(35*2);
+				}
+				Else
+				{
+					If(gogglesTime <= 100 && gogglesTime > 75)
+					{
+					SETFONT("BATT100");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 330.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 75 && gogglesTime > 50)
+					{
+					SETFONT("BATT75");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 330.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 50 && gogglesTime > 25)
+					{
+					SETFONT("BATT50");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 330.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 25 && gogglesTime > 15)
+					{
+					SETFONT("BATT25");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 330.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 15 )
+					{
+					TakeInventory("PowerlightAmp2",1);
+					SETFONT("BATT00");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 330.0, 0.2, 0.5, 2.0, 0.50);
+					}
+					Delay(35*2);
+				}
+			}
+			Else
+			{
+				If ( CheckInventory("UDValt") )
+				{
+					If(gogglesTime <= 100 && gogglesTime > 75)
+					{
+					SETFONT("BATT100");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 553.0, 251.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 75 && gogglesTime > 50)
+					{
+					SETFONT("BATT75");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 553.0, 251.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 50 && gogglesTime > 25)
+					{
+					SETFONT("BATT50");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 553.0, 251.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 25 && gogglesTime > 15)
+					{
+					SETFONT("BATT25");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 553.0, 251.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 15 )
+					{
+					TakeInventory("PowerlightAmp2",1);
+					SETFONT("BATT00");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 553.0, 251.0, 0.2, 0.5, 2.0, 0.50);
+					}
+					Delay(35*2);
+				}
+				Else
+				{
+					If(gogglesTime <= 100 && gogglesTime > 75)
+					{
+					SETFONT("BATT100");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 331.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 75 && gogglesTime > 50)
+					{
+					SETFONT("BATT75");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 331.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 50 && gogglesTime > 25)
+					{
+					SETFONT("BATT50");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 331.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 25 && gogglesTime > 15)
+					{
+					SETFONT("BATT25");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 331.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(gogglesTime <= 15 )
+					{
+					TakeInventory("PowerlightAmp2",1);
+					SETFONT("BATT00");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 331.0, 0.2, 0.5, 2.0, 0.50);
+					}
+					Delay(35*2);
+				}
+			}
+		}
+		if (gogglesOn[PlayerNumber()])
+			{
+				ACS_NamedExecute("GoggleBattery",0);
+			}
+		Delay(1);
+	}
+	Delay (1);
+	}
+}
+
+script "GoggleBattery" (void)
+{
+		If(CheckInventory("InfraredUsed"))
+		{
+		time = 120;
+		while (time > 0 && CheckInventory("InfraredUsed"))
+				{
+					gogglesTime = (time-- * 100) / 120;
+					GiveInventory("PowerLightAmp2", 1);
+					Delay (35);
+				}
+		LocalAmbientSound("NvgOFF",127);
+		DropInventory(ActivatorTID(), "InfraredUsed");
+		TakeInventory("PowerLightAmp2",1);
+		gogglesOn[PlayerNumber()] = 0;
+		Print(s:"Goggles Battery Depleted");
+		Delay (1);
+		GogglesEmpty = 1;
+		}
+		Else
+		{
+		Print(s:"No Goggles!");
+		gogglesOn[PlayerNumber()] = 0;
+		}
+}

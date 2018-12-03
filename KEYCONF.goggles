@@ -1,0 +1,4 @@
+AddKeySection "Light Amp Goggles" LightAmpGoggles
+AddMenuKey "Toggle Goggles" "ToggleGoggles"
+Alias "ToggleGoggles" "PukeName GoggleSwitch"
+DefaultBind "J" "ToggleGoggles"

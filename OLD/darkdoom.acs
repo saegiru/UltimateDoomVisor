@@ -1,0 +1,154 @@
+#library "darkdoom"
+#include "zcommon.acs"
+
+int darkcheck;
+
+function VOID CheckDarkRandom (void)
+{
+		If(GetCVAR("udv_darkrandom"))
+		{
+			int darkrandom = random(0,100);
+			//SetCVAR("udv_darkdoom",darkrandom);
+			If(darkrandom <= 50 ) SetCVAR( "udv_darkdoom", 0);
+			Else If(darkrandom > 50 && darkrandom <= 75 ) SetCVAR( "udv_darkdoom", 40);
+			Else If(darkrandom > 75 && darkrandom <= 90 ) SetCVAR( "udv_darkdoom", 80);
+			Else If(darkrandom > 90 ) SetCVAR( "udv_darkdoom", 255);
+		}
+		//darkcheck++;
+}
+
+script "StartDark" Enter
+{
+	If(GetCVAR("udv_enabledark"))
+	{
+		For(darkcheck = 0; darkcheck == 0; darkcheck++)
+		{
+		CheckDarkRandom();
+		}
+		Delay(10);
+		int local0;
+		If(PlayerNumber() == 0)
+		{
+			for(local0 = 0; local0 <= 10000; local0++)
+			{
+				Light_LowerByValue(local0, GetCVAR("udv_darkdoom"));
+			}
+			SetCVAR("udv_darkdoom_save", GetCVAR("udv_darkdoom"));
+			darkcheck = 0;
+		}
+	}
+	Else 
+	{
+		SetCVAR("udv_darkdoom_save", 0);
+		SetCVAR("udv_darkdoom", 0);
+	}
+}
+
+script "DoDark" (void) net
+{
+	If(GetCVAR("udv_enabledark"))
+	{
+		For(darkcheck = 0; darkcheck == 0; darkcheck++)
+		{
+		CheckDarkRandom();
+		}
+		Delay(10);
+		int local0;
+		If(PlayerNumber() == 0)
+		{
+			for(local0 = 0; local0 <= 10000; local0++)
+			{
+				Light_RaiseByValue(local0, GetCVAR("udv_darkdoom_save"));
+				Light_LowerByValue(local0, GetCVAR("udv_darkdoom"));
+			}
+			SetCVAR("udv_darkdoom_save", GetCVAR("udv_darkdoom"));
+			darkcheck = 0;
+		}
+	}
+}
+/*
+script 32760 ENTER NET// addr = 8, flags=0000
+{
+If(GetCvar("udv_enabledark"))
+{
+		While(darkcheck == 0) 
+		{
+		CheckDarkRandom();
+		Delay(1);
+		}
+		Delay(10);
+		int local0;
+		int goto_block;
+	//If (!GetCVAR( "udv_darkdoom") == 0)
+	//{
+		switch (goto_block) {
+		case 0:
+			if ((PlayerNumber() == 0)) {
+				local0 = 0;
+				goto_block = 2; restart;
+			} else {
+				goto_block = 3; restart;
+			}
+
+		case 2:
+			if ((local0 < 10000)) {
+				Light_LowerByValue(local0, GetCVAR( "udv_darkdoom"));
+				local0++;
+				goto_block = 2; restart;
+			} else {
+				SetCVAR("udv_darkdoom_save", GetCVAR( "udv_darkdoom"));
+				goto_block = 3; restart;
+			}
+
+		case 3:
+			darkcheck = 0;
+			Terminate;
+
+		}
+	//}
+	//Else SetCVAR("udv_darkdoom_save", GetCVAR( "udv_darkdoom"));
+}
+}
+*/
+
+/*
+script 32759 (void) NET
+{
+If(GetCvar("udv_enabledark"))
+{
+		While(darkcheck == 0) 
+		{
+		CheckDarkRandom();
+		Delay(1);
+		}
+		Delay(10);
+		int local0;
+		int goto_block;
+		switch (goto_block) {
+		case 0:
+			if ((PlayerNumber() == 0)) {
+				local0 = 0;
+				goto_block = 2; restart;
+			} else {
+				goto_block = 3; restart;
+			}
+
+		case 2:
+			if ((local0 < 10000)) {
+				Light_RaiseByValue(local0, GetCVAR( "udv_darkdoom_save"));
+				Light_LowerByValue(local0, GetCVAR( "udv_darkdoom"));
+				local0++;
+				goto_block = 2; restart;
+			} else {
+				SetCVAR( "udv_darkdoom_save", GetCVAR( "udv_darkdoom"));
+				goto_block = 3; restart;
+			}
+
+		case 3:
+			darkcheck = 0;
+			Terminate;
+
+		}
+}
+}
+*/

@@ -1,0 +1,134 @@
+ACTOR MediKitReplacer replaces Medikit
+{
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	TNT1 A 3 A_JumpIf(ACS_NamedExecuteWithResult("CheckMedikit")==1,"SmartMedikitSpawn")
+	TNT1 A 1 A_SpawnItemEx("OGMediKit",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+	Stop
+	SmartMedikitSpawn:
+	TNT1 A 1 
+	TNT1 A 1 A_SpawnItemEx("SmartMedikit",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+	Stop
+	}
+}
+
+ACTOR OGMedikit : Health
+{
+  Inventory.Amount 25
+  Inventory.PickupMessage "$GOTMEDIKIT" // "Picked up a medikit."
+  Health.LowMessage 25, "$GOTMEDINEED" // "Picked up a medikit that you REALLY need!"
+  States
+  {
+  Spawn:
+    MEDI A -1
+    Stop
+  }
+}
+
+ACTOR SmartMedikit : SwitchableDecoration //replaces Medikit
+{
+	+LOOKALLAROUND
+	+USESPECIAL
+	Activation THINGSPEC_Activate
+	Radius 5
+	States
+	{
+	Spawn:
+		SKIT A 1 A_Look
+		Loop
+	Active:
+		TNT1 A 0 A_PlaySound("OPENMED")
+		TNT1 A 0 A_Jump(256,"SpawnStims2")
+		Stop
+	See:
+		SKIT A 1 A_JumpIfCloser(36,"CheckPlayerHealth")
+		Loop
+	CheckPlayerHealth:
+		TNT1 A 0 A_JumpIf( ACS_Executewithresult(15789,0,0,0), "SpawnKit" )//A_JumpIfHealthLower(76,"SpawnKit",AAPTR_TARGET)
+		TNT1 A 0 A_JumpIf( ACS_Executewithresult(15790,0,0,0), "SpawnStims" )//A_JumpIfHealthLower(100,"SpawnStims",AAPTR_TARGET)
+		SKIT A 1
+		Goto See
+	SpawnKit:
+		TNT1 A 0 A_SpawnItemEx("NanoStim",0,0,0,0,0,0,0,0,230)
+		TNT1 A 0 A_SpawnItemEx("FullMedikit")
+		Stop
+	SpawnStims:
+		TNT1 A 0 A_PlaySound("OPENMED")
+		SKIT B 15
+		SKIT B 10 A_SpawnItemEx("NanoStim",0,0,0,frandom(6,8),0,frandom(6,8),random(0,360),0,230)
+		SKIT C 10 A_SpawnItemEx("Stim5",0,0,0,frandom(2,4),0,frandom(2,4),random(1,180))
+		SKIT DE 10 A_SpawnItemEx("Stim10",0,0,0,frandom(2,4),0,frandom(2,4),random(1,180))
+		//TNT1 A 0 A_SpawnItemEx("NanoStim",0,0,0,frandom(6,8),0,frandom(6,8),random(0,360),0,230)
+		SKIT E 70
+		TNT1 A 0 A_Jump(256, "FadeOut")
+	SpawnStims2:
+		TNT1 A 0 A_PlaySound("OPENMED")
+		SKIT B 15
+		SKIT B 10 A_SpawnItemEx("NanoStim",0,0,0,frandom(6,8),0,frandom(6,8),random(0,360),0,230)
+		SKIT C 10 A_SpawnItemEx("Stim5",0,0,0,frandom(2,4),0,frandom(2,4),random(0,360))
+		SKIT DE 10 A_SpawnItemEx("Stim10",0,0,0,frandom(2,4),0,frandom(2,4),random(0,360))
+		SKIT E 70
+	 FadeOut:
+		SKIT E 5 A_FadeOut(0.1,1)
+		Loop	
+	}
+}
+
+ACTOR NanoStim : UpgradeStamina
+{
+   Scale 0.03
+   Inventory.Amount 5
+   Inventory.MaxAmount 80
+   Inventory.PickupMessage "UAC Nanobot Injector! Increase Max Health!"
+  +COUNTITEM
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP   
+  States
+  {
+  Spawn:
+    NANO ABCD 6
+    Loop
+  }
+}
+
+
+ACTOR Stim10 : Health
+{
+  Inventory.Amount 10
+  Inventory.PickupMessage "$GOTSTIM" // "Picked up a stimpack."
+  States
+  {
+  Spawn:
+    SSTI A -1
+    Stop
+  }
+}
+
+
+ACTOR Stim5 : Health
+{
+	Inventory.Amount 5
+	Inventory.PickupMessage "Picked up a MiniStim."
+	Inventory.PickupSound "misc/health_pkup"
+	States
+	{
+	Spawn:
+		MSTI A -1
+	    Stop
+	}
+}
+
+ACTOR FullMedikit : Health
+{
+	Inventory.Amount 25
+	Inventory.PickupMessage "$GOTMEDIKIT"
+	Health.LowMessage 25, "$GOTMEDINEED"
+	States
+	{
+	Spawn:
+		SKIT A -1
+		Stop
+	}
+}

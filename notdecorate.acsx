@@ -1,0 +1,5824 @@
+
+// Copyright Ben Moir 2016
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+// This file has been automatically generated.
+
+// SOLID
+actor "_CF_SOLID_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SOLID", false)
+		stop
+	}
+}
+
+actor "_CF_SOLID_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SOLID", true)
+		stop
+	}
+}
+
+// SHOOTABLE
+actor "_CF_SHOOTABLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", false)
+		stop
+	}
+}
+
+actor "_CF_SHOOTABLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", true)
+		stop
+	}
+}
+
+// FLOAT
+actor "_CF_FLOAT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FLOAT", false)
+		stop
+	}
+}
+
+actor "_CF_FLOAT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FLOAT", true)
+		stop
+	}
+}
+
+// NOGRAVITY
+actor "_CF_NOGRAVITY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", false)
+		stop
+	}
+}
+
+actor "_CF_NOGRAVITY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", true)
+		stop
+	}
+}
+
+// WINDTHRUST
+actor "_CF_WINDTHRUST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WINDTHRUST", false)
+		stop
+	}
+}
+
+actor "_CF_WINDTHRUST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WINDTHRUST", true)
+		stop
+	}
+}
+
+// PUSHABLE
+actor "_CF_PUSHABLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PUSHABLE", false)
+		stop
+	}
+}
+
+actor "_CF_PUSHABLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PUSHABLE", true)
+		stop
+	}
+}
+
+// DONTFALL
+actor "_CF_DONTFALL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTFALL", false)
+		stop
+	}
+}
+
+actor "_CF_DONTFALL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTFALL", true)
+		stop
+	}
+}
+
+// CANPASS
+actor "_CF_CANPASS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANPASS", false)
+		stop
+	}
+}
+
+actor "_CF_CANPASS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANPASS", true)
+		stop
+	}
+}
+
+// ACTLIKEBRIDGE
+actor "_CF_ACTLIKEBRIDGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ACTLIKEBRIDGE", false)
+		stop
+	}
+}
+
+actor "_CF_ACTLIKEBRIDGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ACTLIKEBRIDGE", true)
+		stop
+	}
+}
+
+// NOBLOCKMAP
+actor "_CF_NOBLOCKMAP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", false)
+		stop
+	}
+}
+
+actor "_CF_NOBLOCKMAP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", true)
+		stop
+	}
+}
+
+// MOVEWITHSECTOR
+actor "_CF_MOVEWITHSECTOR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MOVEWITHSECTOR", false)
+		stop
+	}
+}
+
+actor "_CF_MOVEWITHSECTOR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MOVEWITHSECTOR", true)
+		stop
+	}
+}
+
+// RELATIVETOFLOOR
+actor "_CF_RELATIVETOFLOOR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("RELATIVETOFLOOR", false)
+		stop
+	}
+}
+
+actor "_CF_RELATIVETOFLOOR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("RELATIVETOFLOOR", true)
+		stop
+	}
+}
+
+// NOLIFTDROP
+actor "_CF_NOLIFTDROP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOLIFTDROP", false)
+		stop
+	}
+}
+
+actor "_CF_NOLIFTDROP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOLIFTDROP", true)
+		stop
+	}
+}
+
+// SLIDESONWALLS
+actor "_CF_SLIDESONWALLS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SLIDESONWALLS", false)
+		stop
+	}
+}
+
+actor "_CF_SLIDESONWALLS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SLIDESONWALLS", true)
+		stop
+	}
+}
+
+// NODROPOFF
+actor "_CF_NODROPOFF_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODROPOFF", false)
+		stop
+	}
+}
+
+actor "_CF_NODROPOFF_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODROPOFF", true)
+		stop
+	}
+}
+
+// NOTRIGGER
+actor "_CF_NOTRIGGER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTRIGGER", false)
+		stop
+	}
+}
+
+actor "_CF_NOTRIGGER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTRIGGER", true)
+		stop
+	}
+}
+
+// BLOCKEDBYSOLIDACTORS
+actor "_CF_BLOCKEDBYSOLIDACTORS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLOCKEDBYSOLIDACTORS", false)
+		stop
+	}
+}
+
+actor "_CF_BLOCKEDBYSOLIDACTORS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLOCKEDBYSOLIDACTORS", true)
+		stop
+	}
+}
+
+// ALWAYSRESPAWN
+actor "_CF_ALWAYSRESPAWN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALWAYSRESPAWN", false)
+		stop
+	}
+}
+
+actor "_CF_ALWAYSRESPAWN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALWAYSRESPAWN", true)
+		stop
+	}
+}
+
+// AMBUSH
+actor "_CF_AMBUSH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("AMBUSH", false)
+		stop
+	}
+}
+
+actor "_CF_AMBUSH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("AMBUSH", true)
+		stop
+	}
+}
+
+// AVOIDMELEE
+actor "_CF_AVOIDMELEE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("AVOIDMELEE", false)
+		stop
+	}
+}
+
+actor "_CF_AVOIDMELEE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("AVOIDMELEE", true)
+		stop
+	}
+}
+
+// BOSS
+actor "_CF_BOSS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOSS", false)
+		stop
+	}
+}
+
+actor "_CF_BOSS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOSS", true)
+		stop
+	}
+}
+
+// DONTCORPSE
+actor "_CF_DONTCORPSE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTCORPSE", false)
+		stop
+	}
+}
+
+actor "_CF_DONTCORPSE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTCORPSE", true)
+		stop
+	}
+}
+
+// DORMANT
+actor "_CF_DORMANT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DORMANT", false)
+		stop
+	}
+}
+
+actor "_CF_DORMANT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DORMANT", true)
+		stop
+	}
+}
+
+// FRIENDLY
+actor "_CF_FRIENDLY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FRIENDLY", false)
+		stop
+	}
+}
+
+actor "_CF_FRIENDLY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FRIENDLY", true)
+		stop
+	}
+}
+
+// JUMPDOWN
+actor "_CF_JUMPDOWN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("JUMPDOWN", false)
+		stop
+	}
+}
+
+actor "_CF_JUMPDOWN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("JUMPDOWN", true)
+		stop
+	}
+}
+
+// LOOKALLAROUND
+actor "_CF_LOOKALLAROUND_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("LOOKALLAROUND", false)
+		stop
+	}
+}
+
+actor "_CF_LOOKALLAROUND_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("LOOKALLAROUND", true)
+		stop
+	}
+}
+
+// MISSILEEVENMORE
+actor "_CF_MISSILEEVENMORE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MISSILEEVENMORE", false)
+		stop
+	}
+}
+
+actor "_CF_MISSILEEVENMORE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MISSILEEVENMORE", true)
+		stop
+	}
+}
+
+// MISSILEMORE
+actor "_CF_MISSILEMORE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MISSILEMORE", false)
+		stop
+	}
+}
+
+actor "_CF_MISSILEMORE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MISSILEMORE", true)
+		stop
+	}
+}
+
+// NEVERRESPAWN
+actor "_CF_NEVERRESPAWN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NEVERRESPAWN", false)
+		stop
+	}
+}
+
+actor "_CF_NEVERRESPAWN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NEVERRESPAWN", true)
+		stop
+	}
+}
+
+// NOSPLASHALERT
+actor "_CF_NOSPLASHALERT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOSPLASHALERT", false)
+		stop
+	}
+}
+
+actor "_CF_NOSPLASHALERT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOSPLASHALERT", true)
+		stop
+	}
+}
+
+// NOTARGETSWITCH
+actor "_CF_NOTARGETSWITCH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTARGETSWITCH", false)
+		stop
+	}
+}
+
+actor "_CF_NOTARGETSWITCH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTARGETSWITCH", true)
+		stop
+	}
+}
+
+// NOVERTICALMELEERANGE
+actor "_CF_NOVERTICALMELEERANGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOVERTICALMELEERANGE", false)
+		stop
+	}
+}
+
+actor "_CF_NOVERTICALMELEERANGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOVERTICALMELEERANGE", true)
+		stop
+	}
+}
+
+// QUICKTORETALIATE
+actor "_CF_QUICKTORETALIATE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("QUICKTORETALIATE", false)
+		stop
+	}
+}
+
+actor "_CF_QUICKTORETALIATE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("QUICKTORETALIATE", true)
+		stop
+	}
+}
+
+// STANDSTILL
+actor "_CF_STANDSTILL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STANDSTILL", false)
+		stop
+	}
+}
+
+actor "_CF_STANDSTILL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STANDSTILL", true)
+		stop
+	}
+}
+
+// CANNOTPUSH
+actor "_CF_CANNOTPUSH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANNOTPUSH", false)
+		stop
+	}
+}
+
+actor "_CF_CANNOTPUSH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANNOTPUSH", true)
+		stop
+	}
+}
+
+// NOTELEPORT
+actor "_CF_NOTELEPORT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTELEPORT", false)
+		stop
+	}
+}
+
+actor "_CF_NOTELEPORT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTELEPORT", true)
+		stop
+	}
+}
+
+// ACTIVATEIMPACT
+actor "_CF_ACTIVATEIMPACT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ACTIVATEIMPACT", false)
+		stop
+	}
+}
+
+actor "_CF_ACTIVATEIMPACT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ACTIVATEIMPACT", true)
+		stop
+	}
+}
+
+// CANPUSHWALLS
+actor "_CF_CANPUSHWALLS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANPUSHWALLS", false)
+		stop
+	}
+}
+
+actor "_CF_CANPUSHWALLS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANPUSHWALLS", true)
+		stop
+	}
+}
+
+// CANUSEWALLS
+actor "_CF_CANUSEWALLS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANUSEWALLS", false)
+		stop
+	}
+}
+
+actor "_CF_CANUSEWALLS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANUSEWALLS", true)
+		stop
+	}
+}
+
+// ACTIVATEMCROSS
+actor "_CF_ACTIVATEMCROSS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ACTIVATEMCROSS", false)
+		stop
+	}
+}
+
+actor "_CF_ACTIVATEMCROSS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ACTIVATEMCROSS", true)
+		stop
+	}
+}
+
+// ACTIVATEPCROSS
+actor "_CF_ACTIVATEPCROSS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ACTIVATEPCROSS", false)
+		stop
+	}
+}
+
+actor "_CF_ACTIVATEPCROSS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ACTIVATEPCROSS", true)
+		stop
+	}
+}
+
+// CANTLEAVEFLOORPIC
+actor "_CF_CANTLEAVEFLOORPIC_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANTLEAVEFLOORPIC", false)
+		stop
+	}
+}
+
+actor "_CF_CANTLEAVEFLOORPIC_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANTLEAVEFLOORPIC", true)
+		stop
+	}
+}
+
+// TELESTOMP
+actor "_CF_TELESTOMP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("TELESTOMP", false)
+		stop
+	}
+}
+
+actor "_CF_TELESTOMP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("TELESTOMP", true)
+		stop
+	}
+}
+
+// NOTELESTOMP
+actor "_CF_NOTELESTOMP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTELESTOMP", false)
+		stop
+	}
+}
+
+actor "_CF_NOTELESTOMP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTELESTOMP", true)
+		stop
+	}
+}
+
+// STAYMORPHED
+actor "_CF_STAYMORPHED_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STAYMORPHED", false)
+		stop
+	}
+}
+
+actor "_CF_STAYMORPHED_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STAYMORPHED", true)
+		stop
+	}
+}
+
+// CANBLAST
+actor "_CF_CANBLAST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANBLAST", false)
+		stop
+	}
+}
+
+actor "_CF_CANBLAST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANBLAST", true)
+		stop
+	}
+}
+
+// NOBLOCKMONST
+actor "_CF_NOBLOCKMONST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", false)
+		stop
+	}
+}
+
+actor "_CF_NOBLOCKMONST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", true)
+		stop
+	}
+}
+
+// THRUGHOST
+actor "_CF_THRUGHOST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("THRUGHOST", false)
+		stop
+	}
+}
+
+actor "_CF_THRUGHOST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("THRUGHOST", true)
+		stop
+	}
+}
+
+// THRUACTORS
+actor "_CF_THRUACTORS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("THRUACTORS", false)
+		stop
+	}
+}
+
+actor "_CF_THRUACTORS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("THRUACTORS", true)
+		stop
+	}
+}
+
+// THRUSPECIES
+actor "_CF_THRUSPECIES_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("THRUSPECIES", false)
+		stop
+	}
+}
+
+actor "_CF_THRUSPECIES_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("THRUSPECIES", true)
+		stop
+	}
+}
+
+// MTHRUSPECIES
+actor "_CF_MTHRUSPECIES_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MTHRUSPECIES", false)
+		stop
+	}
+}
+
+actor "_CF_MTHRUSPECIES_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MTHRUSPECIES", true)
+		stop
+	}
+}
+
+// SPECTRAL
+actor "_CF_SPECTRAL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPECTRAL", false)
+		stop
+	}
+}
+
+actor "_CF_SPECTRAL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPECTRAL", true)
+		stop
+	}
+}
+
+// FRIGHTENED
+actor "_CF_FRIGHTENED_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FRIGHTENED", false)
+		stop
+	}
+}
+
+actor "_CF_FRIGHTENED_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FRIGHTENED", true)
+		stop
+	}
+}
+
+// NOTARGET
+actor "_CF_NOTARGET_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTARGET", false)
+		stop
+	}
+}
+
+actor "_CF_NOTARGET_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTARGET", true)
+		stop
+	}
+}
+
+// NEVERTARGET
+actor "_CF_NEVERTARGET_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NEVERTARGET", false)
+		stop
+	}
+}
+
+actor "_CF_NEVERTARGET_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NEVERTARGET", true)
+		stop
+	}
+}
+
+// NOINFIGHTING
+actor "_CF_NOINFIGHTING_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOINFIGHTING", false)
+		stop
+	}
+}
+
+actor "_CF_NOINFIGHTING_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOINFIGHTING", true)
+		stop
+	}
+}
+
+// NOTIMEFREEZE
+actor "_CF_NOTIMEFREEZE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTIMEFREEZE", false)
+		stop
+	}
+}
+
+actor "_CF_NOTIMEFREEZE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTIMEFREEZE", true)
+		stop
+	}
+}
+
+// NOFEAR
+actor "_CF_NOFEAR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOFEAR", false)
+		stop
+	}
+}
+
+actor "_CF_NOFEAR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOFEAR", true)
+		stop
+	}
+}
+
+// CANTSEEK
+actor "_CF_CANTSEEK_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANTSEEK", false)
+		stop
+	}
+}
+
+actor "_CF_CANTSEEK_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANTSEEK", true)
+		stop
+	}
+}
+
+// SEEKINVISIBLE
+actor "_CF_SEEKINVISIBLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SEEKINVISIBLE", false)
+		stop
+	}
+}
+
+actor "_CF_SEEKINVISIBLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SEEKINVISIBLE", true)
+		stop
+	}
+}
+
+// DONTTHRUST
+actor "_CF_DONTTHRUST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTTHRUST", false)
+		stop
+	}
+}
+
+actor "_CF_DONTTHRUST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTTHRUST", true)
+		stop
+	}
+}
+
+// ALLOWPAIN
+actor "_CF_ALLOWPAIN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALLOWPAIN", false)
+		stop
+	}
+}
+
+actor "_CF_ALLOWPAIN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALLOWPAIN", true)
+		stop
+	}
+}
+
+// INVULNERABLE
+actor "_CF_INVULNERABLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVULNERABLE", false)
+		stop
+	}
+}
+
+actor "_CF_INVULNERABLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVULNERABLE", true)
+		stop
+	}
+}
+
+// BUDDHA
+actor "_CF_BUDDHA_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BUDDHA", false)
+		stop
+	}
+}
+
+actor "_CF_BUDDHA_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BUDDHA", true)
+		stop
+	}
+}
+
+// REFLECTIVE
+actor "_CF_REFLECTIVE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("REFLECTIVE", false)
+		stop
+	}
+}
+
+actor "_CF_REFLECTIVE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("REFLECTIVE", true)
+		stop
+	}
+}
+
+// SHIELDREFLECT
+actor "_CF_SHIELDREFLECT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SHIELDREFLECT", false)
+		stop
+	}
+}
+
+actor "_CF_SHIELDREFLECT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SHIELDREFLECT", true)
+		stop
+	}
+}
+
+// DEFLECT
+actor "_CF_DEFLECT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DEFLECT", false)
+		stop
+	}
+}
+
+actor "_CF_DEFLECT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DEFLECT", true)
+		stop
+	}
+}
+
+// MIRRORREFLECT
+actor "_CF_MIRRORREFLECT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MIRRORREFLECT", false)
+		stop
+	}
+}
+
+actor "_CF_MIRRORREFLECT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MIRRORREFLECT", true)
+		stop
+	}
+}
+
+// AIMREFLECT
+actor "_CF_AIMREFLECT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("AIMREFLECT", false)
+		stop
+	}
+}
+
+actor "_CF_AIMREFLECT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("AIMREFLECT", true)
+		stop
+	}
+}
+
+// THRUREFLECT
+actor "_CF_THRUREFLECT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("THRUREFLECT", false)
+		stop
+	}
+}
+
+actor "_CF_THRUREFLECT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("THRUREFLECT", true)
+		stop
+	}
+}
+
+// NORADIUSDMG
+actor "_CF_NORADIUSDMG_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NORADIUSDMG", false)
+		stop
+	}
+}
+
+actor "_CF_NORADIUSDMG_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NORADIUSDMG", true)
+		stop
+	}
+}
+
+// DONTBLAST
+actor "_CF_DONTBLAST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTBLAST", false)
+		stop
+	}
+}
+
+actor "_CF_DONTBLAST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTBLAST", true)
+		stop
+	}
+}
+
+// GHOST
+actor "_CF_GHOST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("GHOST", false)
+		stop
+	}
+}
+
+actor "_CF_GHOST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("GHOST", true)
+		stop
+	}
+}
+
+// DONTMORPH
+actor "_CF_DONTMORPH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTMORPH", false)
+		stop
+	}
+}
+
+actor "_CF_DONTMORPH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTMORPH", true)
+		stop
+	}
+}
+
+// DONTSQUASH
+actor "_CF_DONTSQUASH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTSQUASH", false)
+		stop
+	}
+}
+
+actor "_CF_DONTSQUASH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTSQUASH", true)
+		stop
+	}
+}
+
+// NOTELEOTHER
+actor "_CF_NOTELEOTHER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTELEOTHER", false)
+		stop
+	}
+}
+
+actor "_CF_NOTELEOTHER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTELEOTHER", true)
+		stop
+	}
+}
+
+// HARMFRIENDS
+actor "_CF_HARMFRIENDS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HARMFRIENDS", false)
+		stop
+	}
+}
+
+actor "_CF_HARMFRIENDS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HARMFRIENDS", true)
+		stop
+	}
+}
+
+// DOHARMSPECIES
+actor "_CF_DOHARMSPECIES_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DOHARMSPECIES", false)
+		stop
+	}
+}
+
+actor "_CF_DOHARMSPECIES_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DOHARMSPECIES", true)
+		stop
+	}
+}
+
+// DONTHARMCLASS
+actor "_CF_DONTHARMCLASS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTHARMCLASS", false)
+		stop
+	}
+}
+
+actor "_CF_DONTHARMCLASS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTHARMCLASS", true)
+		stop
+	}
+}
+
+// DONTHARMSPECIES
+actor "_CF_DONTHARMSPECIES_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTHARMSPECIES", false)
+		stop
+	}
+}
+
+actor "_CF_DONTHARMSPECIES_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTHARMSPECIES", true)
+		stop
+	}
+}
+
+// NODAMAGE
+actor "_CF_NODAMAGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODAMAGE", false)
+		stop
+	}
+}
+
+actor "_CF_NODAMAGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODAMAGE", true)
+		stop
+	}
+}
+
+// DONTRIP
+actor "_CF_DONTRIP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTRIP", false)
+		stop
+	}
+}
+
+actor "_CF_DONTRIP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTRIP", true)
+		stop
+	}
+}
+
+// NOTELEFRAG
+actor "_CF_NOTELEFRAG_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTELEFRAG", false)
+		stop
+	}
+}
+
+actor "_CF_NOTELEFRAG_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTELEFRAG", true)
+		stop
+	}
+}
+
+// ALWAYSTELEFRAG
+actor "_CF_ALWAYSTELEFRAG_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALWAYSTELEFRAG", false)
+		stop
+	}
+}
+
+actor "_CF_ALWAYSTELEFRAG_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALWAYSTELEFRAG", true)
+		stop
+	}
+}
+
+// DONTDRAIN
+actor "_CF_DONTDRAIN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTDRAIN", false)
+		stop
+	}
+}
+
+actor "_CF_DONTDRAIN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTDRAIN", true)
+		stop
+	}
+}
+
+// LAXTELEFRAGDMG
+actor "_CF_LAXTELEFRAGDMG_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("LAXTELEFRAGDMG", false)
+		stop
+	}
+}
+
+actor "_CF_LAXTELEFRAGDMG_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("LAXTELEFRAGDMG", true)
+		stop
+	}
+}
+
+// BRIGHT
+actor "_CF_BRIGHT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BRIGHT", false)
+		stop
+	}
+}
+
+actor "_CF_BRIGHT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BRIGHT", true)
+		stop
+	}
+}
+
+// INVISIBLE
+actor "_CF_INVISIBLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVISIBLE", false)
+		stop
+	}
+}
+
+actor "_CF_INVISIBLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVISIBLE", true)
+		stop
+	}
+}
+
+// SHADOW
+actor "_CF_SHADOW_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SHADOW", false)
+		stop
+	}
+}
+
+actor "_CF_SHADOW_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SHADOW", true)
+		stop
+	}
+}
+
+// NOBLOOD
+actor "_CF_NOBLOOD_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBLOOD", false)
+		stop
+	}
+}
+
+actor "_CF_NOBLOOD_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBLOOD", true)
+		stop
+	}
+}
+
+// NOBLOODDECALS
+actor "_CF_NOBLOODDECALS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBLOODDECALS", false)
+		stop
+	}
+}
+
+actor "_CF_NOBLOODDECALS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBLOODDECALS", true)
+		stop
+	}
+}
+
+// STEALTH
+actor "_CF_STEALTH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STEALTH", false)
+		stop
+	}
+}
+
+actor "_CF_STEALTH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STEALTH", true)
+		stop
+	}
+}
+
+// FLOORCLIP
+actor "_CF_FLOORCLIP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FLOORCLIP", false)
+		stop
+	}
+}
+
+actor "_CF_FLOORCLIP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FLOORCLIP", true)
+		stop
+	}
+}
+
+// SPAWNFLOAT
+actor "_CF_SPAWNFLOAT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPAWNFLOAT", false)
+		stop
+	}
+}
+
+actor "_CF_SPAWNFLOAT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPAWNFLOAT", true)
+		stop
+	}
+}
+
+// SPAWNCEILING
+actor "_CF_SPAWNCEILING_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPAWNCEILING", false)
+		stop
+	}
+}
+
+actor "_CF_SPAWNCEILING_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPAWNCEILING", true)
+		stop
+	}
+}
+
+// FLOATBOB
+actor "_CF_FLOATBOB_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FLOATBOB", false)
+		stop
+	}
+}
+
+actor "_CF_FLOATBOB_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FLOATBOB", true)
+		stop
+	}
+}
+
+// NOICEDEATH
+actor "_CF_NOICEDEATH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOICEDEATH", false)
+		stop
+	}
+}
+
+actor "_CF_NOICEDEATH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOICEDEATH", true)
+		stop
+	}
+}
+
+// DONTGIB
+actor "_CF_DONTGIB_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTGIB", false)
+		stop
+	}
+}
+
+actor "_CF_DONTGIB_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTGIB", true)
+		stop
+	}
+}
+
+// DONTSPLASH
+actor "_CF_DONTSPLASH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTSPLASH", false)
+		stop
+	}
+}
+
+actor "_CF_DONTSPLASH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTSPLASH", true)
+		stop
+	}
+}
+
+// DONTOVERLAP
+actor "_CF_DONTOVERLAP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTOVERLAP", false)
+		stop
+	}
+}
+
+actor "_CF_DONTOVERLAP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTOVERLAP", true)
+		stop
+	}
+}
+
+// RANDOMIZE
+actor "_CF_RANDOMIZE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("RANDOMIZE", false)
+		stop
+	}
+}
+
+actor "_CF_RANDOMIZE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("RANDOMIZE", true)
+		stop
+	}
+}
+
+// FIXMAPTHINGPOS
+actor "_CF_FIXMAPTHINGPOS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FIXMAPTHINGPOS", false)
+		stop
+	}
+}
+
+actor "_CF_FIXMAPTHINGPOS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FIXMAPTHINGPOS", true)
+		stop
+	}
+}
+
+// FULLVOLACTIVE
+actor "_CF_FULLVOLACTIVE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FULLVOLACTIVE", false)
+		stop
+	}
+}
+
+actor "_CF_FULLVOLACTIVE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FULLVOLACTIVE", true)
+		stop
+	}
+}
+
+// FULLVOLDEATH
+actor "_CF_FULLVOLDEATH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FULLVOLDEATH", false)
+		stop
+	}
+}
+
+actor "_CF_FULLVOLDEATH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FULLVOLDEATH", true)
+		stop
+	}
+}
+
+// NOWALLBOUNCESND
+actor "_CF_NOWALLBOUNCESND_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOWALLBOUNCESND", false)
+		stop
+	}
+}
+
+actor "_CF_NOWALLBOUNCESND_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOWALLBOUNCESND", true)
+		stop
+	}
+}
+
+// VISIBILITYPULSE
+actor "_CF_VISIBILITYPULSE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("VISIBILITYPULSE", false)
+		stop
+	}
+}
+
+actor "_CF_VISIBILITYPULSE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("VISIBILITYPULSE", true)
+		stop
+	}
+}
+
+// ROCKETTRAIL
+actor "_CF_ROCKETTRAIL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ROCKETTRAIL", false)
+		stop
+	}
+}
+
+actor "_CF_ROCKETTRAIL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ROCKETTRAIL", true)
+		stop
+	}
+}
+
+// GRENADETRAIL
+actor "_CF_GRENADETRAIL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("GRENADETRAIL", false)
+		stop
+	}
+}
+
+actor "_CF_GRENADETRAIL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("GRENADETRAIL", true)
+		stop
+	}
+}
+
+// NOBOUNCESOUND
+actor "_CF_NOBOUNCESOUND_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBOUNCESOUND", false)
+		stop
+	}
+}
+
+actor "_CF_NOBOUNCESOUND_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBOUNCESOUND", true)
+		stop
+	}
+}
+
+// NOSKIN
+actor "_CF_NOSKIN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOSKIN", false)
+		stop
+	}
+}
+
+actor "_CF_NOSKIN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOSKIN", true)
+		stop
+	}
+}
+
+// DONTTRANSLATE
+actor "_CF_DONTTRANSLATE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTTRANSLATE", false)
+		stop
+	}
+}
+
+actor "_CF_DONTTRANSLATE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTTRANSLATE", true)
+		stop
+	}
+}
+
+// NOPAIN
+actor "_CF_NOPAIN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOPAIN", false)
+		stop
+	}
+}
+
+actor "_CF_NOPAIN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOPAIN", true)
+		stop
+	}
+}
+
+// FORCEYBILLBOARD
+actor "_CF_FORCEYBILLBOARD_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCEYBILLBOARD", false)
+		stop
+	}
+}
+
+actor "_CF_FORCEYBILLBOARD_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCEYBILLBOARD", true)
+		stop
+	}
+}
+
+// FORCEXYBILLBOARD
+actor "_CF_FORCEXYBILLBOARD_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", false)
+		stop
+	}
+}
+
+actor "_CF_FORCEXYBILLBOARD_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", true)
+		stop
+	}
+}
+
+// MISSILE
+actor "_CF_MISSILE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MISSILE", false)
+		stop
+	}
+}
+
+actor "_CF_MISSILE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MISSILE", true)
+		stop
+	}
+}
+
+// RIPPER
+actor "_CF_RIPPER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("RIPPER", false)
+		stop
+	}
+}
+
+actor "_CF_RIPPER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("RIPPER", true)
+		stop
+	}
+}
+
+// NOBOSSRIP
+actor "_CF_NOBOSSRIP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBOSSRIP", false)
+		stop
+	}
+}
+
+actor "_CF_NOBOSSRIP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOBOSSRIP", true)
+		stop
+	}
+}
+
+// NODAMAGETHRUST
+actor "_CF_NODAMAGETHRUST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODAMAGETHRUST", false)
+		stop
+	}
+}
+
+actor "_CF_NODAMAGETHRUST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODAMAGETHRUST", true)
+		stop
+	}
+}
+
+// DONTREFLECT
+actor "_CF_DONTREFLECT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTREFLECT", false)
+		stop
+	}
+}
+
+actor "_CF_DONTREFLECT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTREFLECT", true)
+		stop
+	}
+}
+
+// FLOORHUGGER
+actor "_CF_FLOORHUGGER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FLOORHUGGER", false)
+		stop
+	}
+}
+
+actor "_CF_FLOORHUGGER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FLOORHUGGER", true)
+		stop
+	}
+}
+
+// CEILINGHUGGER
+actor "_CF_CEILINGHUGGER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CEILINGHUGGER", false)
+		stop
+	}
+}
+
+actor "_CF_CEILINGHUGGER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CEILINGHUGGER", true)
+		stop
+	}
+}
+
+// BLOODLESSIMPACT
+actor "_CF_BLOODLESSIMPACT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLOODLESSIMPACT", false)
+		stop
+	}
+}
+
+actor "_CF_BLOODLESSIMPACT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLOODLESSIMPACT", true)
+		stop
+	}
+}
+
+// BLOODSPLATTER
+actor "_CF_BLOODSPLATTER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLOODSPLATTER", false)
+		stop
+	}
+}
+
+actor "_CF_BLOODSPLATTER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLOODSPLATTER", true)
+		stop
+	}
+}
+
+// FOILINVUL
+actor "_CF_FOILINVUL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FOILINVUL", false)
+		stop
+	}
+}
+
+actor "_CF_FOILINVUL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FOILINVUL", true)
+		stop
+	}
+}
+
+// FOILBUDDHA
+actor "_CF_FOILBUDDHA_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FOILBUDDHA", false)
+		stop
+	}
+}
+
+actor "_CF_FOILBUDDHA_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FOILBUDDHA", true)
+		stop
+	}
+}
+
+// SEEKERMISSILE
+actor "_CF_SEEKERMISSILE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SEEKERMISSILE", false)
+		stop
+	}
+}
+
+actor "_CF_SEEKERMISSILE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SEEKERMISSILE", true)
+		stop
+	}
+}
+
+// SCREENSEEKER
+actor "_CF_SCREENSEEKER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SCREENSEEKER", false)
+		stop
+	}
+}
+
+actor "_CF_SCREENSEEKER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SCREENSEEKER", true)
+		stop
+	}
+}
+
+// SKYEXPLODE
+actor "_CF_SKYEXPLODE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SKYEXPLODE", false)
+		stop
+	}
+}
+
+actor "_CF_SKYEXPLODE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SKYEXPLODE", true)
+		stop
+	}
+}
+
+// NOEXPLODEFLOOR
+actor "_CF_NOEXPLODEFLOOR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOEXPLODEFLOOR", false)
+		stop
+	}
+}
+
+actor "_CF_NOEXPLODEFLOOR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOEXPLODEFLOOR", true)
+		stop
+	}
+}
+
+// STRIFEDAMAGE
+actor "_CF_STRIFEDAMAGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STRIFEDAMAGE", false)
+		stop
+	}
+}
+
+actor "_CF_STRIFEDAMAGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STRIFEDAMAGE", true)
+		stop
+	}
+}
+
+// EXTREMEDEATH
+actor "_CF_EXTREMEDEATH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH", false)
+		stop
+	}
+}
+
+actor "_CF_EXTREMEDEATH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH", true)
+		stop
+	}
+}
+
+// NOEXTREMEDEATH
+actor "_CF_NOEXTREMEDEATH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOEXTREMEDEATH", false)
+		stop
+	}
+}
+
+actor "_CF_NOEXTREMEDEATH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOEXTREMEDEATH", true)
+		stop
+	}
+}
+
+// DEHEXPLOSION
+actor "_CF_DEHEXPLOSION_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DEHEXPLOSION", false)
+		stop
+	}
+}
+
+actor "_CF_DEHEXPLOSION_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DEHEXPLOSION", true)
+		stop
+	}
+}
+
+// PIERCEARMOR
+actor "_CF_PIERCEARMOR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PIERCEARMOR", false)
+		stop
+	}
+}
+
+actor "_CF_PIERCEARMOR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PIERCEARMOR", true)
+		stop
+	}
+}
+
+// FORCERADIUSDMG
+actor "_CF_FORCERADIUSDMG_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCERADIUSDMG", false)
+		stop
+	}
+}
+
+actor "_CF_FORCERADIUSDMG_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCERADIUSDMG", true)
+		stop
+	}
+}
+
+// SPAWNSOUNDSOURCE
+actor "_CF_SPAWNSOUNDSOURCE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPAWNSOUNDSOURCE", false)
+		stop
+	}
+}
+
+actor "_CF_SPAWNSOUNDSOURCE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPAWNSOUNDSOURCE", true)
+		stop
+	}
+}
+
+// PAINLESS
+actor "_CF_PAINLESS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PAINLESS", false)
+		stop
+	}
+}
+
+actor "_CF_PAINLESS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PAINLESS", true)
+		stop
+	}
+}
+
+// FORCEPAIN
+actor "_CF_FORCEPAIN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCEPAIN", false)
+		stop
+	}
+}
+
+actor "_CF_FORCEPAIN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCEPAIN", true)
+		stop
+	}
+}
+
+// CAUSEPAIN
+actor "_CF_CAUSEPAIN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CAUSEPAIN", false)
+		stop
+	}
+}
+
+actor "_CF_CAUSEPAIN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CAUSEPAIN", true)
+		stop
+	}
+}
+
+// DONTSEEKINVISIBLE
+actor "_CF_DONTSEEKINVISIBLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTSEEKINVISIBLE", false)
+		stop
+	}
+}
+
+actor "_CF_DONTSEEKINVISIBLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTSEEKINVISIBLE", true)
+		stop
+	}
+}
+
+// STEPMISSILE
+actor "_CF_STEPMISSILE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STEPMISSILE", false)
+		stop
+	}
+}
+
+actor "_CF_STEPMISSILE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("STEPMISSILE", true)
+		stop
+	}
+}
+
+// ADDITIVEPOISONDAMAGE
+actor "_CF_ADDITIVEPOISONDAMAGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ADDITIVEPOISONDAMAGE", false)
+		stop
+	}
+}
+
+actor "_CF_ADDITIVEPOISONDAMAGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ADDITIVEPOISONDAMAGE", true)
+		stop
+	}
+}
+
+// ADDITIVEPOISONDURATION
+actor "_CF_ADDITIVEPOISONDURATION_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ADDITIVEPOISONDURATION", false)
+		stop
+	}
+}
+
+actor "_CF_ADDITIVEPOISONDURATION_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ADDITIVEPOISONDURATION", true)
+		stop
+	}
+}
+
+// NOFORWARDFALL
+actor "_CF_NOFORWARDFALL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOFORWARDFALL", false)
+		stop
+	}
+}
+
+actor "_CF_NOFORWARDFALL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOFORWARDFALL", true)
+		stop
+	}
+}
+
+// HITTARGET
+actor "_CF_HITTARGET_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HITTARGET", false)
+		stop
+	}
+}
+
+actor "_CF_HITTARGET_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HITTARGET", true)
+		stop
+	}
+}
+
+// HITMASTER
+actor "_CF_HITMASTER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HITMASTER", false)
+		stop
+	}
+}
+
+actor "_CF_HITMASTER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HITMASTER", true)
+		stop
+	}
+}
+
+// HITTRACER
+actor "_CF_HITTRACER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HITTRACER", false)
+		stop
+	}
+}
+
+actor "_CF_HITTRACER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HITTRACER", true)
+		stop
+	}
+}
+
+// BOUNCEONWALLS
+actor "_CF_BOUNCEONWALLS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEONWALLS", false)
+		stop
+	}
+}
+
+actor "_CF_BOUNCEONWALLS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEONWALLS", true)
+		stop
+	}
+}
+
+// BOUNCEONFLOORS
+actor "_CF_BOUNCEONFLOORS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEONFLOORS", false)
+		stop
+	}
+}
+
+actor "_CF_BOUNCEONFLOORS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEONFLOORS", true)
+		stop
+	}
+}
+
+// BOUNCEONCEILINGS
+actor "_CF_BOUNCEONCEILINGS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEONCEILINGS", false)
+		stop
+	}
+}
+
+actor "_CF_BOUNCEONCEILINGS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEONCEILINGS", true)
+		stop
+	}
+}
+
+// ALLOWBOUNCEONACTORS
+actor "_CF_ALLOWBOUNCEONACTORS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALLOWBOUNCEONACTORS", false)
+		stop
+	}
+}
+
+actor "_CF_ALLOWBOUNCEONACTORS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALLOWBOUNCEONACTORS", true)
+		stop
+	}
+}
+
+// BOUNCEAUTOOFF
+actor "_CF_BOUNCEAUTOOFF_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEAUTOOFF", false)
+		stop
+	}
+}
+
+actor "_CF_BOUNCEAUTOOFF_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEAUTOOFF", true)
+		stop
+	}
+}
+
+// BOUNCEAUTOFFFLOORONLY
+actor "_CF_BOUNCEAUTOFFFLOORONLY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEAUTOFFFLOORONLY", false)
+		stop
+	}
+}
+
+actor "_CF_BOUNCEAUTOFFFLOORONLY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEAUTOFFFLOORONLY", true)
+		stop
+	}
+}
+
+// BOUNCELIKEHERETIC
+actor "_CF_BOUNCELIKEHERETIC_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCELIKEHERETIC", false)
+		stop
+	}
+}
+
+actor "_CF_BOUNCELIKEHERETIC_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCELIKEHERETIC", true)
+		stop
+	}
+}
+
+// BOUNCEONACTORS
+actor "_CF_BOUNCEONACTORS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", false)
+		stop
+	}
+}
+
+actor "_CF_BOUNCEONACTORS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOUNCEONACTORS", true)
+		stop
+	}
+}
+
+// EXPLODEONWATER
+actor "_CF_EXPLODEONWATER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("EXPLODEONWATER", false)
+		stop
+	}
+}
+
+actor "_CF_EXPLODEONWATER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("EXPLODEONWATER", true)
+		stop
+	}
+}
+
+// CANBOUNCEWATER
+actor "_CF_CANBOUNCEWATER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANBOUNCEWATER", false)
+		stop
+	}
+}
+
+actor "_CF_CANBOUNCEWATER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CANBOUNCEWATER", true)
+		stop
+	}
+}
+
+// MBFBOUNCER
+actor "_CF_MBFBOUNCER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MBFBOUNCER", false)
+		stop
+	}
+}
+
+actor "_CF_MBFBOUNCER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("MBFBOUNCER", true)
+		stop
+	}
+}
+
+// USEBOUNCESTATE
+actor "_CF_USEBOUNCESTATE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("USEBOUNCESTATE", false)
+		stop
+	}
+}
+
+actor "_CF_USEBOUNCESTATE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("USEBOUNCESTATE", true)
+		stop
+	}
+}
+
+// DROPPED
+actor "_CF_DROPPED_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DROPPED", false)
+		stop
+	}
+}
+
+actor "_CF_DROPPED_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DROPPED", true)
+		stop
+	}
+}
+
+// ISMONSTER
+actor "_CF_ISMONSTER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ISMONSTER", false)
+		stop
+	}
+}
+
+actor "_CF_ISMONSTER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ISMONSTER", true)
+		stop
+	}
+}
+
+// CORPSE
+actor "_CF_CORPSE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CORPSE", false)
+		stop
+	}
+}
+
+actor "_CF_CORPSE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CORPSE", true)
+		stop
+	}
+}
+
+// COUNTITEM
+actor "_CF_COUNTITEM_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("COUNTITEM", false)
+		stop
+	}
+}
+
+actor "_CF_COUNTITEM_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("COUNTITEM", true)
+		stop
+	}
+}
+
+// COUNTKILL
+actor "_CF_COUNTKILL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("COUNTKILL", false)
+		stop
+	}
+}
+
+actor "_CF_COUNTKILL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("COUNTKILL", true)
+		stop
+	}
+}
+
+// COUNTSECRET
+actor "_CF_COUNTSECRET_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("COUNTSECRET", false)
+		stop
+	}
+}
+
+actor "_CF_COUNTSECRET_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("COUNTSECRET", true)
+		stop
+	}
+}
+
+// NOTDMATCH
+actor "_CF_NOTDMATCH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTDMATCH", false)
+		stop
+	}
+}
+
+actor "_CF_NOTDMATCH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTDMATCH", true)
+		stop
+	}
+}
+
+// NONSHOOTABLE
+actor "_CF_NONSHOOTABLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NONSHOOTABLE", false)
+		stop
+	}
+}
+
+actor "_CF_NONSHOOTABLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NONSHOOTABLE", true)
+		stop
+	}
+}
+
+// DROPOFF
+actor "_CF_DROPOFF_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DROPOFF", false)
+		stop
+	}
+}
+
+actor "_CF_DROPOFF_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DROPOFF", true)
+		stop
+	}
+}
+
+// PUFFONACTORS
+actor "_CF_PUFFONACTORS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PUFFONACTORS", false)
+		stop
+	}
+}
+
+actor "_CF_PUFFONACTORS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PUFFONACTORS", true)
+		stop
+	}
+}
+
+// ALLOWPARTICLES
+actor "_CF_ALLOWPARTICLES_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALLOWPARTICLES", false)
+		stop
+	}
+}
+
+actor "_CF_ALLOWPARTICLES_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALLOWPARTICLES", true)
+		stop
+	}
+}
+
+// ALWAYSPUFF
+actor "_CF_ALWAYSPUFF_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALWAYSPUFF", false)
+		stop
+	}
+}
+
+actor "_CF_ALWAYSPUFF_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALWAYSPUFF", true)
+		stop
+	}
+}
+
+// PUFFGETSOWNER
+actor "_CF_PUFFGETSOWNER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PUFFGETSOWNER", false)
+		stop
+	}
+}
+
+actor "_CF_PUFFGETSOWNER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PUFFGETSOWNER", true)
+		stop
+	}
+}
+
+// FORCEDECAL
+actor "_CF_FORCEDECAL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCEDECAL", false)
+		stop
+	}
+}
+
+actor "_CF_FORCEDECAL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FORCEDECAL", true)
+		stop
+	}
+}
+
+// NODECAL
+actor "_CF_NODECAL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODECAL", false)
+		stop
+	}
+}
+
+actor "_CF_NODECAL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODECAL", true)
+		stop
+	}
+}
+
+// SYNCHRONIZED
+actor "_CF_SYNCHRONIZED_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SYNCHRONIZED", false)
+		stop
+	}
+}
+
+actor "_CF_SYNCHRONIZED_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SYNCHRONIZED", true)
+		stop
+	}
+}
+
+// ALWAYSFAST
+actor "_CF_ALWAYSFAST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALWAYSFAST", false)
+		stop
+	}
+}
+
+actor "_CF_ALWAYSFAST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALWAYSFAST", true)
+		stop
+	}
+}
+
+// NEVERFAST
+actor "_CF_NEVERFAST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NEVERFAST", false)
+		stop
+	}
+}
+
+actor "_CF_NEVERFAST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NEVERFAST", true)
+		stop
+	}
+}
+
+// OLDRADIUSDMG
+actor "_CF_OLDRADIUSDMG_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("OLDRADIUSDMG", false)
+		stop
+	}
+}
+
+actor "_CF_OLDRADIUSDMG_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("OLDRADIUSDMG", true)
+		stop
+	}
+}
+
+// USESPECIAL
+actor "_CF_USESPECIAL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("USESPECIAL", false)
+		stop
+	}
+}
+
+actor "_CF_USESPECIAL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("USESPECIAL", true)
+		stop
+	}
+}
+
+// BUMPSPECIAL
+actor "_CF_BUMPSPECIAL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BUMPSPECIAL", false)
+		stop
+	}
+}
+
+actor "_CF_BUMPSPECIAL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BUMPSPECIAL", true)
+		stop
+	}
+}
+
+// BOSSDEATH
+actor "_CF_BOSSDEATH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOSSDEATH", false)
+		stop
+	}
+}
+
+actor "_CF_BOSSDEATH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BOSSDEATH", true)
+		stop
+	}
+}
+
+// NOINTERACTION
+actor "_CF_NOINTERACTION_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOINTERACTION", false)
+		stop
+	}
+}
+
+actor "_CF_NOINTERACTION_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOINTERACTION", true)
+		stop
+	}
+}
+
+// NOTAUTOAIMED
+actor "_CF_NOTAUTOAIMED_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTAUTOAIMED", false)
+		stop
+	}
+}
+
+actor "_CF_NOTAUTOAIMED_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTAUTOAIMED", true)
+		stop
+	}
+}
+
+// NOMENU
+actor "_CF_NOMENU_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOMENU", false)
+		stop
+	}
+}
+
+actor "_CF_NOMENU_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOMENU", true)
+		stop
+	}
+}
+
+// PICKUP
+actor "_CF_PICKUP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PICKUP", false)
+		stop
+	}
+}
+
+actor "_CF_PICKUP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PICKUP", true)
+		stop
+	}
+}
+
+// TOUCHY
+actor "_CF_TOUCHY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("TOUCHY", false)
+		stop
+	}
+}
+
+actor "_CF_TOUCHY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("TOUCHY", true)
+		stop
+	}
+}
+
+// VULNERABLE
+actor "_CF_VULNERABLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("VULNERABLE", false)
+		stop
+	}
+}
+
+actor "_CF_VULNERABLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("VULNERABLE", true)
+		stop
+	}
+}
+
+// NOTONAUTOMAP
+actor "_CF_NOTONAUTOMAP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTONAUTOMAP", false)
+		stop
+	}
+}
+
+actor "_CF_NOTONAUTOMAP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOTONAUTOMAP", true)
+		stop
+	}
+}
+
+// WEAPONSPAWN
+actor "_CF_WEAPONSPAWN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPONSPAWN", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPONSPAWN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPONSPAWN", true)
+		stop
+	}
+}
+
+// SEESDAGGERS
+actor "_CF_SEESDAGGERS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SEESDAGGERS", false)
+		stop
+	}
+}
+
+actor "_CF_SEESDAGGERS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SEESDAGGERS", true)
+		stop
+	}
+}
+
+// INCOMBAT
+actor "_CF_INCOMBAT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INCOMBAT", false)
+		stop
+	}
+}
+
+actor "_CF_INCOMBAT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INCOMBAT", true)
+		stop
+	}
+}
+
+// NOCLIP
+actor "_CF_NOCLIP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOCLIP", false)
+		stop
+	}
+}
+
+actor "_CF_NOCLIP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOCLIP", true)
+		stop
+	}
+}
+
+// NOSECTOR
+actor "_CF_NOSECTOR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOSECTOR", false)
+		stop
+	}
+}
+
+actor "_CF_NOSECTOR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NOSECTOR", true)
+		stop
+	}
+}
+
+// ICECORPSE
+actor "_CF_ICECORPSE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ICECORPSE", false)
+		stop
+	}
+}
+
+actor "_CF_ICECORPSE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ICECORPSE", true)
+		stop
+	}
+}
+
+// JUSTHIT
+actor "_CF_JUSTHIT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("JUSTHIT", false)
+		stop
+	}
+}
+
+actor "_CF_JUSTHIT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("JUSTHIT", true)
+		stop
+	}
+}
+
+// JUSTATTACKED
+actor "_CF_JUSTATTACKED_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("JUSTATTACKED", false)
+		stop
+	}
+}
+
+actor "_CF_JUSTATTACKED_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("JUSTATTACKED", true)
+		stop
+	}
+}
+
+// TELEPORT
+actor "_CF_TELEPORT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("TELEPORT", false)
+		stop
+	}
+}
+
+actor "_CF_TELEPORT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("TELEPORT", true)
+		stop
+	}
+}
+
+// BLASTED
+actor "_CF_BLASTED_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLASTED", false)
+		stop
+	}
+}
+
+actor "_CF_BLASTED_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLASTED", true)
+		stop
+	}
+}
+
+// EXPLOCOUNT
+actor "_CF_EXPLOCOUNT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("EXPLOCOUNT", false)
+		stop
+	}
+}
+
+actor "_CF_EXPLOCOUNT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("EXPLOCOUNT", true)
+		stop
+	}
+}
+
+// SKULLFLY
+actor "_CF_SKULLFLY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SKULLFLY", false)
+		stop
+	}
+}
+
+actor "_CF_SKULLFLY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SKULLFLY", true)
+		stop
+	}
+}
+
+// SPECIALFIREDAMAGE
+actor "_CF_SPECIALFIREDAMAGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPECIALFIREDAMAGE", false)
+		stop
+	}
+}
+
+actor "_CF_SPECIALFIREDAMAGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPECIALFIREDAMAGE", true)
+		stop
+	}
+}
+
+// SPECIALFLOORCLIP
+actor "_CF_SPECIALFLOORCLIP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPECIALFLOORCLIP", false)
+		stop
+	}
+}
+
+actor "_CF_SPECIALFLOORCLIP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPECIALFLOORCLIP", true)
+		stop
+	}
+}
+
+// SUMMONEDMONSTER
+actor "_CF_SUMMONEDMONSTER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SUMMONEDMONSTER", false)
+		stop
+	}
+}
+
+actor "_CF_SUMMONEDMONSTER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SUMMONEDMONSTER", true)
+		stop
+	}
+}
+
+// SPECIAL
+actor "_CF_SPECIAL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPECIAL", false)
+		stop
+	}
+}
+
+actor "_CF_SPECIAL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SPECIAL", true)
+		stop
+	}
+}
+
+// LOWGRAVITY
+actor "_CF_LOWGRAVITY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("LOWGRAVITY", false)
+		stop
+	}
+}
+
+actor "_CF_LOWGRAVITY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("LOWGRAVITY", true)
+		stop
+	}
+}
+
+// QUARTERGRAVITY
+actor "_CF_QUARTERGRAVITY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("QUARTERGRAVITY", false)
+		stop
+	}
+}
+
+actor "_CF_QUARTERGRAVITY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("QUARTERGRAVITY", true)
+		stop
+	}
+}
+
+// LONGMELEERANGE
+actor "_CF_LONGMELEERANGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("LONGMELEERANGE", false)
+		stop
+	}
+}
+
+actor "_CF_LONGMELEERANGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("LONGMELEERANGE", true)
+		stop
+	}
+}
+
+// SHORTMISSILERANGE
+actor "_CF_SHORTMISSILERANGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SHORTMISSILERANGE", false)
+		stop
+	}
+}
+
+actor "_CF_SHORTMISSILERANGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SHORTMISSILERANGE", true)
+		stop
+	}
+}
+
+// FIRERESIST
+actor "_CF_FIRERESIST_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FIRERESIST", false)
+		stop
+	}
+}
+
+actor "_CF_FIRERESIST_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FIRERESIST", true)
+		stop
+	}
+}
+
+// DONTHURTSPECIES
+actor "_CF_DONTHURTSPECIES_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTHURTSPECIES", false)
+		stop
+	}
+}
+
+actor "_CF_DONTHURTSPECIES_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DONTHURTSPECIES", true)
+		stop
+	}
+}
+
+// FIREDAMAGE
+actor "_CF_FIREDAMAGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FIREDAMAGE", false)
+		stop
+	}
+}
+
+actor "_CF_FIREDAMAGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FIREDAMAGE", true)
+		stop
+	}
+}
+
+// ICEDAMAGE
+actor "_CF_ICEDAMAGE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ICEDAMAGE", false)
+		stop
+	}
+}
+
+actor "_CF_ICEDAMAGE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ICEDAMAGE", true)
+		stop
+	}
+}
+
+// HERETICBOUNCE
+actor "_CF_HERETICBOUNCE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HERETICBOUNCE", false)
+		stop
+	}
+}
+
+actor "_CF_HERETICBOUNCE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HERETICBOUNCE", true)
+		stop
+	}
+}
+
+// HEXENBOUNCE
+actor "_CF_HEXENBOUNCE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HEXENBOUNCE", false)
+		stop
+	}
+}
+
+actor "_CF_HEXENBOUNCE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("HEXENBOUNCE", true)
+		stop
+	}
+}
+
+// DOOMBOUNCE
+actor "_CF_DOOMBOUNCE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DOOMBOUNCE", false)
+		stop
+	}
+}
+
+actor "_CF_DOOMBOUNCE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("DOOMBOUNCE", true)
+		stop
+	}
+}
+
+// FASTER
+actor "_CF_FASTER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FASTER", false)
+		stop
+	}
+}
+
+actor "_CF_FASTER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FASTER", true)
+		stop
+	}
+}
+
+// FASTMELEE
+actor "_CF_FASTMELEE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FASTMELEE", false)
+		stop
+	}
+}
+
+actor "_CF_FASTMELEE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("FASTMELEE", true)
+		stop
+	}
+}
+
+// INVENTORY.QUIET
+actor "_CF_INVENTORY.QUIET_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.QUIET", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.QUIET_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.QUIET", true)
+		stop
+	}
+}
+
+// INVENTORY.AUTOACTIVATE
+actor "_CF_INVENTORY.AUTOACTIVATE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.AUTOACTIVATE", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.AUTOACTIVATE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.AUTOACTIVATE", true)
+		stop
+	}
+}
+
+// INVENTORY.UNDROPPABLE
+actor "_CF_INVENTORY.UNDROPPABLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.UNDROPPABLE", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.UNDROPPABLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.UNDROPPABLE", true)
+		stop
+	}
+}
+
+// INVENTORY.INVBAR
+actor "_CF_INVENTORY.INVBAR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.INVBAR", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.INVBAR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.INVBAR", true)
+		stop
+	}
+}
+
+// INVENTORY.HUBPOWER
+actor "_CF_INVENTORY.HUBPOWER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.HUBPOWER", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.HUBPOWER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.HUBPOWER", true)
+		stop
+	}
+}
+
+// INVENTORY.PERSISTENTPOWER
+actor "_CF_INVENTORY.PERSISTENTPOWER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.PERSISTENTPOWER", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.PERSISTENTPOWER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.PERSISTENTPOWER", true)
+		stop
+	}
+}
+
+// INVENTORY.INTERHUBSTRIP
+actor "_CF_INVENTORY.INTERHUBSTRIP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.INTERHUBSTRIP", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.INTERHUBSTRIP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.INTERHUBSTRIP", true)
+		stop
+	}
+}
+
+// INVENTORY.PICKUPFLASH
+actor "_CF_INVENTORY.PICKUPFLASH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.PICKUPFLASH", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.PICKUPFLASH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.PICKUPFLASH", true)
+		stop
+	}
+}
+
+// INVENTORY.ALWAYSPICKUP
+actor "_CF_INVENTORY.ALWAYSPICKUP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.ALWAYSPICKUP", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.ALWAYSPICKUP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.ALWAYSPICKUP", true)
+		stop
+	}
+}
+
+// INVENTORY.FANCYPICKUPSOUND
+actor "_CF_INVENTORY.FANCYPICKUPSOUND_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.FANCYPICKUPSOUND", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.FANCYPICKUPSOUND_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.FANCYPICKUPSOUND", true)
+		stop
+	}
+}
+
+// INVENTORY.NOATTENPICKUPSOUND
+actor "_CF_INVENTORY.NOATTENPICKUPSOUND_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.NOATTENPICKUPSOUND", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.NOATTENPICKUPSOUND_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.NOATTENPICKUPSOUND", true)
+		stop
+	}
+}
+
+// INVENTORY.BIGPOWERUP
+actor "_CF_INVENTORY.BIGPOWERUP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.BIGPOWERUP", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.BIGPOWERUP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.BIGPOWERUP", true)
+		stop
+	}
+}
+
+// INVENTORY.NEVERRESPAWN
+actor "_CF_INVENTORY.NEVERRESPAWN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.NEVERRESPAWN", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.NEVERRESPAWN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.NEVERRESPAWN", true)
+		stop
+	}
+}
+
+// INVENTORY.KEEPDEPLETED
+actor "_CF_INVENTORY.KEEPDEPLETED_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.KEEPDEPLETED", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.KEEPDEPLETED_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.KEEPDEPLETED", true)
+		stop
+	}
+}
+
+// INVENTORY.IGNORESKILL
+actor "_CF_INVENTORY.IGNORESKILL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.IGNORESKILL", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.IGNORESKILL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.IGNORESKILL", true)
+		stop
+	}
+}
+
+// INVENTORY.ADDITIVETIME
+actor "_CF_INVENTORY.ADDITIVETIME_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.ADDITIVETIME", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.ADDITIVETIME_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.ADDITIVETIME", true)
+		stop
+	}
+}
+
+// INVENTORY.UNTOSSABLE
+actor "_CF_INVENTORY.UNTOSSABLE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.UNTOSSABLE", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.UNTOSSABLE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.UNTOSSABLE", true)
+		stop
+	}
+}
+
+// INVENTORY.RESTRICTABSOLUTELY
+actor "_CF_INVENTORY.RESTRICTABSOLUTELY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.RESTRICTABSOLUTELY", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.RESTRICTABSOLUTELY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.RESTRICTABSOLUTELY", true)
+		stop
+	}
+}
+
+// INVENTORY.NOSCREENFLASH
+actor "_CF_INVENTORY.NOSCREENFLASH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.NOSCREENFLASH", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.NOSCREENFLASH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.NOSCREENFLASH", true)
+		stop
+	}
+}
+
+// INVENTORY.TOSSED
+actor "_CF_INVENTORY.TOSSED_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.TOSSED", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.TOSSED_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.TOSSED", true)
+		stop
+	}
+}
+
+// INVENTORY.ALWAYSRESPAWN
+actor "_CF_INVENTORY.ALWAYSRESPAWN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.ALWAYSRESPAWN", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.ALWAYSRESPAWN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.ALWAYSRESPAWN", true)
+		stop
+	}
+}
+
+// INVENTORY.TRANSFER
+actor "_CF_INVENTORY.TRANSFER_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.TRANSFER", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.TRANSFER_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.TRANSFER", true)
+		stop
+	}
+}
+
+// WEAPON.NOAUTOFIRE
+actor "_CF_WEAPON.NOAUTOFIRE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NOAUTOFIRE", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.NOAUTOFIRE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NOAUTOFIRE", true)
+		stop
+	}
+}
+
+// WEAPON.READYSNDHALF
+actor "_CF_WEAPON.READYSNDHALF_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.READYSNDHALF", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.READYSNDHALF_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.READYSNDHALF", true)
+		stop
+	}
+}
+
+// WEAPON.DONTBOB
+actor "_CF_WEAPON.DONTBOB_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.DONTBOB", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.DONTBOB_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.DONTBOB", true)
+		stop
+	}
+}
+
+// WEAPON.AXEBLOOD
+actor "_CF_WEAPON.AXEBLOOD_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.AXEBLOOD", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.AXEBLOOD_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.AXEBLOOD", true)
+		stop
+	}
+}
+
+// WEAPON.NOALERT
+actor "_CF_WEAPON.NOALERT_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NOALERT", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.NOALERT_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NOALERT", true)
+		stop
+	}
+}
+
+// WEAPON.AMMO_OPTIONAL
+actor "_CF_WEAPON.AMMO_OPTIONAL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.AMMO_OPTIONAL", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.AMMO_OPTIONAL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.AMMO_OPTIONAL", true)
+		stop
+	}
+}
+
+// WEAPON.ALT_AMMO_OPTIONAL
+actor "_CF_WEAPON.ALT_AMMO_OPTIONAL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.ALT_AMMO_OPTIONAL", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.ALT_AMMO_OPTIONAL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.ALT_AMMO_OPTIONAL", true)
+		stop
+	}
+}
+
+// WEAPON.AMMO_CHECKBOTH
+actor "_CF_WEAPON.AMMO_CHECKBOTH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.AMMO_CHECKBOTH", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.AMMO_CHECKBOTH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.AMMO_CHECKBOTH", true)
+		stop
+	}
+}
+
+// WEAPON.PRIMARY_USES_BOTH
+actor "_CF_WEAPON.PRIMARY_USES_BOTH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.PRIMARY_USES_BOTH", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.PRIMARY_USES_BOTH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.PRIMARY_USES_BOTH", true)
+		stop
+	}
+}
+
+// WEAPON.ALT_USES_BOTH
+actor "_CF_WEAPON.ALT_USES_BOTH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.ALT_USES_BOTH", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.ALT_USES_BOTH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.ALT_USES_BOTH", true)
+		stop
+	}
+}
+
+// WEAPON.WIMPY_WEAPON
+actor "_CF_WEAPON.WIMPY_WEAPON_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.WIMPY_WEAPON", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.WIMPY_WEAPON_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.WIMPY_WEAPON", true)
+		stop
+	}
+}
+
+// WEAPON.POWERED_UP
+actor "_CF_WEAPON.POWERED_UP_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.POWERED_UP", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.POWERED_UP_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.POWERED_UP", true)
+		stop
+	}
+}
+
+// WEAPON.STAFF2_KICKBACK
+actor "_CF_WEAPON.STAFF2_KICKBACK_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.STAFF2_KICKBACK", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.STAFF2_KICKBACK_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.STAFF2_KICKBACK", true)
+		stop
+	}
+}
+
+// WEAPON.EXPLOSIVE
+actor "_CF_WEAPON.EXPLOSIVE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.EXPLOSIVE", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.EXPLOSIVE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.EXPLOSIVE", true)
+		stop
+	}
+}
+
+// WEAPON.MELEEWEAPON
+actor "_CF_WEAPON.MELEEWEAPON_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.MELEEWEAPON", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.MELEEWEAPON_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.MELEEWEAPON", true)
+		stop
+	}
+}
+
+// WEAPON.BFG
+actor "_CF_WEAPON.BFG_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.BFG", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.BFG_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.BFG", true)
+		stop
+	}
+}
+
+// WEAPON.CHEATNOTWEAPON
+actor "_CF_WEAPON.CHEATNOTWEAPON_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.CHEATNOTWEAPON", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.CHEATNOTWEAPON_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.CHEATNOTWEAPON", true)
+		stop
+	}
+}
+
+// WEAPON.NO_AUTO_SWITCH
+actor "_CF_WEAPON.NO_AUTO_SWITCH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NO_AUTO_SWITCH", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.NO_AUTO_SWITCH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NO_AUTO_SWITCH", true)
+		stop
+	}
+}
+
+// WEAPON.NOAUTOAIM
+actor "_CF_WEAPON.NOAUTOAIM_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NOAUTOAIM", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.NOAUTOAIM_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NOAUTOAIM", true)
+		stop
+	}
+}
+
+// PLAYERPAWN.NOTHRUSTWHENINVUL
+actor "_CF_PLAYERPAWN.NOTHRUSTWHENINVUL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PLAYERPAWN.NOTHRUSTWHENINVUL", false)
+		stop
+	}
+}
+
+actor "_CF_PLAYERPAWN.NOTHRUSTWHENINVUL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PLAYERPAWN.NOTHRUSTWHENINVUL", true)
+		stop
+	}
+}
+
+// PLAYERPAWN.CANSUPERMOPRH
+actor "_CF_PLAYERPAWN.CANSUPERMOPRH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PLAYERPAWN.CANSUPERMOPRH", false)
+		stop
+	}
+}
+
+actor "_CF_PLAYERPAWN.CANSUPERMOPRH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PLAYERPAWN.CANSUPERMOPRH", true)
+		stop
+	}
+}
+
+// PLAYERPAWN.CROUCHABLEMORPH
+actor "_CF_PLAYERPAWN.CROUCHABLEMORPH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PLAYERPAWN.CROUCHABLEMORPH", false)
+		stop
+	}
+}
+
+actor "_CF_PLAYERPAWN.CROUCHABLEMORPH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("PLAYERPAWN.CROUCHABLEMORPH", true)
+		stop
+	}
+}
+
+// SCOREPILLAR
+actor "_CF_SCOREPILLAR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SCOREPILLAR", false)
+		stop
+	}
+}
+
+actor "_CF_SCOREPILLAR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SCOREPILLAR", true)
+		stop
+	}
+}
+
+// ALLOWCLIENTSPAWN
+actor "_CF_ALLOWCLIENTSPAWN_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALLOWCLIENTSPAWN", false)
+		stop
+	}
+}
+
+actor "_CF_ALLOWCLIENTSPAWN_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("ALLOWCLIENTSPAWN", true)
+		stop
+	}
+}
+
+// CLIENTSIDEONLY
+actor "_CF_CLIENTSIDEONLY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CLIENTSIDEONLY", false)
+		stop
+	}
+}
+
+actor "_CF_CLIENTSIDEONLY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("CLIENTSIDEONLY", true)
+		stop
+	}
+}
+
+// SERVERSIDEONLY
+actor "_CF_SERVERSIDEONLY_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SERVERSIDEONLY", false)
+		stop
+	}
+}
+
+actor "_CF_SERVERSIDEONLY_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SERVERSIDEONLY", true)
+		stop
+	}
+}
+
+// NONETID
+actor "_CF_NONETID_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NONETID", false)
+		stop
+	}
+}
+
+actor "_CF_NONETID_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NONETID", true)
+		stop
+	}
+}
+
+// INVENTORY.FORCERESPAWNINSURVIVAL
+actor "_CF_INVENTORY.FORCERESPAWNINSURVIVAL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.FORCERESPAWNINSURVIVAL", false)
+		stop
+	}
+}
+
+actor "_CF_INVENTORY.FORCERESPAWNINSURVIVAL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("INVENTORY.FORCERESPAWNINSURVIVAL", true)
+		stop
+	}
+}
+
+// WEAPON.ALLOW_WITH_RESPAWN_INVUL
+actor "_CF_WEAPON.ALLOW_WITH_RESPAWN_INVUL_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.ALLOW_WITH_RESPAWN_INVUL", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.ALLOW_WITH_RESPAWN_INVUL_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.ALLOW_WITH_RESPAWN_INVUL", true)
+		stop
+	}
+}
+
+// WEAPON.NOLMS
+actor "_CF_WEAPON.NOLMS_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NOLMS", false)
+		stop
+	}
+}
+
+actor "_CF_WEAPON.NOLMS_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("WEAPON.NOLMS", true)
+		stop
+	}
+}
+
+// BLUETEAM
+actor "_CF_BLUETEAM_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLUETEAM", false)
+		stop
+	}
+}
+
+actor "_CF_BLUETEAM_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BLUETEAM", true)
+		stop
+	}
+}
+
+// REDTEAM
+actor "_CF_REDTEAM_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("REDTEAM", false)
+		stop
+	}
+}
+
+actor "_CF_REDTEAM_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("REDTEAM", true)
+		stop
+	}
+}
+
+// NODE
+actor "_CF_NODE_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODE", false)
+		stop
+	}
+}
+
+actor "_CF_NODE_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("NODE", true)
+		stop
+	}
+}
+
+// BASEHEALTH
+actor "_CF_BASEHEALTH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BASEHEALTH", false)
+		stop
+	}
+}
+
+actor "_CF_BASEHEALTH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BASEHEALTH", true)
+		stop
+	}
+}
+
+// SUPERHEALTH
+actor "_CF_SUPERHEALTH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SUPERHEALTH", false)
+		stop
+	}
+}
+
+actor "_CF_SUPERHEALTH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SUPERHEALTH", true)
+		stop
+	}
+}
+
+// BASEARMOR
+actor "_CF_BASEARMOR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BASEARMOR", false)
+		stop
+	}
+}
+
+actor "_CF_BASEARMOR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("BASEARMOR", true)
+		stop
+	}
+}
+
+// SUPERARMOR
+actor "_CF_SUPERARMOR_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SUPERARMOR", false)
+		stop
+	}
+}
+
+actor "_CF_SUPERARMOR_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("SUPERARMOR", true)
+		stop
+	}
+}
+
+// EXPLODEONDEATH
+actor "_CF_EXPLODEONDEATH_0" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("EXPLODEONDEATH", false)
+		stop
+	}
+}
+
+actor "_CF_EXPLODEONDEATH_1" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0 A_ChangeFlag("EXPLODEONDEATH", true)
+		stop
+	}
+}
+

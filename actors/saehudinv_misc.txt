@@ -1,0 +1,173 @@
+actor "UDV_Executor" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteAlways("RadarChanger", 0)
+		stop
+	}
+}
+
+actor "UDV_Giver"
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	+NOTIMEFREEZE
+	states
+	{
+	Spawn:
+		TNT1 A 0 nodelay A_RadiusGive("UDV_Executor", 16383, RGF_MONSTERS|RGF_CUBE|RGF_NOSIGHT, 1)
+		TNT1 A 0 A_Remove(AAPTR_DEFAULT)
+		stop
+	}
+}
+
+actor "UDV_ItemSpawner" : CustomInventory
+{
+	states
+	{
+	Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteAlways("UDV_RandomItemSpawner", 0)
+		stop
+	}
+}
+
+actor "UDV_ItemGiver"
+{
+	+NOBLOCKMAP
+	+NOINTERACTION
+	states
+	{
+	Spawn:
+		TNT1 A 0 nodelay A_RadiusGive("UDV_ItemSpawner", 16383, RGF_ITEMS|RGF_CUBE|RGF_NOSIGHT, 1)
+		TNT1 A 0 A_Remove(AAPTR_DEFAULT)
+		stop
+	}
+}
+
+actor "udv_air" : CustomInventory
+{
++INVENTORY.UNDROPPABLE
+Inventory.Maxamount 60
+}
+
+ACTOR sae_Toggle : Inventory 
+{ 
+	+INVENTORY.UNDROPPABLE 
+	inventory.maxamount 1
+}
+
+ACTOR StartArmorBonus : BasicArmorBonus
+{
+  Armor.SavePercent 33.335
+  Armor.SaveAmount 1
+  Armor.MaxSaveAmount 200
+   +INVENTORY.IGNORESKILL
+}
+
+ACTOR sae_Underwater : sae_Toggle {}
+ACTOR sae_ToggleDamage : sae_Toggle {}
+ACTOR sae_ToggleStats : sae_Toggle {}
+ACTOR sae_ToggleMug : sae_Toggle {}
+ACTOR sae_Toggleammo : sae_Toggle {}
+//ACTOR sae_Togglelist : sae_Toggle {}
+ACTOR sae_DynamicMug : sae_Toggle {}
+ACTOR sae_ToggleInv : sae_Toggle {}
+ACTOR sae_ToggleMessage : sae_Toggle {}
+ACTOR sae_Mug43 : sae_Toggle {}
+ACTOR sae_recording : sae_Toggle {}
+
+ACTOR sae_PA1N : sae_Toggle {}
+ACTOR sae_Quaker : sae_Toggle {}
+ACTOR sae_BDv24 : sae_Toggle {}
+ACTOR sae_Derp : sae_Toggle {}
+ACTOR sae_Vanilla : sae_Toggle {}
+ACTOR sae_SE : sae_Toggle {}
+ACTOR sae_BDv19 : sae_Toggle {}
+ACTOR sae_BDv20 : sae_Toggle {}
+ACTOR sae_BDJ20 : sae_Toggle {}
+ACTOR udv_BD64 : sae_Toggle {}
+// ACTOR udv_NoAddOn : sae_Toggle {}
+
+ACTOR sae_armordamage : sae_Toggle {}
+ACTOR udv_LQ : sae_Toggle {}
+ACTOR udv_playername : sae_Toggle {}
+ACTOR udv_leveltime : sae_Toggle {}
+ACTOR udv_ModuleB : sae_Toggle {}
+ACTOR udv_AMvisor : sae_Toggle {}
+
+ACTOR UDVAlt : sae_Toggle {}
+ACTOR EXVerify : sae_Toggle {} 
+ACTOR startarmor_done : sae_Toggle {}
+ACTOR startbattery_done : sae_Toggle {}
+ACTOR udv_ambient : sae_Toggle {}
+
+ACTOR udv_assignname : sae_Toggle {}
+ACTOR udv_restorecarbines : sae_Toggle {}
+
+Actor HasBarrel : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor TargetIsAMarine : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR udv_helmet : Weapon 25098
+{
+   Inventory.PickupMessage "you shouldn't see this"
+    Scale 0.99 
+	Weapon.SelectionOrder 99999
+	+WEAPON.NO_AUTO_SWITCH
+   +WEAPON.NOAUTOAIM
+   +NOALERT
+	States
+	{
+		Ready:
+			Select:
+			TNT1 A 0
+			TNT1 A 0 A_SetCrosshair(5)
+			HLMU ABC 3
+			HLMU C 1
+			TNT1 A 0 A_PlaySound("IronSights",1)
+			HLMU DEFGH 4
+			HLMU I 4 A_PlaySound("UDVTPUT",3)//3
+			HLMU JKL 3//HLMU JKLMN 3
+			TNT1 A 0 A_JumpIfInventory("UDVAlt",1,"AltVisor")
+			HLMU MNO 3
+			TNT1 A 0 A_PlaySound("UDVTBEP",3)//3
+			HLMU O 3 A_PlaySound("UDVTBPP",4)//4
+			HLMU PQRS 3
+			TNT1 A 0 A_SetCrosshair(0)
+			TNT1 A 0 A_PlaySound("UCLIPIN")
+			TNT1 AAAAAAAA 0
+			TNT1 A 0
+			TNT1 AAAA 0 A_Jump(256, "Deselect")
+			
+		AltVisor:
+			HLMA MNO 3
+			TNT1 A 0 A_PlaySound("UDVTBEP",3)
+			HLMA O 3 A_PlaySound("UDVTBPP",4)
+			HLMA PQRS 3
+			TNT1 A 0 A_SetCrosshair(0)
+			TNT1 A 0 A_PlaySound("UCLIPIN")
+			TNT1 AAAAAAAA 0
+			TNT1 A 0
+			TNT1 AAAA 0
+  Deselect:
+      NULL A 0 //A_Lower
+	  TNT1 A 0 ACS_NamedExecuteAlways("DeselectHelmet",0)
+      Stop
+   Fire:
+      Goto Ready
+			
+	}
+}
+// ACTOR sae_ToggleAmmo : sae_Toggle {}
+// ACTOR sae_ReversePriWithSec : sae_Toggle {}
+// ACTOR sae_DistinctAmmoTypes : sae_Toggle {}
+//ACTOR sae_InfiniteAmmo : sae_Toggle {}

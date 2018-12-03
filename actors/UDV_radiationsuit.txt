@@ -1,0 +1,113 @@
+ACTOR RadSuitReplacer replaces Radsuit
+{
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	TNT1 A 3 A_JumpIf(ACS_NamedExecuteWithResult("CheckHevSuit")==1,"HevSuitSpawn")
+	TNT1 A 1 A_SpawnItemEx("OGRadSuit",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+	Stop
+	HevSuitSpawn:
+	TNT1 A 1 
+	TNT1 A 1 A_SpawnItemEx("UDV_HevSuit",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+	Stop
+	}
+}
+
+ACTOR OGRadSuit : PowerupGiver
+{
+  Height 46
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.MaxAmount 0
+  Inventory.PickupMessage "$GOTSUIT" // "Radiation Shielding Suit"
+  Powerup.Type "IronFeet"
+  States
+  {
+  Spawn:
+    SUIT A -1 Bright
+    Stop
+  }
+}
+
+ACTOR UDV_HevSuit : CustomInventory 30781
+{
+  Game Doom
+  SpawnID 136
+  Height 46
+  //+UNDROPPABLE
+  +INVENTORY.HUBPOWER
+  +INVENTORY.INVBAR
+  Inventory.Icon "RAD"
+  Inventory.MaxAmount 2
+  Inventory.PickupMessage "Hazardous Environment Suit! (Default 'K')" // "Radiation Shielding Suit"
+  //Powerup.Type "IronFeet"
+	States
+	{
+		Spawn:
+		//		TNT1 A 0 
+		//		TNT1 A 0 ACS_NamedExecuteWithResult("RadarChanger",0)
+		HEVS A -1 Bright
+		stop
+		Use:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteAlways("RadsuitSwitch",0)
+		Fail
+	}
+}
+
+ACTOR HEVSuitUsed : CustomInventory
+{
++INVENTORY.INVBAR
++THRUACTORS
+INVENTORY.ICON "RADU"
+INVENTORY.MAXAMOUNT 1
+	STATES
+	{
+		SPAWN:
+		HEVU A -1
+		stop
+		Use:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteAlways("RadsuitSwitch",0)
+		Fail
+	}
+}
+
+Actor HEVFeet : PowerIronFeet
+{
+  //+Inventory.AutoActivate
+  //+Inventory.AlwaysPickup
+  //Inventory.MaxAmount 0
+  //Inventory.PickupMessage ""
+ // Powerup.Type "IronFeet"
+  Powerup.Duration -65
+  Powerup.Color 0, 0, 0, 0
+//  States
+//  {
+//  Spawn:
+//    TNT1 A 1
+//    Fail
+//  }
+}
+
+
+
+ACTOR HEVProtect : PowerProtection
+{
+  DamageFactor "Desintegrate", 0.0
+  DamageFactor "Slime", 0.0
+  DamageFactor "Poison", 0.0
+  DamageFactor "PoisonCloud", 0.0
+  DamageFactor "SuperPlasma", 0.50
+  DamageFactor "GreenFire", 0.25
+  DamageFactor "Plasma", 0.25
+  DamageFactor "Burn", 0.25
+  DamageFactor "Fire", 0.25
+  DamageFactor "Flames", 0.25
+  DamageFactor "Freeze", 0.25
+  DamageFactor "Ice", 0.25
+  DamageFactor "Electric", 0.25
+  Powerup.Duration -65
+  Powerup.Color 0, 0, 255, 0.25
+}

@@ -1,0 +1,59 @@
+#library "nanostim"
+#include "zcommon.acs"
+
+#define Player_TIDOffset 2000
+
+// Not really needed
+Int PlayerNano_TID[8];
+
+int nanostarthealth[8];
+
+int nanomaxhealth[8];
+
+int nanohealthdiff[8];
+
+Script "CheckMedikit" (void) net
+{
+If(GetCvar("udv_smartmedikitspawn")) SetResultValue(1);
+Else SetResultValue(0);
+}
+
+Function Int GetPlayerID (void)
+{
+	//if (ActivatorTID() == 0)
+		//Thing_ChangeTID (ActivatorTID(), UniqueTID((PlayerNumber() + Player_TIDOffset)));
+	PlayerNano_TID[PlayerNumber()] = ActivatorTID();
+	Return (PlayerNano_TID[PlayerNumber()]);
+}
+
+
+Script 15788 Enter
+{
+	Delay(35);
+	GetPlayerID();
+	//PlayerNano_TID[PlayerNumber()] = ActivatorTID();
+	While(true)
+		{
+	GetPlayerID();
+		nanostarthealth[PlayerNumber()] = GetActorProperty(ActivatorTID(),APROP_SpawnHealth);
+		if (nanostarthealth[PlayerNumber()] == 0) nanostarthealth[PlayerNumber()] = 100;
+		nanomaxhealth[PlayerNumber()] = nanostarthealth[PlayerNumber()] + GetActorProperty(ActivatorTID(),APROP_Stamina);
+		//Print(d:nanomaxhealth);
+		Delay(1);
+		}
+}
+
+Script 15789 (int pNum)
+{
+//PrintBold(d:pNum);
+nanohealthdiff[pNum] = nanomaxhealth[pNum] - GetActorProperty(PlayerNano_TID[pNum], APROP_Health);
+If( nanohealthdiff[pNum] < 25 ) SetResultValue( FALSE );
+}
+
+
+Script 15790 (int pNum)
+{
+//PrintBold(d:pNum);
+nanohealthdiff[pNum] = nanomaxhealth[pNum] - GetActorProperty(PlayerNano_TID[pNum], APROP_Health);
+If( nanohealthdiff[pNum] >= 25 || nanohealthdiff[pNum] <= 0 ) SetResultValue( FALSE );
+}

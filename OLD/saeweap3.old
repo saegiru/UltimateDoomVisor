@@ -1,0 +1,237 @@
+#library "saeweap"
+#include "zcommon.acs"
+//#include "acsx.h"
+#import "Aspect.acs"
+
+global int 42:sae_WNAME;
+int sae_SecAmmoCap;
+
+//Constants
+
+#define D_AMMOEMPTY			0	// Ammo Empty
+#define D_AMMOLOW			40  // If ammo % < this number, the bar and counters will become yellow
+#define D_AMMOVERYLOW		20  // If ammo % < this number, the bar and counters will become red
+
+// Tells us which game/mod they are playing
+bool is_vanilla = false;
+bool is_heretic = false;
+bool is_blasphemer = false;
+bool is_hexen = false;
+bool is_strife = false;
+bool is_chex = false;
+bool is_action = false;
+bool is_harmony = false;
+bool is_hacx = false;
+bool is_square = false;
+bool is_brutal = false;
+bool is_d4 = false;
+bool is_brutalpack = false;
+bool is_brutality = false;
+bool is_smooth = false;
+bool is_complex = false;
+bool is_lca = false;
+bool is_trailblazer = false;
+bool is_zion = false;
+bool is_overkill = false;
+
+// -------------------------
+
+// Number of available weapons - If you add more weapons in the array below, make sure the number
+// here reflects that.
+
+#define VANILLA_NUMBEROFWEAPONS	11
+#define VANILLA_STANDARDLIST 7 //Number of standard weapons to show in weaponslist
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+// 6th column ---> Display name of weapon for Weapons list
+
+str VANILLA_weaponslist[VANILLA_NUMBEROFWEAPONS][6] =
+{
+  {"Chainsaw",              	"NoPrimary",        "NoSecondary", "No",	"SAW", "Chain Saw"},
+  {"Pistol",           			"Clip",             "NoSecondary", "No",	"PISTL", "Pistol"},
+  {"Shotgun",                  	"Shell",            "NoSecondary", "No",	"SHOT", "Shotgun"},
+  {"SuperShotgun",              "Shell",            "NoSecondary", "No",	"SSG", "Super Shotgun"},
+  {"Chaingun",                  "Clip",             "NoSecondary", "No",	"CHAIN", "Chaingun"},
+  {"RocketLauncher",			"RocketAmmo",		"NoSecondary", "No",	"RCKTL", "Rocket Launcher"},
+  {"PlasmaRifle",               "Cell",             "NoSecondary", "No",	"PLSMA", "Plasma Rifle"},
+  {"BFG9000",       			"Cell",        		"NoSecondary", "No",	"BFG9K", "BFG 9000"},
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+// Put all special weapons under this line (Fists, Dual weapons, Alternate Fire Modes, human shields, etc.)
+  {"Fist",		          		"NoPrimary",        "NoSecondary", "No",	"FIST", "PlaceHolder"},
+};
+
+
+// AMMO Count Functions
+
+Function void AmmoBarForHUD (str ammotype, str ammoempty, str ammoverylow, str ammolow, str ammogood)
+{
+  // Store ammo type's current amount in a variable as a percentage
+  int sae_ammoper = CheckInventory(ammotype) * 100 / GetAmmoCapacity(ammotype);
+  
+  If(CheckInventory(ammotype) == D_AMMOEMPTY)
+  {
+	GiveInventory(ammoverylow, 1);
+	GiveInventory(ammoempty, 1);
+  }
+  Else If(sae_ammoper <= D_AMMOVERYLOW && sae_ammoper > D_AMMOEMPTY) GiveInventory(ammoverylow, 1);
+  Else If(sae_ammoper >= D_AMMOVERYLOW && sae_ammoper < D_AMMOLOW) GiveInventory(ammolow, 1);
+  Else If(sae_ammoper >= D_AMMOLOW) GiveInventory(ammogood, 1);
+  
+}
+
+Function void GetEquippedWeaponAndAmmo (void)
+{
+  For(int i; i < VANILLA_NUMBEROFWEAPONS; i++)
+  {
+    If(CheckWeapon(VANILLA_weaponslist[i][0]))
+    {
+	  GiveInventory("sae_known", 1);
+	  sae_WNAME = VANILLA_weaponslist[i][4];
+	  sae_SecAmmoCap = GetAmmoCapacity(VANILLA_weaponslist[i][2]);
+	  If ( sae_SecAmmoCap > 2 ) GiveInventory("UDV_SecAmmoCap", 1);
+	  Else TakeInventory("UDV_SecAmmoCap", 1);
+      AmmoBarForHUD(VANILLA_weaponslist[i][1], "sae_PAE", "sae_PrimaryAmmoVeryLow", "sae_PrimaryAmmoLow", "sae_PrimaryAmmoOk");
+      AmmoBarForHUD(VANILLA_weaponslist[i][2], "sae_SAE", "sae_SecondaryAmmoVeryLow", "sae_SecondaryAmmoLow", "sae_SecondaryAmmoOk");
+	  
+	  If((VANILLA_weaponslist[i][3]) == "Yes") GiveInventory("sae_Secondary", 1);
+	  Else TakeInventory("sae_Secondary", 1);
+
+	  If( VANILLA_weaponslist[i][1] == "NoPrimary" ) 
+		{
+			GiveInventory("sae_Melee", 1);
+		}
+	  Else
+		{
+			TakeInventory("sae_Melee", 1);
+		}
+
+      Break;
+    }
+	Else
+	{
+		TakeInventory("sae_known", 1);
+		sae_WNAME = StrLeft(GetWeapon(), 10);
+	}
+  }
+}
+
+//BEGIN Weapon List
+
+
+Function void BuildWeaponList (void)
+{
+int WpnCntr;
+	If(CheckInventory("exverify"))
+	{
+		WpnCntr = VANILLA_STANDARDLIST + 2;
+	}
+	Else
+	{
+		WpnCntr = VANILLA_STANDARDLIST;
+	}
+	
+  For(int i; i <= WpnCntr; i++)
+  {
+    int list_aspect = GetAspectRatio();
+	SetHudSize(930,730,1);
+	SetFont("UDVSmall");
+	If(CheckWeapon(VANILLA_weaponslist[i][0]))
+	{
+		If(list_aspect == ASPECT_4_3)
+		{
+		HudMessage(s:VANILLA_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+		}
+		Else
+		{
+		HudMessage(s:VANILLA_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+		}
+	}
+	Else If(CheckInventory(VANILLA_weaponslist[i][0]))
+	{
+		If(list_aspect == ASPECT_4_3)
+		{
+		HudMessage(s:VANILLA_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+		}
+		Else
+		{
+		HudMessage(s:VANILLA_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+		}
+	}
+	Else
+	{
+		If(list_aspect == ASPECT_4_3)
+		{
+		HudMessage(s:VANILLA_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+		}
+		Else
+		{
+		HudMessage(s:VANILLA_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+		}
+	}
+  }
+}
+
+// Scripts ---------------------------------------------------
+
+
+Script 24008 Enter
+{
+	if (GameType () != GAME_TITLE_MAP)
+	{
+
+	GiveInventory("sae_Vanilla", 1);
+	GiveInventory("udv_ModuleB", 1);
+
+	SETFONT("SMALLFONT");
+
+	  While(TRUE)
+	  {
+		
+		GetEquippedWeaponAndAmmo();
+
+		/*
+		If( GetCvar("saehud_togglelist"))
+		{
+			If ( !CheckInventory("sae_extcam") && !CheckInventory("sae_deathcam") )
+			{
+				BuildWeaponList();
+			}
+		}
+		*/
+		
+		Delay(1);
+	  }
+  }
+}
+
+Script 24009 Enter Clientside
+{
+	if (GameType () != GAME_TITLE_MAP)
+	{
+		SETFONT("SMALLFONT");
+		While(TRUE)
+		{
+				If( GetCvar("saehud_togglelist"))
+				{
+					If ( !CheckInventory("sae_extcam") && !CheckInventory("sae_deathcam") )
+					{
+						BuildWeaponList();
+					}
+				}
+				Delay(1);
+		}
+	}
+}

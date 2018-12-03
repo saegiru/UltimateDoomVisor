@@ -1,0 +1,62 @@
+gameinfo
+{
+   menufontcolor_title = "DARKRED"
+   menufontcolor_label = "SAEHUDGR"
+   menufontcolor_value = "SAEHUDGR"
+   menufontcolor_action = "SAEHUDGR"
+   menufontcolor_header = "DARKRED"
+   menufontcolor_highlight = "SAEHUDGR"
+   menufontcolor_selection = "DARKRED"
+   statusbar = "UDVSB"
+DimColor = "Black"
+DimAmount = 0.80
+}
+
+skill UDVBrutal
+{
+   DamageFactor = 2.0
+   AmmoFactor = 1
+   Aggressiveness = 1.0
+   ACSReturn = 10000
+   FastMonsters
+   MonsterHealth = 1.5
+   SpawnFilter = Nightmare
+   Picname = "UDV_HC"
+   Textcolor = "GRAY"
+   name = "UDV - Hardcore"
+   mustconfirm = "Slower movement, take more damage, faster, stronger, more agressive enemies. Can you survive? Press Y or N"
+}
+
+/*
+skill UDVHardcore
+{
+   DamageFactor = 2.0
+   AmmoFactor = 1
+   Aggressiveness = 1.0
+   ACSReturn = 10001
+   FastMonsters
+   MonsterHealth = 1.5
+   PicName = "UDV_HC"
+   SpawnFilter = Nightmare
+   Textcolor = "BLACK"
+   name = "UDV - Hardcore"
+   mustconfirm = "Truly Brutal + Bleeding and Hobbled when critical. A true test! Can you survive? Press Y or N"
+}
+*/
+
+
+DamageType UDVBlood
+{
+Factor = 1.0
+ReplaceFactor
+NoArmor
+Obituary = "%o bled out on the ground."
+}
+
+DamageType UDVAir
+{
+Factor = 1.0
+ReplaceFactor
+NoArmor
+Obituary = "%o breathed his last."
+}

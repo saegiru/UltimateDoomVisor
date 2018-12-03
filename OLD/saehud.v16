@@ -1,0 +1,1335 @@
+#library "saehud"
+#import "Aspect.acs"
+#include "zcommon.acs"
+#import "gamechecker.acs"
+//#import "skydamage.acs"
+
+//global bool 43:camera_mode;
+str UDV_Version = "2.00"; //Current UDV Version
+int UDV_SpeedNormal; //global starting speed variable
+int	UDV_SpeedFatigued; //global fatigued speed variable
+int	UDV_SpeedEnergized; //global energized speed variable
+int HealthDamage[8];
+int totaldamage[8];//totaldamage counter
+
+int healthcnt[8]; // Counter to delay first bleeding damage
+int alarmcnt[8]; //counter for alarms
+int bleedcheck[8];
+
+
+// Constants -------------------------------------------------
+
+
+//#define SKILL_BDBLACKMETAL	   31 // BLACK METAL SKILL LEVEL FROM BRUTAL DOOM
+//#define SKILL_BDREAL		   32 // Realism Skill Level from Brutal Doom
+#define SKILL_UDVBRUTAL        10000 // UDV Skill Level from MAPINFO
+//#define SKILL_UDVHARDCORE	   10001 // UDV Skill Level from MAPINFO
+//#define UDV_SpeedBlackMetal    1.3 // Black Metal Player Speed
+//#define UDV_SpeedNormal        1.0 // Normal Player Speed
+//#define UDV_SpeedReal          0.6 // Realism Player Speed
+//#define UDV_SpeedBarrel			0.4 // Speed While carrying Barrel
+
+#define C_TID		1000	//Default camera tid
+
+
+// ALL HEALTH IS IN PERCENT
+#define D_HPEXTREME			200 // extreme health
+#define D_HPABOVEHUNDRED	100 // If health > this number, the bar and counters will become blue
+#define D_HPWARNING			51  // If health < this number, the bar and counters will become orange
+#define D_HPCRITICAL		26  // If health < this number, the bar and counters will become red
+#define D_HPZERO             0 	// 
+
+// ALL ARMOR IS IN POINTS
+#DEFINE D_ARMOREXTREME		200 // extreme armor level
+#define D_ARMORABOVEHUNDRED	100 // If armor > this number, the bar and counters will become blue
+#define D_ARMOR90       	90 	// armor damage level
+#define D_ARMOR80       	80 	// armor damage level
+#define D_ARMOR70       	70 	// armor damage level
+#define D_ARMOR60       	60 	// armor damage level
+#define D_ARMORLOW			50 	// If armor < this number, the bar and counters will become yellow
+#DEFINE D_ARMOR40       	40 	// armor damage level
+#define D_ARMOR30       	30 	// armor damage level
+#define D_ARMORVERYLOW		25 	// If armor < this number, the bar and counters will become red
+#DEFINE D_ARMOR20       	20 	// armor damage level
+#define D_ARMOR10       	10 	// armor damage level
+#define D_ARMORZERO      	0  	// armor damage level
+
+
+// Functions -------------------------------------------------
+
+function int min (int a, int b)
+{
+	if (a < b) return a;
+	return b;
+}
+
+function VOID DisplayBulletHoles (void) //preload the bulletholes on entering game
+{
+	{
+	SETFONT("PBULA1");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULB1");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULC1");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULD1");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULE1");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULF1");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULA2");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULB2");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULC2");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULD2");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULE2");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULF2");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULA3");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULB3");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULC3");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULD3");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULE3");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+	{
+	SETFONT("PBULF3");
+	HudMessage(s:"A"; HUDMSG_ALPHA, 0, 0, 0.1, 0.8, 0.1, 0);
+	}
+}
+
+
+script 428 (void) NET
+{
+	int sae_savetime = (GetUserCVAR(PlayerNumber(), "saehud_savetime") * 2100); // convert minutes to relative tics
+
+			Autosave();
+			Delay(sae_savetime);
+			ACS_Terminate(429,0);
+}
+
+script 429 (void) NET
+{
+int sae_savetimeCTR = GetUserCVAR(PlayerNumber(), "saehud_savetime");
+int t;
+t = 0;
+			while( TRUE )
+			{
+			int savetime_ar = GetAspectRatio();
+			SetHudSize(730,560,1);
+			SETFONT("UDVSMALL");
+			If ( !CheckInventory("sae_extcam") && !CheckInventory("sae_deathcam") )
+			{
+				If(savetime_ar == ASPECT_4_3)
+				{
+					If ( CheckInventory("UDValt") )
+					{
+						HudMessage(d:(sae_savetimeCTR-1)-(t/60), s:":", d:5-((t%60)/10), d:9-(t%10);
+						HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, 355, "SaeHUDGr", 198.0, 534.0, 1.0, 0.25);
+					}
+					Else
+					{
+						HudMessage(d:(sae_savetimeCTR-1)-(t/60), s:":", d:5-((t%60)/10), d:9-(t%10);
+						HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, 355, "SaeHUDGr", 68.0, 492.0, 1.0, 0.25);
+					}
+				}
+				Else
+				{
+					If ( CheckInventory("UDVAlt") )
+					{
+						HudMessage(d:(sae_savetimeCTR-1)-(t/60), s:":", d:5-((t%60)/10), d:9-(t%10);
+						HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, 355, "SaeHUDGr", 143.0, 537.0, 1.0, 0.25);
+					}
+					Else
+					{
+						HudMessage(d:(sae_savetimeCTR-1)-(t/60), s:":", d:5-((t%60)/10), d:9-(t%10);
+						HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, 355, "SaeHUDGr", -30.0, 495.0, 1.0, 0.25);
+					}
+				}
+			}
+				//HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, 1, "SaeHUDGr", -0.92, 0.99, 2.0, 0.25);
+				Delay (35);
+				t++;
+			}
+}
+
+// Scripts ---------------------------------------------------
+
+global int 49:givestartarmor;
+global int 51:givestartbattery;
+//global int 52:helmetcnt; //counter for helmet at start
+
+Script "HealthDamage" ENTER
+{
+	While(True)
+	{
+		Int PrevHealth = GetActorProperty(ActivatorTID(), APROP_Health);
+		Delay(1);
+		healthdamage[PlayerNumber()] = PrevHealth - GetActorProperty(ActivatorTID(), APROP_Health);
+	}
+}
+
+Script 472 (void)
+{
+	If(GetUserCVAR(PlayerNumber(), "saehud_togglemessage"))
+	{
+		If(GetUserCVAR(PlayerNumber(), "udv_helmettoggle") && (!is_brutality || GetUserCVAR(PlayerNumber(), "bd_NoHelmetAnimation")) )	Delay(87);//Delays Message for Helmet Animation
+		//SetHudSize(730,560,1);
+		//SETFONT("DIGIFONT_LARGE");
+		SetHudSize(320,200,1);
+		SETFONT("DIGIFONT_SMALL");
+		HudMessage(s:"UAC DEFENSIVE VISOR VERSION ", s:UDV_Version, s:" ONLINE"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 356, "SaeHUDGr", 160.0, 22.0, 2.0, 0.05, 0.25);
+		delay(35*2);
+		HudMessage(s:"UAC IDENTITY '", n:0, s:"' VERIFIED"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 357, "SaeHUDGr", 160.0, 25.0, 2.7, 0.05, 0.25);
+		delay(35);
+		HudMessage(s:"VITAL SIGNS MONITOR ACTIVE"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 358, "SaeHUDGr", 160.0, 28.0, 2.0, 0.05, 0.25);
+		delay(52);
+		HudMessage(s:"AMMUNITION MONITOR ACTIVE"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 359, "SaeHUDGr", 160.0, 31.0, 1.5, 0.05, 0.25);
+		delay(52);
+		If(GetUserCVAR(PlayerNumber(), "saehud_toggleammo")) HudMessage(s:"RESERVE AMMUNITION VIEW ENABLED"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 360, "SaeHUDGr", 160.0, 34.0, 1.5, 0.05, 0.25);
+		Else HudMessage(s:"RESERVE AMMUNITION VIEW OFF"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 360, "SaeHUDGr", 160.0, 34.0, 1.5, 0.05, 0.25);
+		delay(52);
+		If(GetUserCVAR(PlayerNumber(), "saehud_togglelist")) HudMessage(s:"WEAPON LIST ENABLED"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 361, "SaeHUDGr", 160.0, 37.0, 1.5, 0.05, 0.25);
+		Else HudMessage(s:"WEAPON LIST OFF"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 361, "SaeHUDGr", 160.0, 37.0, 1.5, 0.05, 0.25);
+		delay(35);
+		If(GetUserCVAR(PlayerNumber(), "udv_sounds") > 0 ) HudMessage(s:"VOICE ALERTS ENABLED"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 362, "SaeHUDGr", 160.0, 40.0, 1.5, 0.05, 0.25);
+		Else HudMessage(s:"VOICE ALERTS OFF"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 362, "SaeHUDGr", 160.0, 40.0, 1.5, 0.05, 0.25);
+		delay(35);
+		If(GetUserCVAR(PlayerNumber(), "UDV_RadarEnabled")) HudMessage(s:"MOVEMENT SCANNER FUNCTIONAL"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 363, "SaeHUDGr", 160.0, 43.0, 1.0, 0.05, 0.25);
+		Else HudMessage(s:"MOVEMENT SCANNER UNAVAILABLE"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 363, "SaeHUDGr", 160.0, 43.0, 1.0, 0.05, 0.25);
+		//delay(17);
+		//HudMessage(s:"RADAR SYSTEM FUNCTIONAL"; HUDMSG_TYPEON | HUDMSG_LOG | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 360, "SaeHUDGr", 365.0, 84.0, 2.0, 0.05, 0.25);
+	}
+}
+str currweapon;
+
+Script "DeselectHelmet" (void)  //remove fake helmet weapon
+{
+	SetWeapon(currweapon);
+	TakeInventory("sae_deathcam",1);
+	TakeInventory("udv_helmet",1);
+}
+
+Script "EquipHelmet" (void)
+{
+		//Helmet Animation
+		//SetCvar("bd_noHelmetAnimation", true);
+		If(GetUserCVAR(PlayerNumber(), "udv_helmettoggle") && (!is_brutality || GetUserCVAR(PlayerNumber(), "bd_NoHelmetAnimation")) )
+		{
+			//Until(helmetcnt > 0)
+			//{
+				currweapon = GetWeapon();
+				GiveInventory("udv_helmet",1);
+				GiveInventory("sae_deathcam",1);
+				Until(GetWeapon() == "udv_helmet")
+				{
+				SetWeapon("udv_helmet");
+				Delay(1);
+				}
+			//helmetcnt++;
+			//}
+		}
+		//End Helmet Animation
+}
+
+Script 12 Enter
+{
+	if (GameType () != GAME_TITLE_MAP)
+	{
+
+		ACS_NamedExecuteAlways("EquipHelmet",0);//Equip Helmet Animation
+		ACS_ExecuteAlways(1129,0); //Fog Script
+		ACS_ExecuteAlways(1131,0); //Ambient Music script
+	    ACS_ExecuteAlways(470, 0);
+		ACS_ExecuteAlways(4755, 0);
+		ACS_ExecuteAlways(472, 0);
+		ACS_ExecuteAlways(18755,0); //Face Script
+		ACS_ExecuteAlways(4278,0); //Screen Shake on Damage
+		ACS_ExecuteAlways(32660,0); //Light Color Script
+		
+		int damcount = 0; //counter to avoid damage audio at start
+		int hcount = 1; //counter for health warning
+		int hcount2 = 1; //counter for flatline
+		int armcount = 1; //counter for armor warning
+		int asavecount = 1; //counter for autosave voice
+		int acount = 1; //counter for low ammo
+		int acount2 = 1; //counter for empty ammo
+		int acount3 = 1; //counter for clip ammo
+
+		//CURRWEAPON = GETWEAPON();
+		
+
+		/*
+		If ( GetUserCVAR(PlayerNumber(), "saehud_startarmor") == 0 )
+		{
+			givestartarmor++;
+		}
+		*/
+		
+			If(!CheckInventory("startarmor_done"))	
+			{
+			GiveInventory("ArmorBonus", GetCVAR("saehud_startarmor"));
+			GiveInventory("startarmor_done",1);
+			}
+			//givestartarmor++;
+		//}
+		
+		//If (GiveStartBattery == 0)
+		//{
+			If(!CheckInventory("startbattery_done"))
+			{
+			GiveInventory("UDV_AccBattery", 100);
+			GiveInventory("startbattery_done",1);			
+			}
+
+		DisplayBulletHoles();  //call function to preload bulletholes in visor on level start to avoid slowdown
+		
+		SETFONT("UDVSMALL");
+		
+		int maxhealth = GetActorProperty(ActivatorTID(), APROP_SpawnHealth);
+		if (maxhealth == 0) maxhealth = 100;
+	  While(TRUE)
+	  {
+		int maxhealthstam = maxhealth + GetActorProperty(ActivatorTID(), APROP_Stamina); //starting max health + stamina
+		
+		// Store player's current health and armor in their respective variables
+		int sae_health = 100 * GetActorProperty(ActivatorTID(), APROP_Health) / maxhealthstam; //health percentage
+		int sae_actualhealth = GetActorProperty(ActivatorTID(), APROP_Health); //Actual Health number
+		int sae_armor = CheckInventory("Armor");
+		If(sae_armor >= 1 && damcount < 1)
+			{
+				GiveInventory("sae_armordamage", 1);
+				damcount++;
+			}
+		// The given items in the following code are needed by SBARINFO to display the appropriate
+		// bars colors and counters for health, armor and ammo.
+		
+		// Health -------------------------------------------------------------
+		If( sae_actualhealth <= D_HPZERO ) GiveInventory("sae_Flatline", 1);
+		Else If(sae_health < D_HPCRITICAL && sae_actualhealth > D_HPZERO) GiveInventory("sae_HealthCritical", 1);
+		Else If(sae_health >= D_HPCRITICAL && sae_health < D_HPWARNING)	GiveInventory("sae_HealthWarning", 1);
+		Else If(sae_health >= D_HPWARNING && sae_health <= D_HPABOVEHUNDRED) GiveInventory("sae_HealthGood", 1);
+		Else If(sae_health > D_HPABOVEHUNDRED && sae_health <= D_HPEXTREME) GiveInventory("sae_HealthAboveHundred", 1);
+		Else GiveInventory("sae_HealthExtreme", 1);
+		
+		// Armor --------------------------------------------------------------
+		If(sae_armor <= D_ARMORZERO) GiveInventory("sae_ArmorZero", 1);
+		Else If(sae_armor > D_ARMORZERO && sae_armor <= D_ARMOR10) GiveInventory("sae_Armor10", 1);
+		Else If(sae_armor > D_ARMOR10 && sae_armor <= D_ARMOR20) GiveInventory("sae_Armor20", 1);
+		Else If(sae_armor > D_ARMOR20 && sae_armor <= D_ARMORVERYLOW) GiveInventory("sae_ArmorVeryLow", 1);
+		Else If(sae_armor > D_ARMORVERYLOW && sae_armor <= D_ARMOR30) GiveInventory("sae_Armor40", 1);
+		Else If(sae_armor > D_ARMOR30 && sae_armor <= D_ARMORLOW) GiveInventory("sae_ArmorLow", 1);
+		Else If(sae_armor > D_ARMORLOW && sae_armor <= D_ARMOR60) GiveInventory("sae_Armor60", 1);
+		Else If(sae_armor > D_ARMOR60 && sae_armor <= D_ARMOR80) GiveInventory("sae_Armor80", 1);
+		Else If(sae_armor > D_ARMOR80 && sae_armor <= D_ARMORABOVEHUNDRED) GiveInventory("sae_ArmorOk", 1);
+		Else If(sae_armor > D_ARMORABOVEHUNDRED && sae_armor <= D_ARMOREXTREME) GiveInventory("sae_ArmorAboveHundred", 1);
+		Else GiveInventory("sae_ArmorExtreme", 1);
+		
+
+		// Air supply display -------------------------------------------------
+
+		If(GetActorProperty(ActivatorTID(), APROP_WaterLevel) == 3) GiveInventory("sae_Underwater", 1);
+		Else TakeInventory("sae_UnderWater", 1);
+		
+		// Armor Damage Toggle
+		
+		If(GetUserCVAR(PlayerNumber(), "saehud_toggledamage")) GiveInventory("sae_ToggleDamage", 1);
+		Else TakeInventory("sae_ToggleDamage", 1);
+		
+		// Level stats toggle ----------------------- Deprecated
+
+		//If(GetUserCVAR(PlayerNumber(), "saehud_togglestats")) GiveInventory("sae_ToggleStats", 1);
+		//Else TakeInventory("sae_ToggleStats", 1);
+		
+		// Mugshot display toggle
+		
+		If(GetUserCVAR(PlayerNumber(), "saehud_togglemug")) GiveInventory("sae_ToggleMug", 1);
+		Else TakeInventory("sae_ToggleMug", 1);
+		
+		// Dynamic Mugshot toggle
+		
+		If(GetUserCVAR(PlayerNumber(), "saehud_dynamicmug")) GiveInventory("sae_DynamicMug", 1);
+		Else TakeInventory("sae_DynamicMug", 1);
+
+		// Low Quality Toggle
+		
+		If(GetUserCVAR(PlayerNumber(), "udv_toggleLQ")) GiveInventory("udv_LQ", 1);
+		Else TakeInventory("udv_LQ", 1);
+		
+		// Player Name Toggle
+		
+		If(GetUserCVAR(PlayerNumber(), "udv_togglename")) GiveInventory("udv_playername", 1);
+		Else TakeInventory("udv_playername", 1);
+		
+		// Level Time Toggle
+		
+		If(GetUserCVAR(PlayerNumber(), "udv_toggletime")) GiveInventory("udv_leveltime", 1);
+		Else TakeInventory("udv_leveltime", 1);
+		
+		// Automap Visor Display Toggle
+		
+		If(GetUserCVAR(PlayerNumber(), "udv_toggleAMvisor")) GiveInventory("udv_AMvisor", 1);
+		Else TakeInventory("udv_AMvisor", 1);
+		
+		// Visor Inventory toggle
+		
+		If(GetUserCVAR(PlayerNumber(), "saehud_toggleinv")) GiveInventory("sae_ToggleInv", 1);
+		Else TakeInventory("sae_ToggleInv", 1);
+
+		// Reserve Ammo toggle
+		
+		If(GetUserCVAR(PlayerNumber(), "saehud_toggleammo")) GiveInventory("sae_Toggleammo", 1);
+		Else TakeInventory("sae_Toggleammo", 1);
+		
+		// Armor Warning
+		
+		//If( CheckInventory("sae_ArmorZero") && CheckInventory("sae_armordamage"))
+		If( sae_armor <= D_ARMORZERO )
+		{
+		Until ( armcount > 1 )
+			{
+				If(GetUserCVAR(PlayerNumber(), "udv_sounds") > 0 )
+					{
+						If (GetUserCVAR(PlayerNumber(), "udv_sounds") == 1)
+						{
+						LocalAmbientSound("armorem", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 2)
+						{
+						LocalAmbientSound("fvox/armorem", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 3)
+						{
+						LocalAmbientSound("gdos/armorem", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/ArmorEmpty", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/ArmorEmpty", 127);
+						}
+					}
+				If(GetUserCVAR(PlayerNumber(), "saehud_togglemessage"))
+					{
+						print(s:"\cgWarning -- Armor Compromised");
+					}
+						armcount++;
+			}
+		}
+		ELSE
+		{
+			armcount = 1;
+		}
+		
+		// Health Warning
+		
+		//If(CheckInventory("sae_HealthCritical"))
+		If( sae_health < D_HPCRITICAL && sae_actualhealth > D_HPZERO ) 
+		{
+		Until ( hcount > 1 )
+			{
+				If(GetUserCVAR(PlayerNumber(), "udv_sounds") > 0 )
+					{
+						If (GetUserCVAR(PlayerNumber(), "udv_sounds") == 1)
+						{
+						LocalAmbientSound("healthlo", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 2)
+						{
+						LocalAmbientSound("fvox/healthlo", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 3)
+						{
+						LocalAmbientSound("gdos/healthlo", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/HealthLow", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/HealthLow", 127);
+						}
+					}
+				If(GetUserCVAR(PlayerNumber(), "saehud_togglemessage"))
+					{
+						print(s:"\cgWarning -- Vital Signs Critical");
+					}
+				hcount++;
+			}
+		}
+		ELSE
+		{
+			hcount = 1;
+		}
+
+		If( sae_actualhealth <= D_HPZERO )
+		{
+		Until ( hcount2 > 1 )
+			{
+				If(GetUserCVAR(PlayerNumber(), "udv_sounds") > 0 )
+					{
+						If (GetUserCVAR(PlayerNumber(), "udv_sounds") == 1)
+						{
+						LocalAmbientSound("death", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 2)
+						{
+						LocalAmbientSound("fvox/death", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 3)
+						{
+						LocalAmbientSound("gdos/death", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/death", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/death", 127);
+						}
+						LocalAmbientSound("flatline", 127);
+					}
+				hcount2++;
+			}
+		}
+		ELSE
+		{
+			hcount2 = 1;
+		}
+		
+		If( CheckInventory("sae_PrimaryAmmoRed") && (CheckInventory("sae_melee") == FALSE) && !CheckInventory("sae_PrimaryAmmoEmpty") )
+		{
+		Until ( acount > 1 )
+			{
+				//If(GetUserCVAR(PlayerNumber(), "udv_sounds") > 0 )
+				//{
+					If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 1)
+					{
+					LocalAmbientSound("ammolo", 127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 2)
+					{
+					LocalAmbientSound("fvox/ammolo", 127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 3)
+					{
+					LocalAmbientSound("gdos/ammolo", 127);
+					}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/AmmoLow", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/AmmoLow", 127);
+						}
+				//}
+				If(GetUserCVAR(PlayerNumber(), "saehud_togglemessage"))
+				{
+					print(s:"\cgWarning -- Ammunition Critical");
+				}
+					acount++;
+			}
+		}
+		ELSE
+		{
+			acount = 1;
+		}
+		
+		If( CheckInventory("sae_PrimaryAmmoEmpty") && (CheckInventory("sae_melee") == FALSE) )
+		{
+		Until ( acount2 > 1 )
+			{
+				//If(GetUserCVAR(PlayerNumber(), "udv_sounds") > 0 )
+				//{
+					If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 1)
+					{
+					LocalAmbientSound("ammoem", 127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 2)
+					{
+					LocalAmbientSound("fvox/ammoem", 127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 3)
+					{
+					LocalAmbientSound("gdos/ammoem", 127);
+					}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/AmmoEmpty", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/AmmoEmpty", 127);
+						}
+
+				//}
+				If(GetUserCVAR(PlayerNumber(), "saehud_togglemessage"))
+				{
+					print(s:"\cgWarning -- Ammunition Depleted");
+				}
+					acount2++;
+			}
+		}
+		ELSE
+		{
+			acount2 = 1;
+		}
+		If( CheckInventory("sae_SecondaryAmmoRed") && CheckInventory("sae_secondary") && CheckInventory("UDV_SecAmmoCap") )
+		{
+		Until ( acount3 > 1 )
+			{
+				If(GetUserCVAR(PlayerNumber(), "udv_sounds") > 0 )
+				{
+					LocalAmbientSound("clipwarn", 127);
+				}
+				acount3++;
+			}
+		}
+		ELSE
+		{
+			acount3 = 1;
+		}
+
+		// Autosave Script
+
+		
+		IF( GetUserCVAR(PlayerNumber(), "saehud_autosave") && GetActorProperty(ActivatorTID(), APROP_Health > 0) )
+			{
+				GiveInventory("sae_recording", 1);
+				ACS_Execute(428, 0, 0, 0, 0);
+				ACS_Execute(429, 0, 0, 0, 0);
+				Until ( asavecount > 1 )
+				{
+				If(GetUserCVAR(PlayerNumber(), "udv_sounds") > 0 )
+					{
+						If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 1)
+						{
+						LocalAmbientSound("CRECINIT", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 2)
+						{
+						LocalAmbientSound("fvox/CRECINIT", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 3)
+						{
+						LocalAmbientSound("gdos/CRECINIT", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/RecorderOn", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/RecorderOn", 127);
+						}
+					}
+				If(GetUserCVAR(PlayerNumber(), "saehud_togglemessage"))
+					{
+						print(s:"\cgCombat Recorder Initialized");
+					}
+						asavecount++;
+				}
+			}
+		Else
+		{
+			TakeInventory("sae_recording", 1);
+			ACS_Terminate(428, 0);
+			ACS_Terminate(429, 0);
+			Until ( asavecount < 2 )
+			{
+				If(GetUserCVAR(PlayerNumber(), "udv_sounds") > 0  && GetActorProperty(ActivatorTID(), APROP_Health > 0) )
+					{
+						If( GetUserCVAR(PlayerNumber(), "udv_sounds") == 1)
+						{
+						LocalAmbientSound("CRECDISA", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 2)
+						{
+						LocalAmbientSound("fvox/CRECDISA", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 3)
+						{
+						LocalAmbientSound("gdos/CRECDISA", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/RecorderOff", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(), "udv_sounds") == 5)
+						{
+						LocalAmbientSound("Graham/RecorderOff", 127);
+						}
+					}
+				If(GetUserCVAR(PlayerNumber(), "saehud_togglemessage"))
+				{
+					print(s:"\cgCombat Recorder Disabled");
+				}
+					asavecount = 1;
+			}
+		}
+		
+		//Check for external cam usage (death, rolls, stealth kills, etc.)
+		
+		If(CheckPlayerCamera(PlayerNumber()) != -1)//( ThingCountName("ChaseCam2", C_TID+PlayerNumber()))
+		{
+			GiveInventory("sae_extcam", 1);
+		}
+		Else
+		{
+			TakeInventory("sae_extcam", 1);
+		}
+		
+		If( GetCVAR("udv_lightarmor") || GetCVAR("UDV_EMSBattery") > 1 ) SetUserCVAR(PlayerNumber(), "udv_batterydisplay", 1); //Accessory Battery display
+		Else SetUserCVAR(PlayerNumber(), "udv_batterydisplay", 0);
+		
+		Delay(1);
+	  }
+  }
+}
+
+Script "BerserkLimiter" Enter
+{
+	While (true)
+	{
+			If(GetCVAR("udv_Berserk") > 0) //Berserk Pack Limiter
+			{
+				If(CheckInventory("PowerStrength"))
+				{
+					Delay(35*(GetCVAR("udv_berserk")*60));
+					Print(s:"Strength Returning to Normal");
+					TakeInventory("PowerStrength",1);
+				}
+			}
+			Delay(1);
+
+	}
+}
+
+
+script 1131 (void) // -- Ambient Sound Script
+{
+		If ( GetUserCVAR(PlayerNumber(), "udv_ambient") )
+		{
+			LocalSetMusic("UDV_AMB");
+			While(true)
+			{
+			Delay(random(35*30,35*240));
+			LocalAmbientSound("ambient", Random(85,127));
+			}
+		}
+		Else
+		{
+			LocalSetMusic("*");
+		}
+}
+
+script 471 RESPAWN NET
+{
+TakeInventory("sae_extcam", 1);
+TakeInventory("sae_deathcam", 1);
+ACS_NamedExecuteAlways("EquipHelmet",0);//Equip Helmet Animation
+totaldamage[PlayerNumber()] = 0;
+healthcnt[PlayerNumber()] = 0;
+If( CheckInventory("Armor") < GetCVAR("saehud_startarmor")) GiveInventory("ArmorBonus", GetCVAR("saehud_startarmor") - CheckInventory("Armor"));
+If( CheckInventory("udv_accbattery") < 100)  GiveInventory("UDV_AccBattery", 100 - CheckInventory("udv_accbattery"));
+}
+
+script 4750 ENTER //Script to get Initial speeds
+{
+	Delay(5);
+	UDV_SpeedNormal = GetActorProperty(ActivatorTID(), APROP_Speed);
+	Delay(1);
+	UDV_SpeedFatigued = UDV_SpeedNormal - 0.3;
+	UDV_SpeedEnergized = UDV_SpeedNormal + 0.3;
+	
+	/*
+	While(true) // -- For Debug Purposes Only
+		{
+			Print(d:GetActorProperty(0,APROP_Speed));
+			//Print(d:UDV_SPeedFatigued);
+			Delay(1);
+		}
+	*/
+}
+
+script 4755 (void) // -- Critical/Energized Speed Modifications
+{
+    Delay(10);
+	int CheckBarrel; //
+	int UDV_SpeedBarrel; // Stores normal speed while carrying barrel
+	int UDV_SpeedBarrel_Energized; // energized speed while carrying barrel
+	int UDV_SpeedBarrel_Fatigued; // fatigued speed while carrying barrel
+	
+	if (GameSkill () > SKILL_UDVBRUTAL || GetCVAR("UDV_ToggleBleeding") )
+	{
+		While(true)
+		{
+			int udv_health = GetActorProperty(ActivatorTID(), APROP_Health);
+			If( udv_health >= 180 )
+			{
+					If(!CheckInventory("sae_deathcam") && !CheckInventory("sae_extcam"))
+					{
+					hudMessage(s:"ENERGIZED";
+					HUDMSG_PLAIN, 153, CR_CYAN, 0.04, 0.87, 0, 0.10);
+					}
+					Else
+					{
+					HudMessage(s:" ";
+					HUDMSG_PLAIN, 153, CR_RED, 0.04, 0.87, 0, 0.10);
+					}
+					If ( CheckInventory("HasBarrel") )
+					{
+						If(CheckBarrel==0)
+						{
+							Delay(1);
+							UDV_SpeedBarrel_Energized=FixedMul(GetActorProperty(ActivatorTID(), APROP_Speed),0.4);
+							CheckBarrel=1;
+						}
+							SetActorProperty (ActivatorTID(), APROP_Speed, UDV_SpeedBarrel_Energized );
+					}
+					Else
+					{
+						SetActorProperty (ActivatorTID(), APROP_Speed, UDV_SpeedEnergized);
+						CheckBarrel=0;
+					}
+				healthcnt[PlayerNumber()] = 0;
+				bleedcheck[PlayerNumber()]=0;
+				//Delay(1);
+			}
+			Else If ( udv_health < 180 && udv_health > 20 )
+			{
+				HudMessage(s:" ";
+				HUDMSG_PLAIN, 153, CR_RED, 0.04, 0.87, 0, 0.10);
+					If ( CheckInventory("HasBarrel") )
+					{
+						If(CheckBarrel==0)
+						{
+							Delay(1);
+							UDV_SpeedBarrel=FixedMul(GetActorProperty(ActivatorTID(), APROP_Speed),0.4);
+							CheckBarrel=1;
+						}
+							SetActorProperty (ActivatorTID(), APROP_Speed, UDV_SpeedBarrel);
+					}
+				Else
+				{
+					SetActorProperty (ActivatorTID(), APROP_Speed, UDV_SpeedNormal);
+					CheckBarrel=0;
+				}
+				healthcnt[PlayerNumber()] = 0;
+				bleedcheck[PlayerNumber()]=0;
+				//Delay(1);
+			}
+			Else If( udv_health <= 20 && udv_health > 0 )
+			{
+					If(!CheckInventory("sae_deathcam") && !CheckInventory("sae_extcam"))
+					{
+					HudMessage(s:"FATIGUED";
+					HUDMSG_PLAIN, 153, CR_RED, 0.04, 0.87, 0, 0.10);
+					}
+					Else
+					{
+					HudMessage(s:" ";
+					HUDMSG_PLAIN, 153, CR_RED, 0.04, 0.87, 0, 0.10);
+					}
+					If ( CheckInventory("HasBarrel") )
+					{
+						If(CheckBarrel==0)
+						{
+							Delay(1);
+							UDV_SpeedBarrel_Fatigued=FixedMul(GetActorProperty(ActivatorTID(), APROP_Speed),0.4);
+							CheckBarrel=1;
+						}
+							SetActorProperty (ActivatorTID(), APROP_Speed, UDV_SpeedBarrel_Fatigued );
+					}
+					Else
+					{
+						SetActorProperty (ActivatorTID(), APROP_Speed, UDV_SpeedFatigued);
+						CheckBarrel=0;
+					}
+					bleedcheck[PlayerNumber()]=1;
+			//ACS_Execute(4756,0);
+			//Bleeding();
+			}
+			Else
+			{
+				HudMessage(s:" ";
+				HUDMSG_PLAIN, 153, CR_RED, 0.04, 0.87, 0, 0.10);
+				bleedcheck[PlayerNumber()]=0;
+			}
+			Delay(1);
+		}
+	}
+	Else
+	{
+	While (true)
+		{
+			HudMessage(s:" ";
+			HUDMSG_PLAIN, 153, CR_RED, 0.04, 0.87, 0, 0.10);
+					If ( CheckInventory("HasBarrel") )
+					{
+						If(CheckBarrel==0)
+						{
+							Delay(10);
+							UDV_SpeedBarrel=FixedMul(GetActorProperty(ActivatorTID(), APROP_Speed),0.4);
+							CheckBarrel=1;
+						}
+							SetActorProperty (ActivatorTID(), APROP_Speed, UDV_SpeedBarrel );
+					}
+				Else
+				{
+					SetActorProperty (ActivatorTID(), APROP_Speed, UDV_SpeedNormal);
+					CheckBarrel=0;
+				}
+			Delay(1);
+		}
+	}
+}
+
+//Script 4756 (void) // -- Bleeding Script
+//function void Bleeding (void)
+Script "bleeding" Enter
+{
+			While(true)
+			{
+				If(bleedcheck[PlayerNumber()] == 1)
+				{
+					If(healthcnt[PlayerNumber()] == 0)
+					{
+						Delay(random(35*5,35*15));
+						healthcnt[PlayerNumber()] = 1;
+						If(bleedcheck[PlayerNumber()] == 0) Restart;
+						//ACS_Terminate(4756,0);
+						//Restart;
+						//Terminate;
+					}
+					HudMessage(s:"Blood Loss Detected";
+					HUDMSG_FADEINOUT, 156, CR_RED, 1.5, 0.6, 0.5,
+					2.0, 2.0);				
+					DamageThing(1);
+					healthcnt[PlayerNumber()] = 1;
+					Delay(random(35*5,35*15));
+				}
+				Else
+				{	
+					Delay(1);
+					Restart;
+				}
+			}
+}
+
+
+script 474 (void) net
+{
+   // if (GameSkill () > SKILL_UDVBRUTAL )
+	//{
+		If ( GetActorProperty(ActivatorTID(), APROP_Health) <= GetCVAR("UDV_EMSHealth") && CheckInventory("Armor") >= GetCVAR("UDV_EMSArmor") && CheckInventory("UDV_AccBattery") >= GetCVAR("UDV_EMSBattery") )
+		{
+			HudMessage(s:"Activating EMS";
+				HUDMSG_FADEINOUT, 156, CR_ORANGE, 1.5, 0.6, 0.5,
+				2.0, 2.0);				
+			//HealThing(40, random(21, 40));
+			//TakeInventory("Armor", 40);
+			TakeInventory("UDV_AccBattery", GetCvar("UDV_EMSBattery"));
+			ActivatorSound("INJECT", 127);
+			For(int i = 0; i<random(21,40); i++)
+			{
+			HealThing(1, 100);
+			Delay(7);
+			}
+			//GiveInventory("HealthBonus", 20);
+			SetActorProperty (ActivatorTID(), APROP_Speed, 0.6);
+		}
+		Else If ( CheckInventory("Armor") >= GetCVAR("UDV_EMSArmor") && CheckInventory("UDV_AccBattery") >= GetCVAR("UDV_EMSBattery") && GetActorProperty(ActivatorTID(), APROP_Health) >= GetCVAR("UDV_EMSHealth") )
+		{
+			HudMessage(s:"EMS\nNo Emergency Detected";
+			HUDMSG_FADEINOUT, 156, CR_ORANGE, 1.5, 0.6, 0.5,
+			2.0, 2.0);				
+			ActivatorSound("GenAlert", 127);
+		}
+		Else If ( GetActorProperty(ActivatorTID(), APROP_Health) > 0 && CheckInventory("Armor") < GetCVAR("UDV_EMSArmor") || CheckInventory("UDV_AccBattery") < GetCVAR("UDV_EMSBattery") )
+		{
+			HudMessage(s:"Insufficient Power for EMS\n", d:GetCVAR("UDV_EMSArmor"), s:" Armor and\n", d:GetCVAR("UDV_EMSBattery"), s:" Acc. Power Required";
+			HUDMSG_FADEINOUT, 156, CR_ORANGE, 1.5, 0.6, 0.5,
+			2.0, 2.0);				
+			ActivatorSound("GenAlert", 127);
+		}
+	//}
+}
+
+
+script 469 (void) net
+{
+ACS_Terminate(12, 0);
+ACS_Terminate(470, 0);
+ACS_Terminate(4755, 0);
+ACS_Terminate(18755, 0);
+ACS_Terminate(4278, 0);
+ACS_Terminate(1131, 0);
+Delay(17);
+ACS_ExecuteAlways(12, 0); // Main HUD Script
+ACS_ExecuteAlways(470,0); // Realistic Aim Script
+ACS_ExecuteAlways(4755,0); // Bleeding Script
+ACS_ExecuteAlways(18755,0); //Face Script
+ACS_ExecuteAlways(4278,0); //Screen Shake on Damage
+ACS_ExecuteAlways(32759,0); // Dark Doom Script
+ACS_ExecuteAlways(471,0); // Remove ExtCam and DeathCam
+ACS_ExecuteAlways(1129,0); //Fog Script
+ACS_ExecuteAlways(1131,0); //Ambient Music Script
+ACS_ExecuteAlways(32660,0); //Light Color Script
+}
+
+Script 4278 (void) net
+{
+	int ArmorAbsorb;
+	if ( GameSkill () >= SKILL_UDVBRUTAL || GetCVAR("UDV_ToggleShake") )
+	{
+
+		While(true)
+		{
+			If(CheckInventory("Armor") >= 80) ArmorAbsorb = 0.25;
+			Else If(CheckInventory("Armor") < 80 && CheckInventory("Armor") >= 50) ArmorAbsorb = 0.50;
+			Else If(CheckInventory("Armor") < 50 && CheckInventory("Armor") >= 20) ArmorAbsorb = 0.75;
+			Else ArmorAbsorb = 1.0;
+			If( healthdamage[PlayerNumber()] > 1 && healthdamage[PlayerNumber()] <= 5 ) QuakeEX(0,5,5,5,FixedMul(17,ArmorAbsorb),0,1,"NULL",QF_SCALEDOWN);
+			Else If( healthdamage[PlayerNumber()] > 5 && healthdamage[PlayerNumber()] <= 10 ) QuakeEX(0,5,5,5,FixedMul(35,ArmorAbsorb),0,1,"NULL",QF_SCALEDOWN);
+			Else If( healthdamage[PlayerNumber()] > 10 && healthdamage[PlayerNumber()] <= 20 ) QuakeEX(0,7,7,7,FixedMul(35,ArmorAbsorb),0,1,"NULL",QF_SCALEDOWN);
+			Else If( healthdamage[PlayerNumber()] > 20 ) QuakeEX(0,10,10,10,FixedMul(52,ArmorAbsorb),0,1,"NULL",QF_SCALEDOWN);
+			Delay(1);
+		}
+	}
+}
+
+script 470 (void) net
+{
+    if ( GameSkill () >= SKILL_UDVBRUTAL ) SetActorProperty (ActivatorTID(), APROP_Speed, 0.6); //slower movement
+	if ( GameSkill () >= SKILL_UDVBRUTAL || GetCVAR("UDV_toggleRealAim") )
+	{
+		int true_angle = GetActorAngle(0);
+		int true_pitch = GetActorPitch(0);
+		int angle;
+		int pitch;
+		int dx = 0;
+		int dy = 0;
+		while(true)
+		{
+			angle = GetActorAngle(0);
+			pitch = GetActorPitch(0);
+			delay(1);
+			int new_angle = GetActorAngle(0);
+			int new_pitch = GetActorPitch(0);
+			true_angle += new_angle - angle;
+			true_pitch += new_pitch - pitch;
+			while (true_angle > 1.0) true_angle -= 1.0;
+			while (true_angle < 0.0) true_angle += 1.0;
+			if (true_pitch > 0.25) true_pitch = 0.25;
+			if (true_pitch < -0.25) true_pitch = -0.25;
+			int dx2;
+			if (angle < new_angle)
+			{
+				if (abs(new_angle - angle) < abs(new_angle - (angle + 1.0)))
+					dx2 = new_angle - angle;
+				else
+					dx2 = new_angle - (angle + 1.0);
+			}
+			else
+			{
+				if (abs(new_angle - angle) < abs(new_angle - angle + 1.0))
+					dx2 = new_angle - angle;
+				else
+					dx2 = new_angle - angle + 1.0;
+			}
+			int vel = abs(GetActorVelX(0)) + abs(GetActorVelY(0)) + abs(GetActorVelZ(0));
+			vel = FixedMul(vel, 0.001);
+			dx = FixedMul(dx + dx2, min(0.875 + vel, 0.99));
+			dy = FixedMul(dy + (new_pitch - pitch), min(0.825 + vel, 0.99));
+			int loopy = FixedMul((Timer() << 16), 0.01);
+			int loopy2 = FixedMul((Timer() << 16), 0.02);
+			int mx = FixedMul(sin(loopy), 0.00024 + vel + abs(dx)/15);
+			int my = FixedMul(sin(loopy2), 0.00048 + vel + abs(dy)/15);/*
+			mx = FixedMul(dx*50, mx + vel*4);
+			my = FixedMul(dy*50, my + vel*4);
+			if (mx < -0.9) mx = -0.9;
+			if (mx > 0.9) mx = 0.9;
+			if (my < -0.24) my = -0.24;
+			if (my > 0.24) my = 0.25;*/
+			dx += mx;
+			dy += my;
+			if (new_angle < true_angle)
+			{
+				if (abs(true_angle - new_angle) < abs(true_angle - (new_angle + 1.0)))
+					angle = ((new_angle + dx/15) + true_angle)/2;
+				else
+					angle = ((new_angle + dx/15) + (true_angle - 1.0))/2;
+			}
+			else
+			{
+				if (abs(true_angle - new_angle) < abs(true_angle - new_angle + 1.0))
+					angle = ((new_angle + dx/15) + true_angle)/2;
+				else
+					angle = ((new_angle + dx/15) + (true_angle + 1.0))/2;
+			}
+			pitch = ((new_pitch + dy/15) + true_pitch*2)/3;
+			while (angle > 1.0) angle -= 1.0;
+			while (angle < 0.0) angle += 1.0;
+			if (pitch > 0.25) pitch = 0.25;
+			if (pitch < -0.25) pitch = -0.25;
+			ChangeActorAngle(ActivatorTID(), angle, true);
+			ChangeActorPitch(ActivatorTID(), pitch, true);
+		}
+	}
+	else
+		delay (1);
+}
+
+script "armorcheck" ENTER
+{
+	
+	Delay(35);
+	//If(GameType() == GAME_SINGLE_PLAYER) //CAN'T GET BLOOD SPLATS TO WORK IN MULTIPLAYER
+	//{
+	//Int totaldamage;
+	int abuttons;
+	While(true)
+		{
+				abuttons = GetPlayerInput(-1, INPUT_BUTTONS);
+				Int PrevArmor = CheckInventory("Armor");
+				Delay(1);
+				Int ArmorChange = CheckInventory("Armor") - PrevArmor;
+				
+				If ( ArmorChange < 10 )
+				{
+					totaldamage[PlayerNumber()] = totaldamage[PlayerNumber()] - ArmorChange;
+					If (totaldamage[PlayerNumber()] < 0) totaldamage[PlayerNumber()] = 0;
+				}
+				Else If ( ArmorChange >= 10 ) 
+				{
+				//Helmet Animation
+					//str udvArmorType = GetArmorInfo(ARMORINFO_CLASSNAME);
+					int CheckArmor = StrICmp(StrRight(GetArmorInfo(ARMORINFO_CLASSNAME), 10),"MegaSphere");
+					If(GetUserCVAR(PlayerNumber(), "udv_helmettoggle") && CheckArmor != 0 )
+					{
+						currweapon = GetWeapon();
+						GiveInventory("udv_helmet",1);
+						GiveInventory("sae_deathcam",1);
+						Until(GetWeapon() == "udv_helmet")
+						{
+						SetWeapon("udv_helmet");
+						Delay(1);
+						}
+						ACS_ExecuteAlways(472,0);
+					}
+				//End Helmet Animation
+					totaldamage[PlayerNumber()] = 0;
+				}
+				If ( abuttons & BT_FORWARD && abuttons & BT_BACK && totaldamage[PlayerNumber()] > 0 && GetActorProperty(ActivatorTID(), APROP_Health) > 0 && GetUserCVAR(PlayerNumber(), "udv_splatter") )
+				{
+				totaldamage[PlayerNumber()] = totaldamage[PlayerNumber()] - 2;
+				If (totaldamage[PlayerNumber()] < 0) totaldamage[PlayerNumber()] = 0;
+				Print(s:"Nano Cleaning Engaged...");
+				LocalAmbientSound("CLEAN",57);
+				NoiseAlert(0,0);
+				//SetHudSize(1, 1, 1);
+				//SETFONT("WHITE");
+				//HudMessage(s:"A"; HUDMSG_FADEOUT, 1356, "WHITE", 0.0, 0.0, 0.0, 2.0);
+				Delay(3);
+				}
+				Else If ( abuttons & BT_FORWARD && abuttons & BT_BACK && totaldamage[PlayerNumber()] == 0 && GetActorProperty(ActivatorTID(), APROP_Health) > 0 && GetUserCVAR(PlayerNumber(), "udv_splatter") )
+				{
+				Print(s:"Nothing to Clean...");
+				LocalAMbientSound("GenAlert",87);
+				}
+				If ( GetUserCVAR(PlayerNumber(), "udv_splatter") )
+				{
+					If ( healthdamage[PlayerNumber()] > 0 ) totaldamage[PlayerNumber()] = healthdamage[PlayerNumber()] + totaldamage[PlayerNumber()];
+					If ( totaldamage[PlayerNumber()] > 220 ) totaldamage[PlayerNumber()] = 220 ;
+					//Delay(3);
+				}
+				Else totaldamage[PlayerNumber()] = 0;
+				If ( totaldamage[PlayerNumber()] >= 0 && totaldamage[PlayerNumber()] <= 10 ) GiveInventory("UDV_NoDamage",1);
+				Else If ( totaldamage[PlayerNumber()] > 10 && totaldamage[PlayerNumber()] <= 20 ) GiveInventory("UDV_10Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 20 && totaldamage[PlayerNumber()] <= 30 ) GiveInventory("UDV_20Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 30 && totaldamage[PlayerNumber()] <= 40 ) GiveInventory("UDV_30Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 40 && totaldamage[PlayerNumber()] <= 50 ) GiveInventory("UDV_40Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 50 && totaldamage[PlayerNumber()] <= 60 ) GiveInventory("UDV_50Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 60 && totaldamage[PlayerNumber()] <= 70 ) GiveInventory("UDV_60Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 70 && totaldamage[PlayerNumber()] <= 80 ) GiveInventory("UDV_70Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 80 && totaldamage[PlayerNumber()] <= 90 ) GiveInventory("UDV_80Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 90 && totaldamage[PlayerNumber()] <= 100) GiveInventory("UDV_90Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 100 && totaldamage[PlayerNumber()] <= 110 ) GiveInventory("UDV_100Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 110 && totaldamage[PlayerNumber()] <= 120 ) GiveInventory("UDV_110Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 120 && totaldamage[PlayerNumber()] <= 130 ) GiveInventory("UDV_120Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 130 && totaldamage[PlayerNumber()] <= 140 ) GiveInventory("UDV_130Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 140 && totaldamage[PlayerNumber()] <= 150 ) GiveInventory("UDV_140Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 150 && totaldamage[PlayerNumber()] <= 160 ) GiveInventory("UDV_150Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 160 && totaldamage[PlayerNumber()] <= 170 ) GiveInventory("UDV_160Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 170 && totaldamage[PlayerNumber()] <= 180 ) GiveInventory("UDV_170Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 180 && totaldamage[PlayerNumber()] <= 190 ) GiveInventory("UDV_180Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 190 && totaldamage[PlayerNumber()] <= 200 ) GiveInventory("UDV_190Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 200 && totaldamage[PlayerNumber()] <= 210 ) GiveInventory("UDV_200Damage",1);
+				Else If ( totaldamage[PlayerNumber()] > 210 ) GiveInventory("UDV_MAXDamage",1);
+		}
+	//}
+}
+
+int skycnt = 0;
+int skydamagetime; //= GetUserCVAR(PlayerNumber(),"udv_skydamagetime");
+
+Script "Checksky" Enter
+{
+	if (GameType () != GAME_TITLE_MAP)
+	{
+		ACS_NamedExecuteAlways("hole",0);
+		While(true)
+		{
+			int skyarmor = GetCVAR("udv_skyarmor");
+			If (CheckActorCeilingTexture(ActivatorTID(), "F_SKY1") && CheckInventory("Armor") <= skyarmor && GetActorProperty(ActivatorTID(), APROP_HEALTH) > 0 && GetCVAR("udv_skydamage") ) 
+				{
+					//PrintBold(s:"OUTSIDE!");
+					SetMugshotState("OUCH");
+					ACS_NamedExecute("SkyDamage", 0);
+				}
+			Else
+				{
+				If(skycnt > 0 && GetActorProperty(ActivatorTID(), APROP_HEALTH) > 0 ) 
+					{
+					PlaySound(ActivatorTID(),"INHALE", 5, 1.0);
+					ACS_NamedTerminate("skydamage",0);
+					//PrintBold(s:"INSIDE");
+					skycnt = 0;
+					}
+				Else StopSound(ActivatorTID(),5);
+				}
+			Delay(1);
+		}
+	}
+}
+
+
+script "skydamage" (void) net// -- outdoor damage Script
+{
+	skydamagetime = GetCVAR("udv_skydamagetime");
+	If( skycnt <= skydamagetime )
+	{
+		Delay(35);//(35*10);
+		//PlaySound(0,"CHOKE", 5, 1.0);//("CHOKE",127);
+		skycnt++;// = 1;
+		HudMessage(s:"--Seconds of oxygen remaining--\n", d:(skydamagetime+1)-skycnt;
+		HUDMSG_FADEINOUT, 1156, CR_RED, 1.5, 0.6, 1.0, 1.0, 1.0);				
+		//PrintBold(d:11 - skycnt);
+		ACS_NamedTerminate("skydamage",0);
+		//Restart;
+	}
+		//PrintBold(d:skycnt);
+	SetMugShotState("OUCH");
+	HudMessage(s:"--FIND BREATHABLE ENVIRONMENT IMMEDIATELY--";
+	HUDMSG_FADEINOUT, 1156, CR_RED, 1.5, 0.6, 0.5,
+	2.0, 2.0);	
+	int skyrandomdmg = random(1,10);
+	DamageThing(skyrandomdmg,MOD_WATER);
+	Delay(1);
+	totaldamage[PlayerNumber()] = totaldamage[PlayerNumber()]-skyrandomdmg;
+	PlaySound(ActivatorTID(),"CHOKE", 5, 1.0, TRUE);//("CHOKE",127);
+	skycnt = skydamagetime+1;
+	Delay(35*6);
+}
+
+/*
+script "dangeralarm" (void)
+{
+			For(alarmcnt[PlayerNumber()]; alarmcnt[PlayerNumber()] < 30; alarmcnt[PlayerNumber()]++)
+			{
+			PlaySound(ActivatorTID(),"DANGER", 6, 0.2, TRUE);
+			Delay(35);
+			}
+			StopSound(ActivatorTID(),6);
+}
+*/
+
+Script "hole" (void) net//(void) // -- Add broken hole to visor for effect
+{
+	int holex = 0;
+	int holey = 0;
+	While(true)
+	{
+		If(CheckInventory("Armor") <= GetCVAR("udv_skyarmor"))
+		{
+		Until( holex > 0 && holey > 0 )
+			{
+				holex = random(1300,1500)*1.0;
+				holey = random(650,850)*1.0;
+				}
+				SetHudSize(1920,1080);
+				SetFont("HOLE");
+				If(!CheckInventory("sae_deathcam") && !CheckInventory("sae_extcam") )
+				{
+					HudMessage(s:"A";
+					HUDMSG_PLAIN | HUDMSG_LAYER_UNDERHUD, 1266, CR_RED, holex, holey, 0.1,
+					1.0);				
+				}
+				//ACS_NamedExecuteAlways("dangeralarm",0);
+				If(GetUserCVAR(PlayerNumber(), "udv_dangeralarm"))
+				{
+					Until(alarmcnt[PlayerNumber()]>0)
+					{
+					PlaySound(ActivatorTID(),"DANGER", 6, 0.2);
+					alarmcnt[PlayerNumber()]++;
+					}
+				}
+		}
+		Else
+		{
+			holex = 0;
+			holey = 0;
+			//ACS_NamedTerminate("dangeralarm",0);
+			StopSound(ActivatorTID(),6);
+			alarmcnt[PlayerNumber()] = 0;
+		}
+		Delay(1);
+	}
+}

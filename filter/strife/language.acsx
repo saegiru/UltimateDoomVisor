@@ -1,0 +1,4 @@
+[enu default]
+GAME_TITLE  = "Strife: Quest for the Sigil";
+GAME_ID     = "STRIFE";
+BASEGAME_ID = "STRIFE";

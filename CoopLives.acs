@@ -1,0 +1,62 @@
+#library "cooplives"
+#include "zcommon.acs"
+
+//Open Level Scripts should be guaranteed to run on level load-up
+//global int 43:totaldamage[];//totaldamage counter
+int udv_num_coop_lives = 8;
+
+script "UDVCoopLivesScript" OPEN NET
+{
+   // GiveInventory("CheckMarines", 1);
+	if (GetCvar("udv_cooplives") || GameType () == GAME_NET_COOPERATIVE)
+    {
+		udv_num_coop_lives = GetCvar("udv_numcooplives");
+	}
+}
+
+script "UDVCoopLivesDecrementOnDeath" DEATH NET
+{
+	if (GetCvar("udv_cooplives") == 1 && GameType () == GAME_NET_COOPERATIVE)
+    {
+		udv_num_coop_lives--;
+		/*
+		if(udv_num_coop_lives < 0)
+		{
+			str LevelLump = StrParam(n: PRINTNAME_LEVEL);
+			PrintBold(s:"Lives Depleted! Restarting Level!");
+			delay(30);
+			//Teleport_NewMap(GetLevelInfo(LEVELINFO_LEVELNUM), 0, 0);
+			ChangeLevel(LevelLump, 0, CHANGELEVEL_NOINTERMISSION | CHANGELEVEL_RESETHEALTH | CHANGELEVEL_RESETINVENTORY, -1);
+		}
+		*/
+		//else
+			PrintBold(s:"Lives Remaining: ", d:udv_num_coop_lives);
+	}
+}
+
+script "UDVCoopLivesChecker" ENTER
+{
+	While (true)
+	{
+		If(GameType() == GAME_NET_COOPERATIVE)
+		{
+			SetHudSize(320,200,1);
+			SETFONT("DIGIFONT_SMALL");
+			{
+			HudMessage(s:"Lives: ", d:udv_num_coop_lives; HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA, 8732, "SaeHudGR", 160.0, 8.0, 0.1, 0.35);
+			}
+			If(udv_num_coop_lives < 0)
+			{
+				str LevelLump = StrParam(n: PRINTNAME_LEVEL);
+				PrintBold(s:"Lives Depleted! Restarting Level!");
+				delay(30);
+				//Teleport_NewMap(GetLevelInfo(LEVELINFO_LEVELNUM), 0, 0);
+				//ACS_ExecuteAlways(471,0,0,0,0);
+				TakeInventory("BasicArmor",CheckInventory("Armor"));
+				TakeInventory("startarmor_done",1); // TO properly allow start armor for bd_cooplives mode.
+				ChangeLevel(LevelLump, 0, CHANGELEVEL_NOINTERMISSION | CHANGELEVEL_RESETHEALTH | CHANGELEVEL_RESETINVENTORY, -1);
+			}
+		}
+		Delay(1);
+	}
+}

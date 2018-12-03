@@ -1,0 +1,99 @@
+// ACS
+#library "UDVLight"
+#include "zcommon.acs"
+
+// Defines
+#define MAXPLAYERS 8
+int UDVflashlightOn[MAXPLAYERS];
+global int 44:accbattery[];
+
+// Scripts
+script "UDVflashlightHoriz" (void) net
+{
+	SetResultValue (GetUserCVAR(PlayerNumber(),"saehud_flashlightpos"));
+}
+
+
+Script "UDVPointerPitch" (void) net
+{
+	SetResultValue(GetActorPitch(0) / -182);
+}
+
+Script "UDVToggleFlashlight" (void) net
+{
+	If ( GameType() != 0 && GetCVAR("UDV_SourcePort") == 0 )
+	{
+	Print(s:"Flashlight Not Implemented in Zandronum Multiplayer Yet");
+	}
+	Else
+	{
+	if (UDVflashlightOn[PlayerNumber()]) {
+		UDVflashlightOn[PlayerNumber()] = 0;
+		//PrintBold(s:"zero");
+		}
+	else if ( CheckInventory("UDV_AccBattery") > 0 || !GetCVAR("udv_lightpower") ) {//( CheckInventory("Armor") >= GetUserCVAR(PlayerNumber(),"udv_lightpower") ){
+		UDVflashlightOn[PlayerNumber()] = 1;
+		//PrintBold(s:"one");
+		}
+	else
+		If(GetUserCVAR(PlayerNumber(),"saehud_togglemessage")) Print(s:"Insufficient Power for Light");
+		ActivatorSound("UDVflashlight/click", 127);
+	}
+}
+
+Script "UDVFlashlightHandling" ENTER net
+{
+	int lightcount;
+	SETFONT("UDVSMALL");
+	While(1)
+	{
+		if (UDVflashlightOn[PlayerNumber()] && (CheckInventory("UDV_AccBattery") > 0 || !GetCVAR("udv_lightpower") ) )//(UDVflashlightOn[PlayerNumber()] && CheckInventory("Armor") >= GetUserCVAR(PlayerNumber(),"udv_lightpower") )
+		{
+			If(!GetUserCVAR(PlayerNumber(),"UDV_FlashlightLow"))
+			{
+			GiveInventory("UDVFlashlightSpawner", 1);
+			}
+			Else
+			{
+			GiveInventory("UDVFlashlightSpawnerLow",1);
+			}
+			lightcount = 0;
+		}
+		else if (UDVflashlightOn[PlayerNumber()] && CheckInventory("UDV_AccBattery") == 0 )//(UDVflashlightOn[PlayerNumber()] && CheckInventory("Armor") < GetUserCVAR(PlayerNumber(),"udv_lightpower") && GetUserCVAR(PlayerNumber(),"saehud_togglemessage") )
+		{
+			Until(lightcount > 0)
+			{
+				ACS_NamedExecuteAlways("UDVToggleFlashlight", 0);
+				If(GetUserCVAR(PlayerNumber(),"saehud_togglemessage")) Print(s:"Insufficient Power for Light");
+				lightcount = 1;
+//				Delay(1);
+			}
+		}
+		Delay(1);
+	}
+}
+
+
+Script "UDVFlashlightDrain" ENTER NET
+{
+	int batterycount = 0;
+	While (1)
+	{
+			If (UDVflashlightOn[PlayerNumber()] && GetCVAR("udv_lightpower") )//&& CheckInventory("Armor") >= GetUserCVAR(PlayerNumber(),"udv_lightpower") )
+			{
+				If(batterycount <= 0)
+				{
+					accbattery[PlayerNumber()] = accbattery[PlayerNumber()] + 4;
+					batterycount = 1;
+				}
+			}
+			Else batterycount = 0;
+			
+			If(accbattery[PlayerNumber()] >= 4 && !UDVFlashlightOn[PlayerNumber()])
+			{
+				accbattery[PlayerNumber()] = accbattery[PlayerNumber()] - 4;
+			}
+			//Print(d:accbattery[PlayerNumber()]);
+			Delay(1);
+	}
+}

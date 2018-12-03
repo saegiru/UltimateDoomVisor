@@ -1,0 +1,83 @@
+ACTOR InfraredReplacer replaces Infrared
+{
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	TNT1 A 3 A_JumpIf(ACS_NamedExecuteWithResult("CheckGoggles")==1,"GoggleSpawn")
+	TNT1 A 1 A_SpawnItemEx("OGGoggles",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+	Stop
+	GoggleSpawn:
+	TNT1 A 1 
+	TNT1 A 1 A_SpawnItemEx("UDV_Infrared2",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+	Stop
+	}
+}
+
+ACTOR OGGoggles : PowerupGiver
+{
+  +COUNTITEM
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.MaxAmount 0
+  Powerup.Type "LightAmp"
+  Inventory.PickupMessage "$GOTVISOR" // "Light Amplification Visor"
+  States
+  {
+  Spawn:
+    PVIS A 6 Bright
+    PVIS B 6
+    Loop
+  }
+}
+
+ACTOR UDV_Infrared2 : CustomInventory 30782 //replaces Infrared //2045
+{
+  Game Doom
+  SpawnID 138
+//  +COUNTITEM
+  //+UNDROPPABLE
+  +INVENTORY.HUBPOWER
+  +INVENTORY.INVBAR
+  Inventory.Icon "infr"
+  Inventory.MaxAmount 2
+  Scale 0.5
+//  Powerup.Type "LightAmp"
+  Inventory.PickupMessage "Light Amp Goggles! (Default: 'J')" // "Light Amplification Visor"
+  States
+  {
+  Spawn:
+    UVIS A 6 Bright
+    UVIS BCDE 6
+    Loop
+	Use:
+	TNT1 A 0
+	TNT1 A 0 ACS_NamedExecuteAlways("GoggleSwitch",0)
+	Fail
+  }
+}
+
+ACTOR InfraredUsed : CustomInventory
+{
+Scale 0.5
++INVENTORY.INVBAR
++THRUACTORS
+  //+UNDROPPABLE
+INVENTORY.ICON "INFU"
+INVENTORY.MAXAMOUNT 1
+STATES
+	{
+		SPAWN:
+		UVIU A -1
+		stop
+		Use:
+	TNT1 A 0
+	TNT1 A 0 ACS_NamedExecuteAlways("GoggleSwitch",0)
+	Fail
+	//Goto Use
+		//DROP:
+		//STOP
+	}
+}
+
+ACTOR PowerLightAmp2 : PowerLightAmp { Powerup.Duration -130 }

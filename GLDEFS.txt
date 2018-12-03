@@ -1,0 +1,447 @@
+// GL Definitions
+
+brightmap sprite BON2A0
+{
+	map "brightmaps/doom/BON2AR.png"
+	//iwad
+	//disablefullbright
+}
+
+
+brightmap sprite BON2B0
+{
+	map "brightmaps/doom/BON2BR.png"
+	//iwad
+	//disablefullbright
+}
+
+brightmap sprite BON2c0
+{
+	map "brightmaps/doom/BON2CR.png"
+	//iwad
+	//disablefullbright
+}
+
+brightmap sprite BON2d0
+{
+	map "brightmaps/doom/BON2DR.png"
+	//iwad
+	//disablefullbright
+}
+
+brightmap sprite ACCBA0
+{
+	map "brightmaps/doom/ACCBAR.png"
+	//iwad
+	//disablefullbright
+}
+
+
+brightmap sprite ACCBB0
+{
+	map "brightmaps/doom/ACCBBR.png"
+	//iwad
+	//disablefullbright
+}
+
+brightmap sprite ACCMB0
+{
+	map "brightmaps/doom/ACCMBR.png"
+	//iwad
+	//disablefullbright
+}
+
+brightmap sprite ACCMA0
+{
+	map "brightmaps/doom/ACCMAR.png"
+	//iwad
+	//disablefullbright
+}
+
+// Accessory Battery
+
+/*
+object UDV_ArmorBonus
+{
+    frame BON2 { light GREENITEM }
+}
+*/
+
+//object UDV_AccBattery
+//{
+//	frame ACCB { light GREENITEM }
+//}
+/*
+pulselight UDV_ArmorBonus
+{
+    color 0.0 0.6 0.0
+    size 15
+    secondarySize 16
+    interval 1.5
+	dontlightself 1
+}
+*/
+/*
+pulselight UDV_AccBattery
+{
+    color 0.0 0.6 0.6
+    size 15
+    secondarySize 16
+    interval 1.5
+	dontlightself 1
+}
+*/
+
+/*
+// Point Lights
+PointLight UDVFLASHLIGHT1
+{
+	Color 0.1 0.2 0.3
+	Size 2
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT2
+{
+	Color 0.1 0.2 0.3
+	Size 5
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT3
+{
+	Color 0.1 0.2 0.3
+	Size 7
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT4
+{
+	Color 0.1 0.2 0.3
+	Size 10
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT5
+{
+	Color 0.09 0.18 0.27
+	Size 12
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT6
+{
+	Color 0.09 0.18 0.27
+	Size 15
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT7
+{
+	Color 0.09 0.18 0.27
+	Size 17
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT8
+{
+	Color 0.09 0.18 0.27
+	Size 20
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT9
+{
+	Color 0.08 0.16 0.24
+	Size 22
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT10
+{
+	Color 0.08 0.16 0.24
+	Size 25
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT11
+{
+	Color 0.08 0.16 0.24
+	Size 27
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT12
+{
+	Color 0.08 0.16 0.24
+	Size 30
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT13
+{
+	Color 0.07 0.14 0.21
+	Size 32
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT14
+{
+	Color 0.07 0.14 0.21
+	Size 34
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT15
+{
+	Color 0.07 0.14 0.21
+	Size 37
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT16
+{
+	Color 0.07 0.14 0.21
+	Size 39
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT17
+{
+	Color 0.06 0.12 0.18
+	Size 42
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT18
+{
+	Color 0.06 0.12 0.18
+	Size 44
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT19
+{
+	Color 0.06 0.12 0.18
+	Size 47
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT20
+{
+	Color 0.06 0.12 0.18
+	Size 49
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT21
+{
+	Color 0.05 0.1 0.15
+	Size 52
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT22
+{
+	Color 0.05 0.1 0.15
+	Size 54
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT23
+{
+	Color 0.05 0.1 0.15
+	Size 56
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT24
+{
+	Color 0.05 0.1 0.15
+	Size 59
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT25
+{
+	Color 0.04 0.08 0.12
+	Size 62
+	Offset 0 0 0
+}
+
+PointLight UDVFLASHLIGHT26
+{
+	Color 0.02 0.04 0.06
+	Size 64
+	Offset 0 0 0
+}
+
+// Objects
+Object UDVFLASHLIGHTBeam1
+{
+	Frame TNT1A { Light UDVFLASHLIGHT1}
+	Frame TNT1B { Light UDVFLASHLIGHT2}
+	Frame TNT1C { Light UDVFLASHLIGHT3}
+}
+
+Object UDVFLASHLIGHTBeam2
+{
+	Frame TNT1A { Light UDVFLASHLIGHT2}
+	Frame TNT1B { Light UDVFLASHLIGHT3}
+	Frame TNT1C { Light UDVFLASHLIGHT4}
+}
+
+Object UDVFLASHLIGHTBeam3
+{
+	Frame TNT1A { Light UDVFLASHLIGHT3}
+	Frame TNT1B { Light UDVFLASHLIGHT4}
+	Frame TNT1C { Light UDVFLASHLIGHT5}
+}
+
+Object UDVFLASHLIGHTBeam4
+{
+	Frame TNT1A { Light UDVFLASHLIGHT4}
+	Frame TNT1B { Light UDVFLASHLIGHT5}
+	Frame TNT1C { Light UDVFLASHLIGHT6}
+}
+
+Object UDVFLASHLIGHTBeam5
+{
+	Frame TNT1A { Light UDVFLASHLIGHT5}
+	Frame TNT1B { Light UDVFLASHLIGHT6}
+	Frame TNT1C { Light UDVFLASHLIGHT7}
+}
+
+Object UDVFLASHLIGHTBeam6
+{
+	Frame TNT1A { Light UDVFLASHLIGHT6}
+	Frame TNT1B { Light UDVFLASHLIGHT7}
+	Frame TNT1C { Light UDVFLASHLIGHT8}
+}
+
+Object UDVFLASHLIGHTBeam7
+{
+	Frame TNT1A { Light UDVFLASHLIGHT7}
+	Frame TNT1B { Light UDVFLASHLIGHT8}
+	Frame TNT1C { Light UDVFLASHLIGHT9}
+}
+
+Object UDVFLASHLIGHTBeam8
+{
+	Frame TNT1A { Light UDVFLASHLIGHT8}
+	Frame TNT1B { Light UDVFLASHLIGHT9}
+	Frame TNT1C { Light UDVFLASHLIGHT10}
+}
+
+Object UDVFLASHLIGHTBeam9
+{
+	Frame TNT1A { Light UDVFLASHLIGHT9}
+	Frame TNT1B { Light UDVFLASHLIGHT10}
+	Frame TNT1C { Light UDVFLASHLIGHT11}
+}
+
+Object UDVFLASHLIGHTBeam10
+{
+	Frame TNT1A { Light UDVFLASHLIGHT10}
+	Frame TNT1B { Light UDVFLASHLIGHT11}
+	Frame TNT1C { Light UDVFLASHLIGHT12}
+}
+
+Object UDVFLASHLIGHTBeam11
+{
+	Frame TNT1A { Light UDVFLASHLIGHT11}
+	Frame TNT1B { Light UDVFLASHLIGHT12}
+	Frame TNT1C { Light UDVFLASHLIGHT13}
+}
+
+Object UDVFLASHLIGHTBeam12
+{
+	Frame TNT1A { Light UDVFLASHLIGHT12}
+	Frame TNT1B { Light UDVFLASHLIGHT13}
+	Frame TNT1C { Light UDVFLASHLIGHT14}
+}
+
+Object UDVFLASHLIGHTBeam13
+{
+	Frame TNT1A { Light UDVFLASHLIGHT13}
+	Frame TNT1B { Light UDVFLASHLIGHT14}
+	Frame TNT1C { Light UDVFLASHLIGHT15}
+}
+
+Object UDVFLASHLIGHTBeam14
+{
+	Frame TNT1A { Light UDVFLASHLIGHT14}
+	Frame TNT1B { Light UDVFLASHLIGHT15}
+	Frame TNT1C { Light UDVFLASHLIGHT16}
+}
+
+Object UDVFLASHLIGHTBeam15
+{
+	Frame TNT1A { Light UDVFLASHLIGHT15}
+	Frame TNT1B { Light UDVFLASHLIGHT16}
+	Frame TNT1C { Light UDVFLASHLIGHT17}
+}
+
+Object UDVFLASHLIGHTBeam16
+{
+	Frame TNT1A { Light UDVFLASHLIGHT16}
+	Frame TNT1B { Light UDVFLASHLIGHT17}
+	Frame TNT1C { Light UDVFLASHLIGHT18}
+}
+
+Object UDVFLASHLIGHTBeam17
+{
+	Frame TNT1A { Light UDVFLASHLIGHT17}
+	Frame TNT1B { Light UDVFLASHLIGHT18}
+	Frame TNT1C { Light UDVFLASHLIGHT19}
+}
+
+Object UDVFLASHLIGHTBeam18
+{
+	Frame TNT1A { Light UDVFLASHLIGHT18}
+	Frame TNT1B { Light UDVFLASHLIGHT19}
+	Frame TNT1C { Light UDVFLASHLIGHT20}
+}
+
+Object UDVFLASHLIGHTBeam19
+{
+	Frame TNT1A { Light UDVFLASHLIGHT19}
+	Frame TNT1B { Light UDVFLASHLIGHT20}
+	Frame TNT1C { Light UDVFLASHLIGHT21}
+}
+
+Object UDVFLASHLIGHTBeam20
+{
+	Frame TNT1A { Light UDVFLASHLIGHT20}
+	Frame TNT1B { Light UDVFLASHLIGHT21}
+	Frame TNT1C { Light UDVFLASHLIGHT22}
+}
+
+Object UDVFLASHLIGHTBeam21
+{
+	Frame TNT1A { Light UDVFLASHLIGHT21}
+	Frame TNT1B { Light UDVFLASHLIGHT22}
+	Frame TNT1C { Light UDVFLASHLIGHT23}
+}
+
+Object UDVFLASHLIGHTBeam22
+{
+	Frame TNT1A { Light UDVFLASHLIGHT22}
+	Frame TNT1B { Light UDVFLASHLIGHT23}
+	Frame TNT1C { Light UDVFLASHLIGHT24}
+}
+
+Object UDVFLASHLIGHTBeam23
+{
+	Frame TNT1A { Light UDVFLASHLIGHT23}
+	Frame TNT1B { Light UDVFLASHLIGHT24}
+	Frame TNT1C { Light UDVFLASHLIGHT25}
+}
+
+Object UDVFLASHLIGHTBeam24
+{
+	Frame TNT1A { Light UDVFLASHLIGHT24}
+	Frame TNT1B { Light UDVFLASHLIGHT25}
+	Frame TNT1C { Light UDVFLASHLIGHT26}
+}
+*/

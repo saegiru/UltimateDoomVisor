@@ -1,0 +1,98 @@
+ACTOR sae_HPWhite : Inventory {}
+ACTOR sae_HPBlue : Inventory {}
+ACTOR sae_HPGreen : Inventory {}
+ACTOR sae_HPYellow : Inventory {}
+ACTOR sae_HPRed : Inventory {}
+ACTOR sae_HPDead : Inventory {}
+
+//---------------------------------------------------------
+
+ACTOR sae_HealthExtreme : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_HPDead", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPBlue", 1)
+	TNT1 A 0 A_GiveInventory("sae_HPWhite", 1)
+    Stop
+  }
+}
+
+ACTOR sae_HealthAboveHundred : CustomInventory
+{
+  States
+  {
+  Pickup:
+  	TNT1 A 0 A_TakeInventory("sae_HPWhite", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPDead", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPYellow", 1)
+    TNT1 A 0 A_GiveInventory("sae_HPBlue", 1)
+    Stop
+  }
+}
+
+ACTOR sae_HealthGood : CustomInventory
+{
+  States
+  {
+  Pickup:
+  	TNT1 A 0 A_TakeInventory("sae_HPWhite", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPDead", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPYellow", 1)
+    TNT1 A 0 A_GiveInventory("sae_HPGreen", 1)
+    Stop
+  }
+}
+
+ACTOR sae_HealthWarning : CustomInventory
+{
+  States
+  {
+  Pickup:
+  	TNT1 A 0 A_TakeInventory("sae_HPWhite", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPDead", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPRed", 1)
+    TNT1 A 0 A_GiveInventory("sae_HPYellow", 1)
+    Stop
+  }
+}
+
+ACTOR sae_HealthCritical : CustomInventory
+{
+  States
+  {
+  Pickup:
+  	TNT1 A 0 A_TakeInventory("sae_HPWhite", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPDead", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPYellow", 1)
+    TNT1 A 0 A_GiveInventory("sae_HPRed", 1)
+    Stop
+  }
+}
+
+ACTOR sae_Flatline : CustomInventory
+{
+  States
+  {
+  Pickup:
+  	TNT1 A 0 A_TakeInventory("sae_HPWhite", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_HPRed", 1)
+    TNT1 A 0 A_GiveInventory("sae_HPDead", 1)
+    Stop
+  }
+}

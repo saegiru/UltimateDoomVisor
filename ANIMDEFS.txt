@@ -1,0 +1,113 @@
+//Face Reflection Animations
+
+texture Face1_0
+	range Face1_2 tics 35 random
+texture Face2_0
+	range Face2_2 tics 35 random
+texture Face3_0
+	range Face3_2 tics 35 random
+texture Face4_0
+	range Face4_2 tics 35 random
+texture Face5_0
+	range Face5_2 tics 35 random
+
+//Berserk Face
+texture BFace1_0
+	range BFace1_2 tics 35 random
+texture BFace2_0
+	range BFace2_2 tics 35 random
+texture BFace3_0
+	range BFace3_2 tics 35 random
+texture BFace4_0
+	range BFace4_2 tics 35 random
+texture BFace5_0
+	range BFace5_2 tics 35 random
+
+
+//Invulnverable Face
+
+texture IFace1_0
+	range IFace1_2 tics 35 random
+
+//RECORDING ANIMATION 16:9
+
+texture RECO01
+  range RECO09 tics 5 Oscillate
+  
+//RECORDING ANIMATION 4:3
+
+texture REC4301
+  range REC4309 tics 5 Oscillate
+
+//BERSERK ANIMATION 16:9
+
+texture BERS01
+  range BERS14 tics 10 Oscillate
+  
+//BERSERK ANIMATION 4:3
+
+texture BERS4301
+  range BERS4314 tics 10 Oscillate
+
+// Ammo Critical Flash 16:9
+
+texture RedAmR01
+  range RedAmR13 tics .45 Oscillate
+
+// Health Critical Flash 16:9
+  
+texture RedHeL01
+  range RedHeL13 tics .45 Oscillate
+
+// Health Warning Flash 16:9
+
+texture OraHeL01
+  range OraHeL13 tics 1 Oscillate
+
+// Ammo Critical Flash 4:3
+
+texture RdAR4301
+  range RdAR4313 tics .45 Oscillate
+
+// Health Critical Flash 4:3
+  
+texture RdHL4301
+  range RdHL4313 tics .45 Oscillate
+
+// Health Warning Flash 4:3
+
+texture OrHL4301
+  range OrHL4313 tics 1 Oscillate
+//health ecg good
+
+texture healfu01
+  range healfu15 tics 2
+  
+//health ecg warning
+
+texture healwr01
+  range healwr15 tics 2
+
+//health ecg critical
+
+texture healcr01
+  range healcr15 tics 2
+  
+//health ecg flatline
+
+texture healfl01
+  range healfl15 tics 2
+  
+//Mugshot Background Flicker
+
+texture MUGBCK01 
+  range MUGBCK13 rand 1 75
+  
+//Mugshot Static
+texture STATIC01
+  range STATIC13 rand 1 25
+  
+//Extreme Health/Armor Pulse
+texture EXTREM01
+  range EXTREM13 tics 2.5 Oscillate
+

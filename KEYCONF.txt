@@ -1,0 +1,49 @@
+AddKeySection "UDV - Tools" UDVTools
+
+AddMenuKey "Toggle Flashlight" "UDVToggleFlashlight"
+Alias "UDVToggleFlashlight" "PukeName UDVToggleFlashlight"
+DefaultBind "Y" "UDVToggleFlashlight"
+
+AddMenuKey "Emergency Medical System" "UDVActivateEMS"
+Alias "UDVActivateEMS" "pukename UDVActivateEMS"//"puke 474"
+DefaultBind "N" "UDVActivateEMS"
+
+AddKeySection "UDV - B Module Radar" UDVRadar
+
+//addmenukey "Toggle Radar On/Off" udv_mradar
+//alias udv_mradar "pukeName RadarToggle"
+addmenukey "Toggle Radar Modes" udv_mradar
+alias udv_mradar "pukename radarmode"
+defaultbind "l" udv_mradar
+
+Alias "HealthBarDefaults43" "udv_hud_enemyhealthbar 1; udv_hud_drawenemytag true; udv_hud_drawHealth false; udv_hud_MinimumHP 10; udv_hud_font_xresolution 1030; udv_hud_font_yresolution 745; udv_hud_xresolution 1030; udv_hud_yresolution 745; hud_h_globalxoffset 360; hud_h_globalyoffset 15; HUD_h_BarXOffset 0; HUD_h_BarYOffset 0; HUD_h_HPXOffset 0; HUD_h_HPYOffset -4; HUD_h_TagXOffset 0; HUD_h_TagYOffset 0; hud_v_globalxoffset 1019; hud_v_globalyoffset 215; HUD_v_BarXOffset 0; HUD_v_BarYOffset 0; HUD_v_HPXOffset -90; HUD_v_HPYOffset 22; HUD_v_TagXOffset -125; HUD_v_TagYOffset 0"
+Alias "HealthBarDefaults" "udv_hud_enemyhealthbar 1; udv_hud_drawenemytag true; udv_hud_drawHealth false; udv_hud_MinimumHP 10; udv_hud_font_xresolution 1030; udv_hud_font_yresolution 745; udv_hud_xresolution 1030; udv_hud_yresolution 745; hud_h_globalxoffset 360; hud_h_globalyoffset 15; HUD_h_BarXOffset 0; HUD_h_BarYOffset 0; HUD_h_HPXOffset 0; HUD_h_HPYOffset -4; HUD_h_TagXOffset 0; HUD_h_TagYOffset 0; hud_v_globalxoffset 1095; hud_v_globalyoffset 215; HUD_v_BarXOffset 0; HUD_v_BarYOffset 0; HUD_v_HPXOffset -90; HUD_v_HPYOffset 22; HUD_v_TagXOffset -125; HUD_v_TagYOffset 0"
+
+Alias "HealthBarCrosshairH" "udv_hud_enemyhealthbar 1; udv_hud_drawHealth false; udv_hud_drawenemytag true; udv_hud_font_xresolution 1030; udv_hud_font_yresolution 745; udv_hud_xresolution 4880; udv_hud_yresolution 735; hud_h_globalyoffset 400; hud_h_globalxoffset 2275; HUD_h_HPYOffset 25; HUD_h_HPXOffset -1920; HUD_h_BarYOffset 0; HUD_h_BarXOffset 0; HUD_h_TagXOffset -1920; HUD_h_TagYOffset 0"
+Alias "HealthBarCrosshairV" "udv_hud_enemyhealthbar 2; udv_hud_drawHealth false; udv_hud_drawenemytag true; udv_hud_font_xresolution 1030; udv_hud_font_yresolution 745; udv_hud_xresolution 1315; udv_hud_yresolution 3000; hud_v_globalyoffset 1370; hud_v_globalxoffset 700; HUD_v_HPYOffset -1065; HUD_v_HPXOffset -220; HUD_v_BarYOffset 0; HUD_v_BarXOffset 0; HUD_v_TagXOffset -230; HUD_v_TagYOffset -1090"
+
+Alias "UDVReset" "pukename UDVReset"//"puke 469"
+Alias "SaveColorLight" "pukename SaveColorLight"
+Alias "LoadColorLight" "pukename LoadColorLight"
+Alias "ColorLight" "pukename ColorLight"
+
+
+Alias "SaveFog" "Pukename SaveFog"//"puke 1139"
+Alias "LoadFog" "pukename LoadFog"//"puke 1141"
+Alias "RunFog" "pukename RunFog"
+Alias "fog_default" "udv_fogcolor 0; udv_getred 25; udv_getgreen 25; udv_getblue 25"
+Alias "fog_red" "udv_fogcolor 0; udv_getred 25; udv_getgreen 0; udv_getblue 0"
+Alias "fog_green" "udv_fogcolor 0; udv_getred 0; udv_getgreen 25; udv_getblue 0"
+Alias "fog_blue" "udv_fogcolor 0; udv_getred 0; udv_getgreen 0; udv_getblue 25"
+Alias "fog_dark" "udv_fogcolor 0; udv_getred 8; udv_getgreen 8; udv_getblue 8"
+
+Alias "SaveColorLight" "pukename SaveColorLight"
+Alias "LoadColorLight" "pukename LoadColorLight"
+Alias "ColorLight" "pukename ColorLight"
+Alias "light_default" "udv_getlred 255; udv_getlgreen 255; udv_getlblue 255; udv_getldesat 0"
+Alias "light_red" "udv_getlred 255; udv_getlgreen 0; udv_getlblue 0; udv_getldesat 0"
+Alias "light_green" "udv_getlred 0; udv_getlgreen 255; udv_getlblue 0; udv_getldesat 0"
+Alias "light_blue" "udv_getlred 0; udv_getlgreen 0; udv_getlblue 255; udv_getldesat 0"
+Alias "light_dark" "udv_getlred 128; udv_getlgreen 128; udv_getlblue 128; udv_getldesat 0"
+
+Alias "Disable_Power" "udv_lightpower 0; udv_EMSBattery 0; udv_radarpower 0; udv_spawnbattery 0;UDV_ToolArmor 0"

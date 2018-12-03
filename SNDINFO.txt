@@ -1,0 +1,121 @@
+$playersound           player  male    *pain-UDVAir     dsempty
+$playersound		   player  male	   *death-UDVAir	dsempty
+
+clipwarn clipwarn
+flatline flatline
+UDVflashlight/click	click
+INJECT INJECT
+GenAlert GenAlert
+CLEAN CLEAN
+// Armor Bonus
+misc/abonus_pickup SHARD_PI
+
+//Putting on Helmet
+UDVTPUT UDVTPUT
+UDVTBEP UDVTBEP
+UDVTBPP UDVTBPP
+UCLIPIN UCLIPIN
+
+ammoem "sounds/default/ammoem.ogg"
+ammolo "sounds/default/ammolo.ogg"
+armorem "sounds/default/armorem.ogg"
+healthlo "sounds/default/healthlo.ogg"
+CRECINIT "sounds/default/CRECINIT.mp3"
+CRECDISA "sounds/default/CRECDISA.mp3"
+
+$random death { death1 death2 death3 }
+
+death1 flatline
+death2 flatline
+death3 flatline
+
+fvox/armorem farmorem
+fvox/ammolo fammolo
+fvox/ammoem fammoem
+fvox/healthlo fhelthlo
+fvox/CRECINIT fCRECINI
+fvox/CRECDISA fCRECDIS
+
+$random fvox/death { fvox/death1 fvox/death2 fvox/death3 }
+
+fvox/death1 flatline
+fvox/death2 flatline
+fvox/death3 flatline
+
+gdos/armorem garmorem
+gdos/ammolo gammolo
+gdos/ammoem gammoem
+gdos/healthlo ghelthlo
+gdos/CRECINIT gCRECINI
+gdos/CRECDISA gCRECDIS
+gdos/scanon gscanon
+gdos/scanoff gscanoff
+gdos/scanvis gscanvis
+gdos/scanmov gscanmov
+
+$random gdos/death { gdos/death1 gdos/death2 gdos/death3 }
+
+gdos/death1 gdeath1
+gdos/death2 gdeath2
+gdos/death3 gdeath3
+
+Graham/AmmoEmpty "sounds/Graham/Ammoempty.ogg"
+Graham/AmmoLow "sounds/Graham/Ammolow.ogg"
+Graham/ArmorLow "sounds/Graham/ArmorLow.ogg"
+Graham/ArmorEmpty "sounds/Graham/ArmorEmpty.ogg"
+Graham/HealthLow "sounds/Graham/HealthLow.ogg"
+Graham/RecorderOff "sounds/Graham/RecorderOff.ogg"
+Graham/RecorderOn "sounds/Graham/RecorderOn.ogg"
+Graham/ScannerOff "sounds/Graham/ScannerOff.ogg"
+Graham/ScannerOn "sounds/Graham/ScannerOn.ogg"
+
+$random Graham/death { graham/death1 graham/death2 graham/death3 }
+
+Graham/Death1 "sounds/Graham/Death1.ogg"
+Graham/Death2 "sounds/Graham/Death1.ogg"
+Graham/Death3 "sounds/Graham/Death1.ogg"
+
+Omega/AmmoEmpty "sounds/Omega/Ammoempty.ogg"
+Omega/AmmoLow "sounds/Omega/Ammolow.ogg"
+Omega/ArmorLow "sounds/Omega/ArmorLow.ogg"
+Omega/ArmorEmpty "sounds/Omega/ArmorEmpty.ogg"
+Omega/HealthLow "sounds/Omega/HealthLow.ogg"
+Omega/RecorderOff "sounds/Omega/RecorderOff.ogg"
+Omega/RecorderOn "sounds/Omega/RecorderOn.ogg"
+Omega/ScannerOff "sounds/Omega/ScannerOff.ogg"
+Omega/ScannerOn "sounds/Omega/ScannerOn.ogg"
+
+$random Omega/death { Omega/death1 Omega/death2 Omega/death3 }
+
+Omega/Death1 "sounds/Omega/Death1.ogg"
+Omega/Death2 "sounds/Omega/Death1.ogg"
+Omega/Death3 "sounds/Omega/Death1.ogg"
+
+Cortana/AmmoEmpty "sounds/Cortana/ammoem.ogg"
+Cortana/AmmoLow "sounds/Cortana/ammolo.ogg"
+Cortana/ArmorEmpty "sounds/Cortana/armorem.ogg"
+Cortana/HealthLow "sounds/Cortana/healthLo.ogg"
+Cortana/RecorderOff "sounds/Cortana/crecdis.ogg"
+Cortana/RecorderOn "sounds/Cortana/crecini.ogg"
+Cortana/ScannerOff "sounds/Cortana/scanoff.ogg"
+Cortana/ScannerOn "sounds/Cortana/scanon.ogg"
+Cortana/Death "sounds/Cortana/death1.ogg"
+
+$random Rallinth/death { Rallinth/death1 Rallinth/death2 Rallinth/death3 }
+
+Rallinth/Death1 "sounds/Rallinth/Death1.mp3"
+Rallinth/Death2 "sounds/Rallinth/Death1.mp3"
+Rallinth/Death3 "sounds/Rallinth/Death1.mp3"
+
+Rallinth/AmmoEmpty "sounds/Rallinth/NoAmmo1.mp3"
+Rallinth/AmmoLow "sounds/Rallinth/LowAmmo1.mp3"
+Rallinth/ArmorLow "sounds/Rallinth/LowArmor1.mp3"
+Rallinth/ArmorEmpty "sounds/Rallinth/NoArmor2.mp3"
+Rallinth/HealthLow "sounds/Rallinth/LowHealth2.mp3"
+Rallinth/RecorderOff "sounds/Rallinth/RecorderDisabled.mp3"
+Rallinth/RecorderOn "sounds/Rallinth/RecorderEnabled.mp3"
+Rallinth/ScannerOff "sounds/Rallinth/ScannerDisabled.mp3"
+Rallinth/ScannerOn "sounds/Rallinth/ScannerEnabled.mp3"
+Rallinth/ScannerFull "sounds/Rallinth/FullRangeScanner.mp3"
+Rallinth/ScannerMove "sounds/Rallinth/MovementScanner.mp3"
+Rallinth/ScannerLocal "sounds/Rallinth/LocalScanner.mp3"

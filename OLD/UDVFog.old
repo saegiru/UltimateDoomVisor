@@ -1,0 +1,87 @@
+#library "fog"
+#include "zcommon.acs"
+
+Script 1139 (void)
+{
+SetUserCVAR(PlayerNumber(), "save_fogred", GetUserCVAR(PlayerNumber(), "udv_getred"));
+SetUserCVAR(PlayerNumber(), "save_foggreen",GetUserCVAR(PlayerNumber(), "udv_getgreen"));
+SetUserCVAR(PlayerNumber(), "save_fogblue",GetUserCVAR(PlayerNumber(), "udv_getblue"));
+SetUserCVAR(PlayerNumber(), "save_fogdensity",GetUserCVAR(PlayerNumber(), "udv_fogdensity"));
+}
+
+Script 1141 (void)
+{
+SetUserCVAR(PlayerNumber(),"udv_getred", GetUserCVAR(PlayerNumber(),"save_fogred"));
+SetUserCVAR(PlayerNumber(),"udv_getgreen", GetUserCVAR(PlayerNumber(),"save_foggreen"));
+SetUserCVAR(PlayerNumber(),"udv_getblue", GetUserCVAR(PlayerNumber(),"save_fogblue"));
+SetUserCVAR(PlayerNumber(),"udv_fogdensity", GetUserCVAR(PlayerNumber(),"save_fogdensity"));
+SetUserCVAR(PlayerNumber(),"udv_fograndom", false);
+SetUserCVAR(PlayerNumber(),"udv_fogcolor", false);
+ACS_ExecuteAlways(1129, 0);
+}
+
+Script 1129 (void)
+{
+
+	int local0 = 0;
+	int fogdensity = GetUserCVAR(PlayerNumber(), "udv_fogdensity");
+	int fograndom = GetUserCVAR(PlayerNumber(), "udv_fograndom");
+	int fogcolor = GetUserCVAR(PlayerNumber(), "udv_fogcolor");
+	int getred;
+	int getgreen;
+	int getblue;
+	
+	If(fogcolor)
+	{
+		getred = random(0,60);
+		getgreen = random(0,60);
+		getblue = random(0,60);
+		SetUserCVAR(PlayerNumber(), "udv_getred", getred);
+		SetUserCVAR(PlayerNumber(), "udv_getgreen", getgreen);
+		SetUserCVAR(PlayerNumber(), "udv_getblue", getblue);
+	}
+	Else
+	{
+		getred = GetUserCVAR(PlayerNumber(), "udv_getred");
+		getgreen = GetUserCVAR(PlayerNumber(), "udv_getgreen");
+		getblue = GetUserCVAR(PlayerNumber(), "udv_getblue");
+	}
+	
+	If(GetUserCVAR(PlayerNumber(), "udv_togglefog"))
+	{
+		If(fogdensity > 0 && !fograndom )//If(getUserCVAR(PlayerNumber(),"udv_togglefog"))
+		{
+				Until(local0 > 49999) {
+					Sector_SetFade(local0, getred, getgreen, getblue);
+					local0++;
+				}
+				SetGlobalFogParameter(0, 64*fogdensity);//256);
+				SetGlobalFogParameter(1, 32*fogdensity);//128);
+				SetGlobalFogParameter(2, 32*fogdensity);//128);
+		}
+		Else If(fogdensity > 0 && fograndom )
+		{
+			int fog1 = random(0, fogdensity);
+			int fog2 = random(0, fogdensity);
+			int fog3 = random(0, fogdensity);
+			
+				Until(local0 > 49999) {
+					Sector_SetFade(local0, getred, getgreen, getblue);
+					local0++;
+				}
+				SetGlobalFogParameter(0, 64*fog1);//256);
+				SetGlobalFogParameter(1, 32*fog2);//128);
+				SetGlobalFogParameter(2, 32*fog3);//128);
+		}
+		Else
+		{
+				Until(local0 > 49999) {
+					Sector_SetFade(local0, 0, 0, 0);
+					local0++;
+				}
+				SetGlobalFogParameter(0, 0);
+				SetGlobalFogParameter(1, 0);
+				SetGlobalFogParameter(2, 0);
+		}
+	}
+}

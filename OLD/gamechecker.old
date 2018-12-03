@@ -1,0 +1,63 @@
+#library "gamechecker"
+#include "zcommon.acs"
+#include "acsx.h"
+// Tells us which game/mod they are playing
+bool is_heretic = false;
+bool is_blasphemer = false;
+bool is_hexen = false;
+bool is_strife = false;
+bool is_chex = false;
+bool is_action = false;
+bool is_harmony = false;
+bool is_hacx = false;
+bool is_square = false;
+bool is_d4 = false;
+bool is_smooth = false;
+bool is_complex = false;
+bool is_lca = false;
+bool is_trailblazer = false;
+bool is_zion = false;
+bool is_overkill = false;
+bool is_johnny = false;
+
+bool is_brutal64 = false;
+bool is_brutalpack = false;
+bool is_brutality = false;
+bool is_brutal = false;
+bool is_vanilla = false;
+
+Script "GameChecker" Enter
+{
+		is_vanilla = CheckInventory("Fist") && (GetBaseGame()==BASEGAME_DOOM || GetBaseGame()==BASEGAME_UNKNOWN);
+		is_heretic = CheckInventory("Staff") && (GetBaseGame()==BASEGAME_HERETIC || GetBaseGame()==BASEGAME_UNKNOWN);
+		is_blasphemer = CheckInventory("Staff") && (GetBaseGame()==BASEGAME_BLASPHEMER || GetBaseGame()==BASEGAME_UNKNOWN);
+		is_hexen = (CheckInventory("FWeapFist") || CheckInventory("CWeapMace") || CheckInventory("MWeapWand"));
+		is_strife = CheckInventory("PunchDagger") && (GetBaseGame()==BASEGAME_STRIFE || GetBaseGame()==BASEGAME_UNKNOWN);
+		is_chex = CheckInventory("Bootspoon") && (GetBaseGame()==BASEGAME_CHEX || GetBaseGame()==BASEGAME_UNKNOWN);
+		is_action = (CheckInventory("ActionFists") || CheckInventory("ActionFists2") || CheckInventory("BrassKnuckles") || CheckInventory("CheetahFists") || CheckInventory("DragonFists") || CheckInventory("DragonFistsWithBrassKnuckles")) && (GetBaseGame()==BASEGAME_URBANBRAWL || GetBaseGame()==BASEGAME_UNKNOWN);
+		is_hacx = CheckInventory("HacxKick") && (GetBaseGame()==BASEGAME_HACX || GetBaseGame()==BASEGAME_UNKNOWN);
+		is_square = CheckInventory("PaintGun") && (GetBaseGame()==BASEGAME_SQUARE || GetBaseGame()==BASEGAME_UNKNOWN);
+		
+		
+		
+		
+		//is_brutal = (((CheckInventory("Melee_Attacks")&&!CheckInventory("TargetIsAMarine")&&!CheckInventory("IsPlayingAsPurist")&&!CheckInventory("IsPlayingAsProjectBrutality")) || CheckInventory("ClassicFist"))&&GetActorProperty(ActivatorTID(),APROP_Mass)==100);
+		is_brutal = (  (CheckInventory("Melee_Attacks")&&!CheckInventory("TargetIsAMarine")&&!CheckInventory("IsPlayingAsPurist")&&!CheckInventory("IsPlayingAsProjectBrutality"))  || (CheckInventory("Melee_Attacks") && CheckInventory("IsNOTTacticalClass")) ||  (CheckInventory("ClassicFist")&&CheckInventory("IsNOTTacticalClass"))  ||  CheckInventory("IsTacticalClass") );//&& CheckInventory("JustStartedGame")  );
+		is_brutal64 = CheckInventory("64Fist");
+		is_d4 = (CheckInventory("Melee_Attacks")&&CheckInventory("TargetIsAMarine"));
+		is_brutalpack = ((CheckInventory("Melee_Attacks")&&!CheckInventory("TargetIsAMarine")&&!CheckInventory("IsPlayingAsPurist")&&!CheckInventory("IsPlayingAsProjectBrutality")));//&&GetActorProperty(ActivatorTID(),APROP_Mass)==500);//Brutal Pack V9
+		is_brutality = ( CheckInventory("Melee_Attacks")&&(CheckInventory("IsPlayingAsPurist") || CheckInventory("IsPlayingAsProjectBrutality") && CheckInventory("QSSGAmmoCounter"))) || CheckInventory("Traditional_Fist");//PB 3.0
+		is_johnny = ( CheckInventory("PerkFist") && GetActorProperty(ActivatorTID(),APROP_Mass)==400 );
+		
+		
+		
+		
+		
+		is_smooth = CheckInventory("PerkFist") && CheckInventory("PerkPistol");
+		is_complex = CheckInventory("Melee");
+		is_lca = CheckInventory("NewMelee");
+		is_trailblazer = CheckInventory("Macheterang");
+		is_zion = CheckInventory("DUMB4Fist");
+		is_overkill = (CheckInventory("YuriTrigger") || CheckInventory("AloszaTrigger") || CheckInventory("MartyTrigger"));
+		is_harmony = (GetBaseGame()==BASEGAME_HARMONY || (GetBaseGame()==BASEGAME_UNKNOWN&&!is_vanilla&&!is_heretic&&!is_blasphemer&&!is_hexen&&!is_strife&&!is_chex&&!is_action&&!is_hacx&&!is_square&&!is_brutal&&!is_d4&&!is_brutalpack&&!is_brutality&&!is_smooth&&!is_complex&&!is_lca&&!is_trailblazer&&!is_zion&&!is_overkill));	// There is no melee weapon in this game that the player always has
+}

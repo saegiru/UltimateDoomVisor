@@ -1,0 +1,87 @@
+// ACS
+#library "UDVLight"
+#include "zcommon.acs"
+
+// Defines
+#define MAXPLAYERS 8
+int UDVflashlightOn[MAXPLAYERS];
+
+// Scripts
+script "UDVflashlightHoriz" (void) 
+{
+	SetResultValue (GetCVar("saehud_flashlightpos"));
+}
+
+
+Script "UDVPointerPitch" (void)
+{
+	SetResultValue(GetActorPitch(0) / -182);
+}
+
+Script "UDVToggleFlashlight" (void) net
+{
+	If ( GameType() != 0 && GetCVar("UDV_SourcePort") == 0 )
+	{
+	Print(s:"Flashlight Not Implemented in Zandronum Multiplayer Yet");
+	}
+	Else
+	{
+	if (UDVflashlightOn[PlayerNumber()]) {
+		UDVflashlightOn[PlayerNumber()] = 0;
+		//PrintBold(s:"zero");
+		}
+	else if ( CheckInventory("UDV_AccBattery") > 0 || GetCvar("udv_lightarmor") == false ) {//( CheckInventory("Armor") >= GetCVar("udv_lightarmor") ){
+		UDVflashlightOn[PlayerNumber()] = 1;
+		//PrintBold(s:"one");
+		}
+	else
+		Print(s:"Insufficient Power for Light 1");
+	ActivatorSound("UDVflashlight/click", 127);
+	}
+}
+
+Script "UDVFlashlightHandling" ENTER
+{
+	int lightcount;
+	SETFONT("UDVSMALL");
+	While(1)
+	{
+		if (UDVflashlightOn[PlayerNumber()] && (CheckInventory("UDV_AccBattery") > 0 || GetCvar("udv_lightarmor") == false ) )//(UDVflashlightOn[PlayerNumber()] && CheckInventory("Armor") >= GetCVar("udv_lightarmor") )
+		{
+			If(!GetCVAR("UDV_FlashlightLow"))
+			{
+			GiveInventory("UDVFlashlightSpawner", 1);
+			}
+			Else
+			{
+			GiveInventory("UDVFlashlightSpawnerLow",1);
+			}
+			lightcount = 0;
+		}
+		else if (UDVflashlightOn[PlayerNumber()] && CheckInventory("UDV_AccBattery") == 0 )//&& GetCVar("saehud_togglemessage") )//(UDVflashlightOn[PlayerNumber()] && CheckInventory("Armor") < GetCVar("udv_lightarmor") && GetCVar("saehud_togglemessage") )
+		{
+			Until(lightcount > 0)
+			{
+				ACS_NamedExecuteAlways("UDVToggleFlashlight", 0);
+				Print(s:"Insufficient Power for Light");
+				lightcount = 1;
+//				Delay(1);
+			}
+		}
+		Delay(1);
+	}
+}
+
+Script "UDVFlashlightDrain" ENTER NET
+{
+While (1)
+{
+		while (UDVflashlightOn[PlayerNumber()] && GetCVar("udv_lightarmor") == true )//&& CheckInventory("Armor") >= GetCVar("udv_lightarmor") )
+		{
+		Delay(35 * 10);
+		//If (UDVflashlightOn[PlayerNumber()])
+		TakeInventory("UDV_AccBattery", 1);
+		}
+		Delay(1);
+}
+}

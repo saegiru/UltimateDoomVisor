@@ -1,0 +1,27 @@
+/*
+UDVBIG
+{
+Template BIGDG%03d
+}
+*/
+
+SMALLFONT
+{
+Template DSSCR%03d
+}
+
+
+UDVSMALL
+{
+Template DSSCR%03d
+}
+
+DIGIFONT_LARGE
+{
+Template DSDIG%03d
+}
+
+DIGIFONT_SMALL
+{
+Template DSDSM%03d
+}

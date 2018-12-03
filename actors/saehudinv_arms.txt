@@ -1,0 +1,10 @@
+ACTOR sae_WeaponSlot0 : Inventory {}
+ACTOR sae_WeaponSlot1 : Inventory {}
+ACTOR sae_WeaponSlot2 : Inventory {}
+ACTOR sae_WeaponSlot3 : Inventory {}
+ACTOR sae_WeaponSlot4 : Inventory {}
+ACTOR sae_WeaponSlot5 : Inventory {}
+ACTOR sae_WeaponSlot6 : Inventory {}
+ACTOR sae_WeaponSlot7 : Inventory {}
+ACTOR sae_WeaponSlot8 : Inventory {}
+ACTOR sae_WeaponSlot9 : Inventory {}

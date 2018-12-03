@@ -1,0 +1,60 @@
+#library "Aspect"
+#include "zcommon.acs"
+
+// List of aspect ratios.
+#libdefine ASPECT_4_3 (4.0 / 3)
+#libdefine ASPECT_16_9 (16.0 / 9)
+#libdefine ASPECT_16_10 (16.0 / 10)
+#libdefine ASPECT_17_10 (17.0 / 10)
+#libdefine ASPECT_5_4 (5.0 / 4)
+
+function int abs(int x)
+{
+    if (x < 0)
+        return -x;
+    return x;
+}
+
+
+Function int GetAspectRatio(void)
+{
+    int noWideScreen = GetCVAR("vid_nowidescreen");
+    int tft = GetCVAR("vid_tft");
+
+    if (noWideScreen)
+    {
+        if (tft && GetScreenHeight() * 5 / 4 == GetScreenWidth())
+        {
+            return ASPECT_5_4;
+        }
+        return ASPECT_4_3;
+    }
+
+    // If the size is approximately 16:9, consider it so.
+    if (Abs(GetScreenHeight() * 16 / 9 - GetScreenWidth()) < 10)
+    {
+        return ASPECT_16_9;
+    }
+    // Consider 17:10 as well.
+    if (Abs(GetScreenHeight() * 17 / 10 - GetScreenWidth()) < 10)
+    {
+        return ASPECT_17_10;
+    }
+    // 16:10 has more variance in the pixel dimensions. Grr.
+    if (Abs(GetScreenHeight() * 16 / 10 - GetScreenWidth()) < 60)
+    {
+        // 320x200 and 640x400 are always 4:3, not 16:10
+        if ((GetScreenWidth() == 320 && GetScreenHeight() == 200) || (GetScreenWidth() == 640 && GetScreenHeight() == 400))
+        {
+            return ASPECT_4_3;
+        }
+        return ASPECT_16_10;
+    }
+    // Unless vid_tft is set, 1280x1024 is 4:3, not 5:4.
+    if (tft && GetScreenHeight() * 5 / 4 == GetScreenWidth())
+    {
+        return ASPECT_5_4;
+    }
+    // Assume anything else is 4:3. (Which is probably wrong these days...)
+    return ASPECT_4_3;
+}

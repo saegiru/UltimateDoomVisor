@@ -1,0 +1,218 @@
+// Decorate
+
+// Constants
+const int UDVflashlightVert = 32;
+
+// Actors
+
+ACTOR UDVFlashlightSpawner : CustomInventory
+{
+	States
+	{
+	Pickup:
+		TNT1 A 0 A_ALERTMONSTERS//(500.0)
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam1", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam2", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam3", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam4", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam5", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam6", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam7", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam8", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam9", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam10", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam11", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam12", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam13", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam14", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam15", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam16", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam17", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam18", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam19", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam20", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam21", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam22", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam23", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam24", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		Stop
+	}
+}
+
+ACTOR UDVFlashlightSpawnerLow : CustomInventory
+{
+	States
+	{
+	Pickup:
+		TNT1 A 0 A_ALERTMONSTERS//(500.0)
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam1", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam2", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam3", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam4", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam5", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam6", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam7", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam8", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam9", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam10", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam11", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam12", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam13", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam14", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam15", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam16", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam17", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam18", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam19", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam20", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam21", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam22", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		TNT1 A 0 A_CustomMissile("UDVFlashLightBeam23", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		//TNT1 A 0 A_CustomMissile("UDVFlashLightBeam24", UDVflashlightVert, ACS_NamedExecuteWithResult("UDVflashlightHoriz", 0), 0, 2, ACS_NamedExecuteWithResult("UDVPointerPitch", 0))
+		Stop
+	}
+}
+
+
+ACTOR UDVFlashLightBeam
+{
+	+NOGRAVITY
+	+NOBLOCKMAP
+	+DONTSPLASH
+	+THRUACTORS
+	+NOCLIP
+	+NOTIMEFREEZE
+	Renderstyle None
+	Radius 1
+	Height 1
+	States 
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 ABC 1 
+	Crash:
+	Death:
+	XDeath:
+		Stop
+	}
+}
+
+ACTOR UDVFlashLightBeam1 : UDVFlashLightBeam
+{
+	Speed  8
+}
+
+ACTOR UDVFlashLightBeam2 : UDVFlashLightBeam
+{
+	Speed  20
+}
+
+ACTOR UDVFlashLightBeam3 : UDVFlashLightBeam
+{
+	Speed  28
+}
+
+ACTOR UDVFlashLightBeam4 : UDVFlashLightBeam
+{
+	Speed  40
+}
+
+ACTOR UDVFlashLightBeam5 : UDVFlashLightBeam
+{
+	Speed  48
+}
+
+ACTOR UDVFlashLightBeam6 : UDVFlashLightBeam
+{
+	Speed  60
+}
+
+ACTOR UDVFlashLightBeam7 : UDVFlashLightBeam
+{
+	Speed  68
+}
+
+ACTOR UDVFlashLightBeam8 : UDVFlashLightBeam
+{
+	Speed  80
+}
+
+ACTOR UDVFlashLightBeam9 : UDVFlashLightBeam
+{
+	Speed  88
+}
+
+ACTOR UDVFlashLightBeam10 : UDVFlashLightBeam
+{
+	Speed  100
+}
+
+ACTOR UDVFlashLightBeam11 : UDVFlashLightBeam
+{
+	Speed  108
+}
+
+ACTOR UDVFlashLightBeam12 : UDVFlashLightBeam
+{
+	Speed  120
+}
+
+ACTOR UDVFlashLightBeam13 : UDVFlashLightBeam
+{
+	Speed  128
+}
+
+ACTOR UDVFlashLightBeam14 : UDVFlashLightBeam
+{
+	Speed  136
+}
+
+ACTOR UDVFlashLightBeam15 : UDVFlashLightBeam
+{
+	Speed  148
+}
+
+ACTOR UDVFlashLightBeam16 : UDVFlashLightBeam
+{
+	Speed  156
+}
+
+ACTOR UDVFlashLightBeam17 : UDVFlashLightBeam
+{
+	Speed  168
+}
+
+ACTOR UDVFlashLightBeam18 : UDVFlashLightBeam
+{
+	Speed  176
+}
+
+ACTOR UDVFlashLightBeam19 : UDVFlashLightBeam
+{
+	Speed  188
+}
+
+ACTOR UDVFlashLightBeam20 : UDVFlashLightBeam
+{
+	Speed  196
+}
+
+ACTOR UDVFlashLightBeam21 : UDVFlashLightBeam
+{
+	Speed  208
+}
+
+ACTOR UDVFlashLightBeam22 : UDVFlashLightBeam
+{
+	Speed  216
+}
+
+ACTOR UDVFlashLightBeam23 : UDVFlashLightBeam
+{
+	Speed  224
+}
+
+ACTOR UDVFlashLightBeam24 : UDVFlashLightBeam
+{
+	Speed  236
+}

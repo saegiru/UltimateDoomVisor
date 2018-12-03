@@ -1,0 +1,90 @@
+ACTOR UDV_AccBattery : Inventory 30779
+{
+  Inventory.PickupMessage "Accessory Battery!"
+  Inventory.Amount 10
+  +INVENTORY.UNDROPPABLE
+  //+INVENTORY.ALWAYSPICKUP
+    +INVENTORY.IGNORESKILL
+ Inventory.MaxAmount 200
+  Scale 0.4
+  States
+  {
+  Spawn:
+	ACCB AB 6
+	LOOP
+  }
+}
+
+ACTOR UDV_AccBatteryEX : CustomInventory 30780
+{
+  Inventory.PickupMessage "Extended Accessory Battery!"
+  //Inventory.Amount 50
+   +INVENTORY.IGNORESKILL
+  //+INVENTORY.ALWAYSPICKUP
+  //Inventory.MaxAmount 200
+  Scale 0.4
+  States
+  {
+  Spawn:
+	ACCM AB 6
+	LOOP
+  Pickup:
+    TNT1 A 0 A_GiveInventory("UDV_AccBattery",25)
+    Stop
+  }
+}
+
+
+/*
+ACTOR UDV_ArmorBonus : ArmorBonus Replaces ArmorBonus
+{
+	Armor.Saveamount 2
+	Armor.Maxsaveamount 9999
+	Inventory.PickUpSound "misc/abonus_PickUp"
+	Scale 0.7
+  States
+  {
+  Spawn:
+	TNT1 A 0 
+	TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("CheckForPower")==1, "NoBattery")
+	TNT1 A 0 A_Jump(192, 3)
+	TNT1 A 0 A_SpawnItemEX("UDV_AccBattery", 10)
+	TNT1 A 0 A_Jump(256, 8)
+	TNT1 A 0 A_Jump(242, 3)
+	TNT1 A 0 A_SpawnItemEX("UDV_AccBatteryEX", 10)
+	TNT1 A 0 A_Jump(256, 5)
+	TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("CheckHevSuit")==0,2)
+	TNT1 A 0 A_SpawnItemEX("HevSpawner", 15)
+	TNT1 A 3 A_JumpIf(ACS_NamedExecuteWithResult("CheckGoggles")==0,2)
+	TNT1 A 0 A_SpawnItemEX("InfSpawner", -10)
+	TNT1 A 0
+    Goto Super::Spawn
+	NoBattery:
+	TNT1 A 0
+	TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("CheckHevSuit")==0,2)
+	TNT1 A 0 A_SpawnItemEX("HevSpawner", 15)
+	TNT1 A 3 A_JumpIf(ACS_NamedExecuteWithResult("CheckGoggles")==0,2)
+	TNT1 A 0 A_SpawnItemEX("InfSpawner", -10)
+	TNT1 A 0
+	Goto Super::Spawn
+  }
+}
+*/
+
+/*
+Actor RadSpawner : RandomSpawner
+{
+DropItem "Radsuit", 10
+}
+*/
+
+Actor HevSpawner : RandomSpawner
+{
+DropItem "UDV_HevSuit", 10
+}
+
+Actor InfSpawner : RandomSpawner
+{
+DropItem "UDV_Infrared2", 10
+//DropItem "ArmorBonus", 255, 75
+}

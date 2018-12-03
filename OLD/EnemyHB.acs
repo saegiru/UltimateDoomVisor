@@ -1,0 +1,356 @@
+// Feel free to tear this apart, reuse it, learn from it. Just be sure to give JPHud credit.
+// Also please check the readme for known issues.
+
+#library "EnemyHB"
+#include "zcommon.acs"
+
+//===========================================================================
+//
+// Defines
+//
+//===========================================================================
+
+// This is not really needed, but I left it in anyways.
+#define Player_TIDOffset 2000
+
+// Enemy health bar positions
+#define UDV_HUD_NOBAR 0
+#define UDV_HUD_HORIZONTALBAR 1
+#define UDV_HUD_VERTICALBAR 2
+
+// Enemy health bar dimensions
+// Change these values if you use new graphics
+// Make sure you use fixed point when specifying the dimension, since it is used in calculations
+// To clarify, the dimensions should be for the graphic you want to have cut-off as the health bar
+// X dimension is for the horizontal bar, Y dimension is for the vertical bar
+#define UDV_HUD_BARXDIM 320.0
+#define UDV_HUD_BARYDIM 240.0
+
+//===========================================================================
+//
+// Variables
+//
+//===========================================================================
+
+// Not really needed
+Int Player_TID [32];
+
+
+//===========================================================================
+//
+// Functions
+//
+//===========================================================================
+
+// Returns the player's TID
+Function Int GetPlayerID (void)
+{
+	if (ActivatorTID() == 0)
+		Thing_ChangeTID (ActivatorTID(), UniqueTID((PlayerNumber() + Player_TIDOffset)));
+	Player_TID [PlayerNumber()] = ActivatorTID();
+	Return (Player_TID [PlayerNumber()]);
+}
+
+// Draws an image to the HUD with the specified coordinates
+Function Bool DrawSprite (Str Sprite, Int ID, Int X, Int Y, Int Alpha)
+{
+	SetFont(Sprite);
+	HUDMessage(s:"A"; HUDMSG_FADEOUT|HUDMSG_NOTWITHFULLMAP|HUDMSG_ALPHA, ID, CR_UNTRANSLATED, X, Y, 0.029, 0.25, 0.35);
+	Return True;
+}
+
+Function Bool DrawHealth (Int CurrentHealth, Int MaxHealth, Int ID, Int X, Int Y)
+{
+	/*
+	if (GetUserCVar(PlayerNumber(), "hud_bigfont"))
+		SetFont ("bigfont");
+	else
+	*/
+		SetFont ("UDVSMALL");
+	HUDMessage(i:CurrentHealth, s:"/", i:MaxHealth; HUDMSG_COLORSTRING | HUDMSG_FADEOUT|HUDMSG_NOWRAP|HUDMSG_NOTWITHFULLMAP, ID, "SaeHUDGr", X, Y, 0.029, 0.25);
+	Return True;
+}
+
+
+// Draws the enemy health bar graphics
+Function Bool DrawEnemyHealthBar (Int CurrentHealth, Int MaxHealth, Int TID, Str NameTag)
+{
+	// The higher the resolution, the smaller the graphics are drawn
+	Int x_resolution = GetUserCVar(PlayerNumber(), "udv_hud_XResolution");
+	If (x_resolution == 0) // We don't want a divide by zero
+		x_resolution = 320; // so use the default value that is set in cvarinfo
+	Int y_resolution = GetUserCVar(PlayerNumber(), "udv_hud_YResolution");
+	If (y_resolution == 0)
+		y_resolution = 240;
+		
+	// Separate Resolution scale for fonts, so you can have tiny health bar and large fonts
+	Int x_font_resolution = GetUserCVar(PlayerNumber(), "udv_hud_font_xresolution");
+	If (x_font_resolution == 0) // We don't want a divide by zero
+		x_font_resolution = 320; // so use the default value that is set in cvarinfo
+	Int y_font_resolution = GetUserCVar(PlayerNumber(), "udv_hud_font_yresolution");
+	If (y_font_resolution == 0)
+		y_font_resolution = 240;
+
+	// Offsets
+	
+	Int h_globaloffsetx = GetUserCVar(PlayerNumber(), "HUD_h_GlobalXOffset"); // The offset from the left side that we want to draw everything from
+	Int h_globaloffsety = GetUserCVar(PlayerNumber(), "HUD_h_GlobalYOffset"); // The offset from the top of the screen
+	Int h_barx = GetUserCVar(PlayerNumber(), "HUD_h_BarXOffset");
+	Int h_bary = GetUserCVar(PlayerNumber(), "HUD_h_BarYOffset");
+	Int h_tagx = GetUserCVar(PlayerNumber(), "HUD_h_TagXOffset"); // NEW
+	Int h_tagy = GetUserCVar(PlayerNumber(), "HUD_h_TagYOffset"); // NEW
+	Int h_hpx = GetUserCVar(PlayerNumber(), "HUD_h_HPXOffset");
+	Int h_hpy = GetUserCVar(PlayerNumber(), "HUD_h_HPYOffset");
+
+	Int v_globaloffsetx = GetUserCVar(PlayerNumber(), "HUD_v_GlobalXOffset"); // The offset from the left side that we want to draw everything from
+	Int v_globaloffsety = GetUserCVar(PlayerNumber(), "HUD_v_GlobalYOffset"); // The offset from the top of the screen
+	Int v_barx = GetUserCVar(PlayerNumber(), "HUD_v_BarXOffset");
+	Int v_bary = GetUserCVar(PlayerNumber(), "HUD_v_BarYOffset");
+	Int v_tagx = GetUserCVar(PlayerNumber(), "HUD_v_TagXOffset"); //NEW
+	Int v_tagy = GetUserCVar(PlayerNumber(), "HUD_v_TagYOffset"); //NEW
+	Int v_hpx = GetUserCVar(PlayerNumber(), "HUD_v_HPXOffset");
+	Int v_hpy = GetUserCVar(PlayerNumber(), "HUD_v_HPYOffset");
+	
+	Int a = CurrentHealth << 16; // convert to fixed point for accuracy
+	Int b = Maxhealth << 16;
+	Int c = FixedDiv(a, b); // This should give us a percentage of remaining health as a fixed point number between 0 and 1.0
+	
+	// Fixed point conversion
+	Int f_xresolution = x_resolution << 16;
+	Int f_yresolution = y_resolution << 16;
+
+	
+	Int h_f_globaloffsetx = h_globaloffsetx << 16;
+	Int h_f_globaloffsety = h_globaloffsety << 16;
+	Int h_f_barx = h_barx << 16;
+	Int h_f_bary = h_bary << 16;
+	Int h_f_tagx = h_tagx << 16; //NEW
+	Int h_f_tagy = h_tagy << 16; //NEW
+	Int h_f_hpx = h_hpx << 16;
+	Int h_f_hpy = h_hpy << 16;
+
+	Int v_f_globaloffsetx = v_globaloffsetx << 16;
+	Int v_f_globaloffsety = v_globaloffsety << 16;
+	Int v_f_barx = v_barx << 16;
+	Int v_f_bary = v_bary << 16;
+	Int v_f_tagx = v_tagx << 16; //NEW
+	Int v_f_tagy = v_tagy << 16; //NEW
+	Int v_f_hpx = v_hpx << 16;
+	Int v_f_hpy = v_hpy << 16;
+	
+	// Multiplies the dimensions of the graphic by the % of health remaining to get how much of the bar we need to show
+	Int barwidth = (FixedMul(c, UDV_HUD_BARXDIM) + 0.5) >> 16; // the extra 0.5 is for rounding up
+	Int barheight = (FixedMul(c, UDV_HUD_BARYDIM) + 0.5) >> 16;
+	
+	//Bool usebigfont = GetUserCVar(PlayerNumber(), "hud_bigfont");
+	Int MinimumHP = GetUserCVar(PlayerNumber(), "udv_hud_MinimumHP");
+	
+Switch (GetUserCVar(PlayerNumber(), "udv_hud_enemyhealthbar")) // Where do we want the enemy health bar?
+	{
+		Case UDV_HUD_NOBAR:
+			// Do nothing
+			break;
+			
+		Case UDV_HUD_HORIZONTALBAR: // Bar is drawn right to left
+			If ( MaxHealth >= MinimumHP )
+			{
+				SetHUDSize(x_resolution, y_resolution, 0);
+
+				// SetHUDClipRect defines the box that the graphic will be drawn within. Anything outside the box is cutoff, displaying the graphics below
+				SetHUDClipRect(2+h_globaloffsetx+h_barx, h_globaloffsety+h_bary, barwidth-3, y_resolution+h_globaloffsety+h_bary, 0); // To see what these numbers mean, see above.
+				DrawSprite ("HBARTOP", 4, h_f_barx+h_f_globaloffsetx+0.1, 0.1+h_f_bary+h_f_globaloffsety, 1.0);
+				
+				// This resets it back to normal
+				SetHUDClipRect(0, 0, 0, 0);
+				//DrawSprite ("HBARBRD", 3, f_globaloffsetx+f_barx+0.1, 0.1+f_bary+f_globaloffsety, 1.0);
+				DrawSprite ("HBARBOT", 5, h_f_barx+h_f_globaloffsetx+0.1, 0.1+h_f_bary+h_f_globaloffsety, 0.5);
+			}
+			SetHUDSize(x_font_resolution, y_font_resolution, 0);
+			If(GetUserCVar(PlayerNumber(), "udv_hud_drawHealth") && MaxHealth >= MinimumHP )
+			{
+				DrawHealth (CurrentHealth, Maxhealth, 1, 160.4+h_f_globaloffsetx+h_f_hpx, 3.1+h_f_globaloffsety+h_f_hpy); // Displays "current health / max health" inside the bar
+			}
+			If (GetUserCVar(PlayerNumber(), "udv_hud_drawenemytag")) // Do we want to draw the name tag?
+			{
+						SetFont ("UDVSMALL");
+						HUDMessage(s:NameTag; HUDMSG_COLORSTRING | HUDMSG_FADEOUT|HUDMSG_NOWRAP|HUDMSG_NOTWITHFULLMAP, 2, "SaeHUDGr", 160.4+h_f_globaloffsetx+h_f_tagx, 16.1+h_f_globaloffsety+h_f_tagy, 0.029, 0.25); // This is drawn right underneath the bar
+			}
+
+			break;
+			
+		Case UDV_HUD_VERTICALBAR: // Bar is drawn top to bottom
+			If ( MaxHealth >= MinimumHP )
+			{
+				SetHUDSize(x_resolution, y_resolution, 0);
+				
+				// This is a little more complicated than the horizontal bar
+				// Instead of starting from the top left and drawing the box size to the right, we have to start from the bottom of the image and draw up
+				SetHUDClipRect(v_globaloffsetx+v_barx, 1+(UDV_HUD_BARYDIM>>16)+v_bary+v_globaloffsety-barheight, x_resolution+v_globaloffsetx+v_barx, -2+v_bary+v_globaloffsety+(UDV_HUD_BARYDIM>>16));
+				DrawSprite ("HBARTOP2", 4, 0.1+v_f_globaloffsetx+v_f_barx, 0.1+v_f_globaloffsety+v_f_bary, 1.0);
+				SetHUDClipRect(0, 0, 0, 0);
+				DrawSprite ("HBARBOT2", 5, 0.1+v_f_globaloffsetx+v_f_barx, 0.1+v_f_globaloffsety+v_f_bary, 0.5);
+				
+				//DrawSprite ("HBARBRD2", 3, 0.1+f_globaloffsetx+f_barx, 0.1+f_globaloffsety+f_bary, 1.0);
+			}
+			SetHUDSize(x_font_resolution, y_font_resolution, 0);
+				If(GetUserCVar(PlayerNumber(), "udv_hud_drawHealth") && MaxHealth >= MinimumHP )
+				{
+					DrawHealth (CurrentHealth, Maxhealth, 1, 18.1+v_f_globaloffsetx+v_f_hpx, 120.1+v_f_globaloffsety+v_f_hpy);
+				}
+			If (GetUserCVar(PlayerNumber(), "udv_hud_drawenemytag"))
+			{
+					SetFont ("UDVSMALL");
+					HUDMessage(s:NameTag; HUDMSG_COLORSTRING | HUDMSG_FADEOUT|HUDMSG_NOWRAP|HUDMSG_NOTWITHFULLMAP, 2, "SaeHUDGr", 18.1+v_f_globaloffsetx+v_f_tagx, 130.1+v_f_globaloffsety+v_f_tagy, 0.029, 0.25); // This is drawn to the right of the bar
+			}
+
+			break;
+	}
+	
+	Return True;
+}
+
+// These 3 scripts are to insure that the statusbar is drawn
+
+Script "UDV_HUD_ScriptEnter" Enter
+{
+	ACS_NamedExecuteAlways ("UDV_HUD_Statusbar", 0, GetPlayerID(), 0, 0);
+}
+
+Script "UDV_HUD_Respawn" Respawn
+{
+	ACS_NamedExecuteAlways ("UDV_HUD_Statusbar", 0, GetPlayerID(), 0, 0);
+}
+
+Script "UDV_HUD_Return" Return
+{
+	ACS_NamedExecuteAlways ("UDV_HUD_Statusbar", 0, GetPlayerID(), 0, 0);
+}
+
+
+
+
+
+
+Script "UDV_HUD_Statusbar" (Int ActivatorID, Int Target_MaxHealth, Int Target_CurrentHealth)
+{
+
+	if ((ActivatorTID() == 0) || (ActivatorTID() != Player_TID [PlayerNumber()])) GetPlayerID ();
+	While (PlayerInGame(PlayerNumber()) && GetActorProperty (Player_TID [PlayerNumber()], AProp_Health) > 0)
+	{
+		ActivatorID = GetPlayerID();
+		if ((GetUserCVar(PlayerNumber(), "udv_hud_enemyhealthbar")) > 0 && !CheckInventory("sae_extcam") )// && !CheckInventory("sae_deathcam") )
+		{ 
+			if (SetActivatorToTarget(ActivatorID))
+			{
+				//If (!CheckInventory("sae_deathcam"))// && !CheckInventory("sae_deathcam"))
+				//{
+						//STR HeadTarget = StrLeft(GetActorClass(0), 14);
+					If( !StrICmp(GetActorClass(0), "HeadShotTarget", 14) || GetActorClass(0) == "CybersHitBox" || CheckActorProperty(0, APROP_Species, "MastermindHitbox") )//CheckActorClass(0, "HeadShotTarget200") || CheckActorClass(0, "HeadshotTarget2") || CheckActorClass(0, "HeadshotTarget4") || CheckActorClass(0, "HeadshotTarget6") || CheckActorClass(0, "HeadshotTarget8") || CheckActorClass(0, "HeadshotTarget10") || CheckActorClass(0, "HeadshotTarget20") || CheckActorClass(0, "HeadshotTarget23") || CheckActorClass(0, "HeadshotTarget30") || CheckActorClass(0, "HeadshotTarget4b") || CheckActorClass(0, "HeadshotTarget8b") )
+					{
+						STR Monster_Name = StrParam(d:random(150,175), s:StrRight("°",1), s:" C");
+						Delay(5);
+						INT Monster_TID = ActivatorTID();
+						Target_MaxHealth = 0;
+						Target_CurrentHealth = 0;
+						if (ActivatorID != ActivatorTID())
+						{
+							SetActivator(ActivatorID);
+							DrawEnemyHealthBar(Target_CurrentHealth, Target_MaxHealth, Monster_TID, Monster_Name); // I didn't want to make a huge mess here, so I made a function for it
+						}
+					}
+					else if ( ClassifyActor(0) & ACTOR_MONSTER  && ClassifyActor(0) & ACTOR_ALIVE && CheckFlag(0, "Shootable") && !CheckFlag(0, "NoDamage") && !CheckFlag(0, "Invulnerable") && !CheckActorClass(0, "ExplosiveBarrel1") ) // Monsters
+					{
+						If( GetUserCVAR(0, "udv_hud_usegeneric") && GetActorClass(0) == GetActorProperty(0, APROP_NameTag) )
+						{
+							//If(StrRight(GetActorClass(0), "4") == "_UDV") 
+							Str MClass = StrRight(GetActorClass(0),4);
+							If(!StrCmp(MClass, "_UDV"))
+							{
+								Int Length = StrLen(GetActorClass(0)) - 4;
+								Monster_Name = StrLeft(GetActorClass(0), Length);
+							}
+							Else Monster_Name = GetActorClass(0);
+						}
+						Else If( GetActorClass(0) == GetActorProperty(0, APROP_NameTag) && GetActorProperty(0, APROP_SpawnHealth) > 0 && GetActorProperty(0, APROP_SpawnHealth) < 100 )
+						{
+						Monster_Name = "Class 1 Entity";
+						}
+						Else If( GetActorClass(0) == GetActorProperty(0, APROP_NameTag) && GetActorProperty(0, APROP_SpawnHealth) >= 100 && GetActorProperty(0, APROP_SpawnHealth) < 150 )
+						{
+						Monster_Name = "Class 2 Entity";
+						}
+						Else If( GetActorClass(0) == GetActorProperty(0, APROP_NameTag) && GetActorProperty(0, APROP_SpawnHealth) >= 150 && GetActorProperty(0, APROP_SpawnHealth) < 321 )
+						{
+						Monster_Name = "Class 3 Entity";
+						}
+						Else If( GetActorClass(0) == GetActorProperty(0, APROP_NameTag) && GetActorProperty(0, APROP_SpawnHealth) >= 321 && GetActorProperty(0, APROP_SpawnHealth) < 551 )
+						{
+						Monster_Name = "Class 4 Entity";
+						}
+						Else If( GetActorClass(0) == GetActorProperty(0, APROP_NameTag) && GetActorProperty(0, APROP_SpawnHealth) >= 551 && GetActorProperty(0, APROP_SpawnHealth) < 801 )
+						{
+						Monster_Name = "Class 5 Entity";
+						}
+						Else If( GetActorClass(0) == GetActorProperty(0, APROP_NameTag) && GetActorProperty(0, APROP_SpawnHealth) >= 801 && GetActorProperty(0, APROP_SpawnHealth) < 1101 )
+						{
+						Monster_Name = "Class 6 Entity";
+						}
+						Else If( GetActorClass(0) == GetActorProperty(0, APROP_NameTag) && GetActorProperty(0, APROP_SpawnHealth) >= 1101 && GetActorProperty(0, APROP_SpawnHealth) < 4001 )
+						{
+						Monster_Name = "Class 7 Entity";
+						}
+						Else If( GetActorClass(0) == GetActorProperty(0, APROP_NameTag) && GetActorProperty(0, APROP_SpawnHealth) >= 4001 )
+						{
+						Monster_Name = "Class 8 Entity";
+						}
+						Else
+						{
+						Monster_Name = GetActorProperty(0, APROP_NameTag);
+						}
+						Monster_TID = ActivatorTID();
+						Target_MaxHealth = GetActorProperty (0, AProp_SpawnHealth);
+						Target_CurrentHealth = GetActorProperty (0, AProp_Health);
+						if (ActivatorID != ActivatorTID())
+						{
+							SetActivator(ActivatorID);
+							//PrintBold(d:CheckInventory("sae_extcam"));
+							DrawEnemyHealthBar(Target_CurrentHealth, Target_MaxHealth, Monster_TID, Monster_Name); // I didn't want to make a huge mess here, so I made a function for it
+						}
+					}
+					else if (ClassifyActor(0) & ACTOR_PLAYER && ClassifyActor(0) & ACTOR_ALIVE) // Players/bots
+					{
+						Monster_Name = GetActorProperty(0, APROP_NameTag);
+						Str Player_Name = GetCVarString("Name");
+						Target_MaxHealth = GetActorProperty(0, AProp_SpawnHealth);
+						Target_CurrentHealth = GetActorProperty(0, AProp_Health);
+						
+						// hacks to work around player health
+						// apparently players have a default max health of 0
+						if (Target_MaxHealth == 0)
+						{
+							if (Target_CurrentHealth > 100)
+								Target_MaxHealth = Target_CurrentHealth;
+							else
+								Target_MaxHealth = 100;
+						}
+						SetActivator(ActivatorID);
+						DrawEnemyHealthBar(Target_CurrentHealth, Target_MaxHealth, Player_Name, Player_Name);
+					}
+					else
+					{
+					SetActivator (ActivatorID);
+					}
+				//}
+			Delay (1);
+			}
+			else
+			{
+				SetActivator (ActivatorID);
+			}
+		}
+
+		Delay (1); // Prevents runaway script
+	}
+	Delay (1);
+	Restart;
+}

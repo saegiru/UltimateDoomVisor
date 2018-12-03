@@ -1,0 +1,704 @@
+ACTOR UDV_NoDam : Inventory {}
+ACTOR UDV_10Dam : Inventory {}
+ACTOR UDV_20Dam : Inventory {}
+ACTOR UDV_30Dam : Inventory {}
+ACTOR UDV_40Dam : Inventory {}
+ACTOR UDV_50Dam : Inventory {}
+ACTOR UDV_60Dam : Inventory {}
+ACTOR UDV_70Dam : Inventory {}
+ACTOR UDV_80Dam : Inventory {}
+ACTOR UDV_90Dam : Inventory {}
+ACTOR UDV_100Dam : Inventory {}
+ACTOR UDV_110Dam : Inventory {}
+ACTOR UDV_120Dam : Inventory {}
+ACTOR UDV_130Dam : Inventory {}
+ACTOR UDV_140Dam : Inventory {}
+ACTOR UDV_150Dam : Inventory {}
+ACTOR UDV_160Dam : Inventory {}
+ACTOR UDV_170Dam : Inventory {}
+ACTOR UDV_180Dam : Inventory {}
+ACTOR UDV_190Dam : Inventory {}
+ACTOR UDV_200Dam : Inventory {}
+ACTOR UDV_MAXDam : Inventory {}
+
+
+ACTOR UDV_NoDamage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_GiveInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_10Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_GiveInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_20Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_30Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_40Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_50Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_60Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_70Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_80Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_90Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_100Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_110Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+ 	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+   Stop
+  }
+}
+
+ACTOR UDV_120Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_130Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_140Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_150Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_160Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_170Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_180Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+ACTOR UDV_190Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_200Damage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_GiveInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}
+
+ACTOR UDV_MAXDamage : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_GiveInventory("UDV_MAXDam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_200Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_190Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_180Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_170Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_160Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_150Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_140Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_130Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_120Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_110Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_100Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_90Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_80Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_70Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_60Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_50Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_40Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_30Dam", 1)
+    TNT1 A 0 A_TakeInventory("UDV_20Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_10Dam", 1)
+	TNT1 A 0 A_TakeInventory("UDV_NoDam", 1)
+    Stop
+  }
+}

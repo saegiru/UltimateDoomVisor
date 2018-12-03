@@ -1,0 +1,154 @@
+// These items are for the "highlight" feature for the
+// all-ammo/reserve ammo display. By default it supports
+// 30 ammo types. The first four (0-3) are reserved by
+// default for Doom's 4 ammunition types. The rest (4-29)
+// are for custom ammo types. If you require more than 30
+// ammo types for some reason, just increase the count by
+// making more items.
+
+
+ACTOR sae_Secondary : Inventory {}
+ACTOR sae_known : Inventory {}
+ACTOR sae_Melee : Inventory {}
+ACTOR UDV_SecAmmoCap : Inventory {}
+
+ACTOR sae_ReserveAmmo0 : Inventory {} // Clip
+ACTOR sae_ReserveAmmo1 : Inventory {} // Shell
+ACTOR sae_ReserveAmmo2 : Inventory {} // RocketAmmo
+ACTOR sae_ReserveAmmo3 : Inventory {} // Cell
+
+ACTOR sae_ReserveAmmo4 : Inventory {}
+ACTOR sae_ReserveAmmo5 : Inventory {}
+ACTOR sae_ReserveAmmo6 : Inventory {}
+ACTOR sae_ReserveAmmo7 : Inventory {}
+ACTOR sae_ReserveAmmo8 : Inventory {}
+ACTOR sae_ReserveAmmo9 : Inventory {}
+ACTOR sae_ReserveAmmo10 : Inventory {}
+ACTOR sae_ReserveAmmo11 : Inventory {}
+ACTOR sae_ReserveAmmo12 : Inventory {}
+ACTOR sae_ReserveAmmo13 : Inventory {}
+ACTOR sae_ReserveAmmo14 : Inventory {}
+ACTOR sae_ReserveAmmo15 : Inventory {}
+ACTOR sae_ReserveAmmo16 : Inventory {}
+ACTOR sae_ReserveAmmo17 : Inventory {}
+ACTOR sae_ReserveAmmo18 : Inventory {}
+ACTOR sae_ReserveAmmo19 : Inventory {}
+ACTOR sae_ReserveAmmo20 : Inventory {}
+ACTOR sae_ReserveAmmo21 : Inventory {}
+ACTOR sae_ReserveAmmo22 : Inventory {}
+ACTOR sae_ReserveAmmo23 : Inventory {}
+ACTOR sae_ReserveAmmo24 : Inventory {}
+ACTOR sae_ReserveAmmo25 : Inventory {}
+ACTOR sae_ReserveAmmo26 : Inventory {}
+ACTOR sae_ReserveAmmo27 : Inventory {}
+ACTOR sae_ReserveAmmo28 : Inventory {}
+ACTOR sae_ReserveAmmo29 : Inventory {}
+
+//---------------------------------------------------------
+
+ACTOR sae_PrimaryAmmoGreen : Inventory {}
+ACTOR sae_PrimaryAmmoYellow : Inventory {}
+ACTOR sae_PrimaryAmmoRed : Inventory {}
+ACTOR sae_PrimaryAmmoEmpty : Inventory {}
+
+ACTOR sae_SecondaryAmmoGreen : Inventory {}
+ACTOR sae_SecondaryAmmoYellow : Inventory {}
+ACTOR sae_SecondaryAmmoRed : Inventory {}
+
+ACTOR NoPrimary : Ammo {}
+ACTOR NoSecondary : Ammo {}
+
+//---------------------------------------------------------
+
+ACTOR sae_PrimaryAmmoOk : CustomInventory
+{
+  States
+  {
+  Pickup:
+	TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoEmpty", 1)
+    TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoRed", 1)
+    TNT1 A 0 A_GiveInventory("sae_PrimaryAmmoGreen", 1)
+    Stop
+  }
+}
+
+ACTOR sae_PrimaryAmmoLow : CustomInventory
+{
+  States
+  {
+  Pickup:
+	TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoEmpty", 1)
+    TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoRed", 1)
+    TNT1 A 0 A_GiveInventory("sae_PrimaryAmmoYellow", 1)
+    Stop
+  }
+}
+
+ACTOR sae_PrimaryAmmoVeryLow : CustomInventory
+{
+  States
+  {
+  Pickup:
+	TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoEmpty", 1)
+    TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoYellow", 1)
+    TNT1 A 0 A_GiveInventory("sae_PrimaryAmmoRed", 1)
+    Stop
+  }
+}
+
+ACTOR sae_PAE : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_PrimaryAmmoYellow", 1)
+    TNT1 A 0 A_GiveInventory("sae_PrimaryAmmoRed", 1)
+	TNT1 A 0 A_GiveInventory("sae_PrimaryAmmoEmpty", 1)
+    Stop
+  }
+}
+
+
+//---------------------------------------------------------
+
+ACTOR sae_SecondaryAmmoOk : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_SecondaryAmmoYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_SecondaryAmmoRed", 1)
+    TNT1 A 0 A_GiveInventory("sae_SecondaryAmmoGreen", 1)
+    Stop
+  }
+}
+
+ACTOR sae_SecondaryAmmoLow : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_SecondaryAmmoGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_SecondaryAmmoRed", 1)
+    TNT1 A 0 A_GiveInventory("sae_SecondaryAmmoYellow", 1)
+    Stop
+  }
+}
+
+ACTOR sae_SecondaryAmmoVeryLow : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_SecondaryAmmoGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_SecondaryAmmoYellow", 1)
+    TNT1 A 0 A_GiveInventory("sae_SecondaryAmmoRed", 1)
+    Stop
+  }
+}
+
+ACTOR sae_SAE : CustomInventory {} // Unused

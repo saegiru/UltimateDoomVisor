@@ -1,0 +1,23 @@
+WildWeasel for the original Doomguy Visor
+Blue Shadow and his NC Hud for the initial ammo counters
+2800fps for his beautiful artwork on the much higher res version of the original Doomguy Visor
+SidDoyle for Sneaky Doom (the flashlight and Dark Doom)
+jpalomo for the enemy health bar (JP HUD)
+cybermind for the radar
+Lightsource for the Alternate Visor graphics
+Yamil for the Alternate Visor 2 graphics
+Whoever made Weapon Wheel - for the idea to combine the weapon modules and game checker capability.
+
+Countless zdoom posts and the ZDoom wiki for all the learnin'!
+
+Inspiration for the entire HUD itself to Sgt. Mark IV, PA1NKILL3R, and Quaker540! Your mods made me care enough about Brutal Doom to ever bother making this. To think this
+all spawned out of wanting to have a grenade counter...
+
+Thank you so much everyone!
+
+Feel free to modify and use anything in my HUD... make something better, give me ideas, or make your own kickass HUD! This is all about enjoying the game and having fun!
+
+saegiru
+
+http://www.moddb.com/members/saegiru
+

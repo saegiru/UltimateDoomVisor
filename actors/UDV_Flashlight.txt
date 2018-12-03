@@ -1,0 +1,60 @@
+ACTOR UDVFlashLightBeam
+{
+	-SOLID
+	+CANPASS
+	+FLOORCLIP
+	+FLOAT
+	+NOGRAVITY
+	+DONTSPLASH
+	+THRUACTORS
+	+NOTRIGGER
+	+NOBLOCKMAP
+	+NOCLIP
+	+NOTIMEFREEZE
+	Renderstyle None
+	Radius 0
+	Height 0
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 //A_AlertMonsters(0)
+		Stop
+	}
+}
+
+ACTOR UDVFlashLightGlow : UDVFlashLightBeam
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 ABC 1 
+		Stop
+	}
+}
+
+ACTOR UDVFlashLightBeam1 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam2 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam3 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam4 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam5 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam6 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam7 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam8 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam9 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam10 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam11 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam12 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam13 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam14 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam15 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam16 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam17 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam18 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam19 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam20 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam21 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam22 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam23 : UDVFlashLightBeam {}
+ACTOR UDVFlashLightBeam24 : UDVFlashLightBeam {}

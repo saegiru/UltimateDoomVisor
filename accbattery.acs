@@ -1,0 +1,76 @@
+#library "accbattery"
+#include "zcommon.acs"
+
+#define BATTMAX 35 //Defines the maximum seconds between battery tics
+
+global int 44:accbattery[];
+
+Script "AccBattery" Enter
+{
+	accbattery[PlayerNumber()] = 0;
+	Delay(5);
+	int battamt; // amount to subtract from battmax
+	int battcurr; // current seconds until next battery tic
+	int bloop; // loop counter for battery depleted message
+	While(True)
+	{
+		//Print(d:accbattery[PlayerNumber()]);
+		//Get initial battery
+			//Print(d:accbattery[PlayerNumber()]);
+		If(accbattery[PlayerNumber()] == 1)	battamt = 5 ; // Visual Radar
+		Else If(accbattery[PlayerNumber()] == 2) battamt = 10 ; // Movement Radar
+		Else If(accbattery[PlayerNumber()] == 3) battamt = 15 ; // Full Radar
+		Else If(accbattery[PlayerNumber()] == 4) battamt = 15 ; // Light
+		Else If(accbattery[PlayerNumber()] == 5) battamt = 20 ; // Visual + Light
+		Else If(accbattery[PlayerNumber()] == 6) battamt = 25 ; // Movement + Light
+		Else If(accbattery[PlayerNumber()] == 7) battamt = 30 ; // Full + Light
+		Else battamt = BATTMAX;
+		battcurr = BATTMAX - battamt;
+		//Do battery tic loop
+		for (int i; i < battcurr; i++)
+		{
+			//Print(d:accbattery[PlayerNumber()]);
+			If(accbattery[PlayerNumber()] == 1)	battamt = 5 ; // Visual Radar
+			Else If(accbattery[PlayerNumber()] == 2) battamt = 10 ; // Movement Radar
+			Else If(accbattery[PlayerNumber()] == 3) battamt = 15 ; // Full Radar
+			Else If(accbattery[PlayerNumber()] == 4) battamt = 15 ; // Light
+			Else If(accbattery[PlayerNumber()] == 5) battamt = 20 ; // Visual + Light
+			Else If(accbattery[PlayerNumber()] == 6) battamt = 25 ; // Movement + Light
+			Else If(accbattery[PlayerNumber()] == 7) battamt = 30 ; // Full + Light
+			Else battamt = BATTMAX;
+			battcurr = BATTMAX - battamt;
+			Delay(35);
+		}
+		If(battcurr > 0) TakeInventory("udv_accbattery", 1);
+		i = 0;
+		//Accessory Battery Monitor
+		If(!CheckInventory("udv_accbattery") && GameType() != GAME_TITLE_MAP )
+		{
+			Until(bloop > 0)
+			{
+			LocalAmbientSound("GenAlert", 127);
+			Print(s:"Accessory Battery Depleted");
+			bloop++;
+			}
+		}
+		Else bloop = 0;
+		Delay(1);
+	}
+
+}
+
+Script "CheckForPower" (void)
+{
+int power_disabled = (!GetCVar("udv_lightpower") && !GetCVar("udv_EMSBattery") && !GetCVar("udv_radarpower"));
+If(power_disabled) SetResultValue(1);
+Else SetResultValue(0);
+}
+
+Script "Disable_Power" (void)
+{
+	SetCVAR("udv_lightpower", 0);
+	SetCVAR("udv_EMSBattery", 0);
+	SetCVAR("udv_radarpower", 0);
+	SetCVAR("udv_spawnbattery", 0);
+	SetCVAR("UDV_ToolArmor", 0);
+}

@@ -1,0 +1,13 @@
+CHOKE CHOKE
+INHALE INHALE
+DANGER DANGER
+DROP1 DROP1
+DROP2 DROP2
+DROP3 DROP3
+
+//$playersound           player  male    *death-drowning    CHOKE
+
+
+$random player/randomair { drop1 drop2 drop3  }
+   
+$playeralias	player	male	*death-drowning	player/randomair 

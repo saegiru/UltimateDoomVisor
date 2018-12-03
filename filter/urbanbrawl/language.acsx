@@ -1,0 +1,4 @@
+[enu default]
+GAME_TITLE  = "Action Doom 2: Urban Brawl";
+GAME_ID     = "URBANBRAWL";
+BASEGAME_ID = "URBANBRAWL";

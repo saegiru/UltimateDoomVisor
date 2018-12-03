@@ -1,0 +1,31 @@
+pulselight NanoBlue
+{
+    color 0.1 0.1 1.0
+    size 14
+    secondarySize 16
+    interval 0.25
+    offset 0 5 0
+}
+
+
+object UDV_NanoStim
+{
+    frame NANO { light NanoBlue }
+}
+
+brightmap sprite SSTIA0
+{
+	map "brightmaps/doom/SSTIA0.png"
+	//[thiswad]
+}
+
+brightmap sprite SKITA0
+{
+	map "brightmaps/doom/SKITA0.png"
+	//[thiswad]
+}
+
+brightmap sprite MSTIA0
+{
+	map "brightmaps/doom/MSTIA0.png"
+}

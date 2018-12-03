@@ -1,0 +1,1483 @@
+//Radar by cybermind
+#library "UDVRadar"
+#import "Aspect.acs"
+#include "zcommon.acs"
+
+int pid=1000000;
+int tidcounter=-32767;
+int count=0;
+int mode=2;
+global int 1:kx[];
+global int 2:ky[];
+global int 3:kz[];
+
+//Names list for Enemy Health Bar
+#define D_NUMBEROFNAMES	1000  //number of names in list
+str sae_nameslist[D_NUMBEROFNAMES][2] =
+{
+	{"Smith",		"Pvt."},
+	{"Johnson",		"PFC."},
+	{"Williams",	"Lcpl."},
+	{"Brown",		"Cpl."},
+	{"Jones",		"Sgt."},
+	{"Miller",		"SSgt."},
+	{"Davis",		"GySgt."},
+	{"Garcia",		"1stSg."},
+	{"Rodriguez",	"MSgt."},
+	{"Wilson",		"MGySg."},
+	{"Martinez",	"SgtMa."},
+	{"Anderson",	"SgtMa."},
+	{"Taylor",		"WO1."},
+	{"Thomas",		"CW2."},
+	{"Hernandez",	"CW3."},
+	{"Moore",		"CW4."},
+	{"Martin",		"CW5."},
+	{"Jackson",		"2ndLt."},
+	{"Thompson",	"1stLt."},
+	{"White",		"Capt."},
+	{"Lopez",		"Maj."},
+	{"Lee",			"LtCol."},
+	{"Gonzalez",	"Col."},
+	{"Harris",		"BGen."},
+	{"Clark",		"MajGen."},
+	{"Lewis",		"LtGen."},
+	{"Robinson",	"Gen."},
+	{"Walker",		"Dr."},
+	{"Perez",		"Mr."},
+	{"Hall",		"Scutze"},
+	{"Young",		"Oberschutze"},
+	{"Allen",		"Gefreiter"},
+	{"Sanchez",		"Obergefreiter"},
+	{"Wright",		"Stabsgefreiter"},
+	{"King",		"Leutnant"},
+	{"Scott",		"Oberleutnant"},
+	{"Green",		"Hauptmann"},
+	{"Baker",		"Major"},
+	{"Adams",	"Oberstleutnant"},
+	{"Nelson",	"Oberst"},
+	{"Hill",	"Generalmajor"},
+	{"Ramirez",	"Generalleutnant"},
+	{"Campbell",	"Generalder Infanterie"},
+	{"Mitchell",	"Generaloberst"},
+	{"Roberts",	"Generalfeldmarschall"},
+	{"Carter",	"None."},
+	{"Phillips",	"None."},
+	{"Evans",	"None."},
+	{"Turner",	"None."},
+	{"Torres",	"None."},
+	{"Parker",	"None."},
+	{"Collins",	"None."},
+	{"Edwards",	"None."},
+	{"Stewart",	"None."},
+	{"Flores",	"None."},
+	{"Morris",	"None."},
+	{"Nguyen",	"None."},
+	{"Murphy",	"None."},
+	{"Rivera",	"None."},
+	{"Cook",	"None."},
+	{"Rogers",	"None."},
+	{"Morgan",	"None."},
+	{"Peterson",	"None."},
+	{"Cooper",	"None."},
+	{"Reed",	"None."},
+	{"Bailey",	"None."},
+	{"Bell",	"None."},
+	{"Gomez",	"None."},
+	{"Kelly",	"None."},
+	{"Howard",	"None."},
+	{"Ward",	"None."},
+	{"Cox",	"None."},
+	{"Diaz",	"None."},
+	{"Richardson",	"None."},
+	{"Wood",	"None."},
+	{"Watson",	"None."},
+	{"Brooks",	"None."},
+	{"Bennett",	"None."},
+	{"Gray",	"None."},
+	{"James",	"None."},
+	{"Reyes",	"None."},
+	{"Cruz",	"None."},
+	{"Hughes",	"None."},
+	{"Price",	"None."},
+	{"Myers",	"None."},
+	{"Long",	"None."},
+	{"Foster",	"None."},
+	{"Sanders",	"None."},
+	{"Ross",	"None."},
+	{"Morales",	"None."},
+	{"Powell",	"None."},
+	{"Sullivan",	"None."},
+	{"Russell",	"None."},
+	{"Ortiz",	"None."},
+	{"Jenkins",	"None."},
+	{"Gutierrez",	"None."},
+	{"Perry",	"None."},
+	{"Butler",	"None."},
+	{"Barnes",	"None."},
+	{"Fisher",	"None."},
+	{"Henderson",	"None."},
+	{"Coleman",	"None."},
+	{"Simmons",	"None."},
+	{"Patterson",	"None."},
+	{"Jordan",	"None."},
+	{"Reynolds",	"None."},
+	{"Hamilton",	"None."},
+	{"Graham",	"None."},
+	{"Kim",	"None."},
+	{"Gonzales",	"None."},
+	{"Alexander",	"None."},
+	{"Ramos",	"None."},
+	{"Wallace",	"None."},
+	{"Griffin",	"None."},
+	{"West",	"None."},
+	{"Cole",	"None."},
+	{"Hayes",	"None."},
+	{"Chavez",	"None."},
+	{"Gibson",	"None."},
+	{"Bryant",	"None."},
+	{"Ellis",	"None."},
+	{"Stevens",	"None."},
+	{"Murray",	"None."},
+	{"Ford",	"None."},
+	{"Marshall",	"None."},
+	{"Owens",	"None."},
+	{"Mcdonald",	"None."},
+	{"Harrison",	"None."},
+	{"Ruiz",	"None."},
+	{"Kennedy",	"None."},
+	{"Wells",	"None."},
+	{"Alvarez",	"None."},
+	{"Woods",	"None."},
+	{"Mendoza",	"None."},
+	{"Castillo",	"None."},
+	{"Olson",	"None."},
+	{"Webb",	"None."},
+	{"Washington",	"None."},
+	{"Tucker",	"None."},
+	{"Freeman",	"None."},
+	{"Burns",	"None."},
+	{"Henry",	"None."},
+	{"Vasquez",	"None."},
+	{"Snyder",	"None."},
+	{"Simpson",	"None."},
+	{"Crawford",	"None."},
+	{"Jimenez",	"None."},
+	{"Porter",	"None."},
+	{"Mason",	"None."},
+	{"Shaw",	"None."},
+	{"Gordon",	"None."},
+	{"Wagner",	"None."},
+	{"Hunter",	"None."},
+	{"Romero",	"None."},
+	{"Hicks",	"None."},
+	{"Dixon",	"None."},
+	{"Hunt",	"None."},
+	{"Palmer",	"None."},
+	{"Robertson",	"None."},
+	{"Black",	"None."},
+	{"Holmes",	"None."},
+	{"Stone",	"None."},
+	{"Meyer",	"None."},
+	{"Boyd",	"None."},
+	{"Mills",	"None."},
+	{"Warren",	"None."},
+	{"Fox",	"None."},
+	{"Rose",	"None."},
+	{"Rice",	"None."},
+	{"Moreno",	"None."},
+	{"Schmidt",	"None."},
+	{"Patel",	"None."},
+	{"Ferguson",	"None."},
+	{"Nichols",	"None."},
+	{"Herrera",	"None."},
+	{"Medina",	"None."},
+	{"Ryan",	"None."},
+	{"Fernandez",	"None."},
+	{"Weaver",	"None."},
+	{"Daniels",	"None."},
+	{"Stephens",	"None."},
+	{"Gardner",	"None."},
+	{"Payne",	"None."},
+	{"Kelley",	"None."},
+	{"Dunn",	"None."},
+	{"Pierce",	"None."},
+	{"Arnold",	"None."},
+	{"Tran",	"None."},
+	{"Spencer",	"None."},
+	{"Peters",	"None."},
+	{"Hawkins",	"None."},
+	{"Grant",	"None."},
+	{"Hansen",	"None."},
+	{"Castro",	"None."},
+	{"Hoffman",	"None."},
+	{"Hart",	"None."},
+	{"Elliott",	"None."},
+	{"Cunningham",	"None."},
+	{"Knight",	"None."},
+	{"Bradley",	"None."},
+	{"Carroll",	"None."},
+	{"Hudson",	"None."},
+	{"Duncan",	"None."},
+	{"Armstrong",	"None."},
+	{"Berry",	"None."},
+	{"Andrews",	"None."},
+	{"Johnston",	"None."},
+	{"Ray",	"None."},
+	{"Lane",	"None."},
+	{"Riley",	"None."},
+	{"Carpenter",	"None."},
+	{"Perkins",	"None."},
+	{"Aguilar",	"None."},
+	{"Silva",	"None."},
+	{"Richards",	"None."},
+	{"Willis",	"None."},
+	{"Matthews",	"None."},
+	{"Chapman",	"None."},
+	{"Lawrence",	"None."},
+	{"Garza",	"None."},
+	{"Vargas",	"None."},
+	{"Watkins",	"None."},
+	{"Wheeler",	"None."},
+	{"Larson",	"None."},
+	{"Carlson",	"None."},
+	{"Harper",	"None."},
+	{"George",	"None."},
+	{"Greene",	"None."},
+	{"Burke",	"None."},
+	{"Guzman",	"None."},
+	{"Morrison",	"None."},
+	{"Munoz",	"None."},
+	{"Jacobs",	"None."},
+	{"Obrien",	"None."},
+	{"Lawson",	"None."},
+	{"Franklin",	"None."},
+	{"Lynch",	"None."},
+	{"Bishop",	"None."},
+	{"Carr",	"None."},
+	{"Salazar",	"None."},
+	{"Austin",	"None."},
+	{"Mendez",	"None."},
+	{"Gilbert",	"None."},
+	{"Jensen",	"None."},
+	{"Williamson",	"None."},
+	{"Montgomery",	"None."},
+	{"Harvey",	"None."},
+	{"Oliver",	"None."},
+	{"Howell",	"None."},
+	{"Dean",	"None."},
+	{"Hanson",	"None."},
+	{"Weber",	"None."},
+	{"Garrett",	"None."},
+	{"Sims",	"None."},
+	{"Burton",	"None."},
+	{"Fuller",	"None."},
+	{"Soto",	"None."},
+	{"Mccoy",	"None."},
+	{"Welch",	"None."},
+	{"Chen",	"None."},
+	{"Schultz",	"None."},
+	{"Walters",	"None."},
+	{"Reid",	"None."},
+	{"Fields",	"None."},
+	{"Walsh",	"None."},
+	{"Little",	"None."},
+	{"Fowler",	"None."},
+	{"Bowman",	"None."},
+	{"Davidson",	"None."},
+	{"May",	"None."},
+	{"Day",	"None."},
+	{"Schneider",	"None."},
+	{"Newman",	"None."},
+	{"Brewer",	"None."},
+	{"Lucas",	"None."},
+	{"Holland",	"None."},
+	{"Wong",	"None."},
+	{"Banks",	"None."},
+	{"Santos",	"None."},
+	{"Curtis",	"None."},
+	{"Pearson",	"None."},
+	{"Delgado",	"None."},
+	{"Valdez",	"None."},
+	{"Pena",	"None."},
+	{"Rios",	"None."},
+	{"Douglas",	"None."},
+	{"Sandoval",	"None."},
+	{"Barrett",	"None."},
+	{"Hopkins",	"None."},
+	{"Keller",	"None."},
+	{"Guerrero",	"None."},
+	{"Stanley",	"None."},
+	{"Bates",	"None."},
+	{"Alvarado",	"None."},
+	{"Beck",	"None."},
+	{"Ortega",	"None."},
+	{"Wade",	"None."},
+	{"Estrada",	"None."},
+	{"Contreras",	"None."},
+	{"Barnett",	"None."},
+	{"Caldwell",	"None."},
+	{"Santiago",	"None."},
+	{"Lambert",	"None."},
+	{"Powers",	"None."},
+	{"Chambers",	"None."},
+	{"Nunez",	"None."},
+	{"Craig",	"None."},
+	{"Leonard",	"None."},
+	{"Lowe",	"None."},
+	{"Rhodes",	"None."},
+	{"Byrd",	"None."},
+	{"Gregory",	"None."},
+	{"Shelton",	"None."},
+	{"Frazier",	"None."},
+	{"Becker",	"None."},
+	{"Maldonado",	"None."},
+	{"Fleming",	"None."},
+	{"Vega",	"None."},
+	{"Sutton",	"None."},
+	{"Cohen",	"None."},
+	{"Jennings",	"None."},
+	{"Parks",	"None."},
+	{"Mcdaniel",	"None."},
+	{"Watts",	"None."},
+	{"Barker",	"None."},
+	{"Norris",	"None."},
+	{"Vaughn",	"None."},
+	{"Vazquez",	"None."},
+	{"Holt",	"None."},
+	{"Schwartz",	"None."},
+	{"Steele",	"None."},
+	{"Benson",	"None."},
+	{"Neal",	"None."},
+	{"Dominguez",	"None."},
+	{"Horton",	"None."},
+	{"Terry",	"None."},
+	{"Wolfe",	"None."},
+	{"Hale",	"None."},
+	{"Lyons",	"None."},
+	{"Graves",	"None."},
+	{"Haynes",	"None."},
+	{"Miles",	"None."},
+	{"Park",	"None."},
+	{"Warner",	"None."},
+	{"Padilla",	"None."},
+	{"Bush",	"None."},
+	{"Thornton",	"None."},
+	{"Mccarthy",	"None."},
+	{"Mann",	"None."},
+	{"Zimmerman",	"None."},
+	{"Erickson",	"None."},
+	{"Fletcher",	"None."},
+	{"Mckinney",	"None."},
+	{"Page",	"None."},
+	{"Dawson",	"None."},
+	{"Joseph",	"None."},
+	{"Marquez",	"None."},
+	{"Reeves",	"None."},
+	{"Klein",	"None."},
+	{"Espinoza",	"None."},
+	{"Baldwin",	"None."},
+	{"Moran",	"None."},
+	{"Love",	"None."},
+	{"Robbins",	"None."},
+	{"Higgins",	"None."},
+	{"Ball",	"None."},
+	{"Cortez",	"None."},
+	{"Le",	"None."},
+	{"Griffith",	"None."},
+	{"Bowen",	"None."},
+	{"Sharp",	"None."},
+	{"Cummings",	"None."},
+	{"Ramsey",	"None."},
+	{"Hardy",	"None."},
+	{"Swanson",	"None."},
+	{"Barber",	"None."},
+	{"Acosta",	"None."},
+	{"Luna",	"None."},
+	{"Chandler",	"None."},
+	{"Blair",	"None."},
+	{"Daniel",	"None."},
+	{"Cross",	"None."},
+	{"Simon",	"None."},
+	{"Dennis",	"None."},
+	{"Oconnor",	"None."},
+	{"Quinn",	"None."},
+	{"Gross",	"None."},
+	{"Navarro",	"None."},
+	{"Moss",	"None."},
+	{"Fitzgerald",	"None."},
+	{"Doyle",	"None."},
+	{"Mclaughlin",	"None."},
+	{"Rojas",	"None."},
+	{"Rodgers",	"None."},
+	{"Stevenson",	"None."},
+	{"Singh",	"None."},
+	{"Yang",	"None."},
+	{"Figueroa",	"None."},
+	{"Harmon",	"None."},
+	{"Newton",	"None."},
+	{"Paul",	"None."},
+	{"Manning",	"None."},
+	{"Garner",	"None."},
+	{"Mcgee",	"None."},
+	{"Reese",	"None."},
+	{"Francis",	"None."},
+	{"Burgess",	"None."},
+	{"Adkins",	"None."},
+	{"Goodman",	"None."},
+	{"Curry",	"None."},
+	{"Brady",	"None."},
+	{"Christensen",	"None."},
+	{"Potter",	"None."},
+	{"Walton",	"None."},
+	{"Goodwin",	"None."},
+	{"Mullins",	"None."},
+	{"Molina",	"None."},
+	{"Webster",	"None."},
+	{"Fischer",	"None."},
+	{"Campos",	"None."},
+	{"Avila",	"None."},
+	{"Sherman",	"None."},
+	{"Todd",	"None."},
+	{"Chang",	"None."},
+	{"Blake",	"None."},
+	{"Malone",	"None."},
+	{"Wolf",	"None."},
+	{"Hodges",	"None."},
+	{"Juarez",	"None."},
+	{"Gill",	"None."},
+	{"Farmer",	"None."},
+	{"Hines",	"None."},
+	{"Gallagher",	"None."},
+	{"Duran",	"None."},
+	{"Hubbard",	"None."},
+	{"Cannon",	"None."},
+	{"Miranda",	"None."},
+	{"Wang",	"None."},
+	{"Saunders",	"None."},
+	{"Tate",	"None."},
+	{"Mack",	"None."},
+	{"Hammond",	"None."},
+	{"Carrillo",	"None."},
+	{"Townsend",	"None."},
+	{"Wise",	"None."},
+	{"Ingram",	"None."},
+	{"Barton",	"None."},
+	{"Mejia",	"None."},
+	{"Ayala",	"None."},
+	{"Schroeder",	"None."},
+	{"Hampton",	"None."},
+	{"Rowe",	"None."},
+	{"Parsons",	"None."},
+	{"Frank",	"None."},
+	{"Waters",	"None."},
+	{"Strickland",	"None."},
+	{"Osborne",	"None."},
+	{"Maxwell",	"None."},
+	{"Chan",	"None."},
+	{"Deleon",	"None."},
+	{"Norman",	"None."},
+	{"Harrington",	"None."},
+	{"Casey",	"None."},
+	{"Patton",	"None."},
+	{"Logan",	"None."},
+	{"Bowers",	"None."},
+	{"Mueller",	"None."},
+	{"Glover",	"None."},
+	{"Floyd",	"None."},
+	{"Hartman",	"None."},
+	{"Buchanan",	"None."},
+	{"Cobb",	"None."},
+	{"French",	"None."},
+	{"Kramer",	"None."},
+	{"Mccormick",	"None."},
+	{"Clarke",	"None."},
+	{"Tyler",	"None."},
+	{"Gibbs",	"None."},
+	{"Moody",	"None."},
+	{"Conner",	"None."},
+	{"Sparks",	"None."},
+	{"Mcguire",	"None."},
+	{"Leon",	"None."},
+	{"Bauer",	"None."},
+	{"Norton",	"None."},
+	{"Pope",	"None."},
+	{"Flynn",	"None."},
+	{"Hogan",	"None."},
+	{"Robles",	"None."},
+	{"Salinas",	"None."},
+	{"Yates",	"None."},
+	{"Lindsey",	"None."},
+	{"Lloyd",	"None."},
+	{"Marsh",	"None."},
+	{"Mcbride",	"None."},
+	{"Owen",	"None."},
+	{"Solis",	"None."},
+	{"Pham",	"None."},
+	{"Lang",	"None."},
+	{"Pratt",	"None."},
+	{"Lara",	"None."},
+	{"Brock",	"None."},
+	{"Ballard",	"None."},
+	{"Trujillo",	"None."},
+	{"Shaffer",	"None."},
+	{"Drake",	"None."},
+	{"Roman",	"None."},
+	{"Aguirre",	"None."},
+	{"Morton",	"None."},
+	{"Stokes",	"None."},
+	{"Lamb",	"None."},
+	{"Pacheco",	"None."},
+	{"Patrick",	"None."},
+	{"Cochran",	"None."},
+	{"Shepherd",	"None."},
+	{"Cain",	"None."},
+	{"Burnett",	"None."},
+	{"Hess",	"None."},
+	{"Li",	"None."},
+	{"Cervantes",	"None."},
+	{"Olsen",	"None."},
+	{"Briggs",	"None."},
+	{"Ochoa",	"None."},
+	{"Cabrera",	"None."},
+	{"Velasquez",	"None."},
+	{"Montoya",	"None."},
+	{"Roth",	"None."},
+	{"Meyers",	"None."},
+	{"Cardenas",	"None."},
+	{"Fuentes",	"None."},
+	{"Weiss",	"None."},
+	{"Hoover",	"None."},
+	{"Wilkins",	"None."},
+	{"Nicholson",	"None."},
+	{"Underwood",	"None."},
+	{"Short",	"None."},
+	{"Carson",	"None."},
+	{"Morrow",	"None."},
+	{"Colon",	"None."},
+	{"Holloway",	"None."},
+	{"Summers",	"None."},
+	{"Bryan",	"None."},
+	{"Petersen",	"None."},
+	{"Mckenzie",	"None."},
+	{"Serrano",	"None."},
+	{"Wilcox",	"None."},
+	{"Carey",	"None."},
+	{"Clayton",	"None."},
+	{"Poole",	"None."},
+	{"Calderon",	"None."},
+	{"Gallegos",	"None."},
+	{"Greer",	"None."},
+	{"Rivas",	"None."},
+	{"Guerra",	"None."},
+	{"Decker",	"None."},
+	{"Collier",	"None."},
+	{"Wall",	"None."},
+	{"Whitaker",	"None."},
+	{"Bass",	"None."},
+	{"Flowers",	"None."},
+	{"Davenport",	"None."},
+	{"Conley",	"None."},
+	{"Houston",	"None."},
+	{"Huff",	"None."},
+	{"Copeland",	"None."},
+	{"Hood",	"None."},
+	{"Monroe",	"None."},
+	{"Massey",	"None."},
+	{"Roberson",	"None."},
+	{"Combs",	"None."},
+	{"Franco",	"None."},
+	{"Larsen",	"None."},
+	{"Pittman",	"None."},
+	{"Randall",	"None."},
+	{"Skinner",	"None."},
+	{"Wilkinson",	"None."},
+	{"Kirby",	"None."},
+	{"Cameron",	"None."},
+	{"Bridges",	"None."},
+	{"Anthony",	"None."},
+	{"Richard",	"None."},
+	{"Kirk",	"None."},
+	{"Bruce",	"None."},
+	{"Singleton",	"None."},
+	{"Mathis",	"None."},
+	{"Bradford",	"None."},
+	{"Boone",	"None."},
+	{"Abbott",	"None."},
+	{"Charles",	"None."},
+	{"Allison",	"None."},
+	{"Sweeney",	"None."},
+	{"Atkinson",	"None."},
+	{"Horn",	"None."},
+	{"Jefferson",	"None."},
+	{"Rosales",	"None."},
+	{"York",	"None."},
+	{"Christian",	"None."},
+	{"Phelps",	"None."},
+	{"Farrell",	"None."},
+	{"Castaneda",	"None."},
+	{"Nash",	"None."},
+	{"Dickerson",	"None."},
+	{"Bond",	"None."},
+	{"Wyatt",	"None."},
+	{"Foley",	"None."},
+	{"Chase",	"None."},
+	{"Gates",	"None."},
+	{"Vincent",	"None."},
+	{"Mathews",	"None."},
+	{"Hodge",	"None."},
+	{"Garrison",	"None."},
+	{"Trevino",	"None."},
+	{"Villarreal",	"None."},
+	{"Heath",	"None."},
+	{"Dalton",	"None."},
+	{"Valencia",	"None."},
+	{"Callahan",	"None."},
+	{"Hensley",	"None."},
+	{"Atkins",	"None."},
+	{"Huffman",	"None."},
+	{"Roy",	"None."},
+	{"Boyer",	"None."},
+	{"Shields",	"None."},
+	{"Lin",	"None."},
+	{"Hancock",	"None."},
+	{"Grimes",	"None."},
+	{"Glenn",	"None."},
+	{"Cline",	"None."},
+	{"Delacruz",	"None."},
+	{"Camacho",	"None."},
+	{"Dillon",	"None."},
+	{"Parrish",	"None."},
+	{"Oneill",	"None."},
+	{"Melton",	"None."},
+	{"Booth",	"None."},
+	{"Kane",	"None."},
+	{"Berg",	"None."},
+	{"Harrell",	"None."},
+	{"Pitts",	"None."},
+	{"Savage",	"None."},
+	{"Wiggins",	"None."},
+	{"Brennan",	"None."},
+	{"Salas",	"None."},
+	{"Marks",	"None."},
+	{"Russo",	"None."},
+	{"Sawyer",	"None."},
+	{"Baxter",	"None."},
+	{"Golden",	"None."},
+	{"Hutchinson",	"None."},
+	{"Liu",	"None."},
+	{"Walter",	"None."},
+	{"Mcdowell",	"None."},
+	{"Wiley",	"None."},
+	{"Rich",	"None."},
+	{"Humphrey",	"None."},
+	{"Johns",	"None."},
+	{"Koch",	"None."},
+	{"Suarez",	"None."},
+	{"Hobbs",	"None."},
+	{"Beard",	"None."},
+	{"Gilmore",	"None."},
+	{"Ibarra",	"None."},
+	{"Keith",	"None."},
+	{"Macias",	"None."},
+	{"Khan",	"None."},
+	{"Andrade",	"None."},
+	{"Ware",	"None."},
+	{"Stephenson",	"None."},
+	{"Henson",	"None."},
+	{"Wilkerson",	"None."},
+	{"Dyer",	"None."},
+	{"Mcclure",	"None."},
+	{"Blackwell",	"None."},
+	{"Mercado",	"None."},
+	{"Tanner",	"None."},
+	{"Eaton",	"None."},
+	{"Clay",	"None."},
+	{"Barron",	"None."},
+	{"Beasley",	"None."},
+	{"Oneal",	"None."},
+	{"Preston",	"None."},
+	{"Small",	"None."},
+	{"Wu",	"None."},
+	{"Zamora",	"None."},
+	{"Macdonald",	"None."},
+	{"Vance",	"None."},
+	{"Snow",	"None."},
+	{"Mcclain",	"None."},
+	{"Stafford",	"None."},
+	{"Orozco",	"None."},
+	{"Barry",	"None."},
+	{"English",	"None."},
+	{"Shannon",	"None."},
+	{"Kline",	"None."},
+	{"Jacobson",	"None."},
+	{"Woodard",	"None."},
+	{"Huang",	"None."},
+	{"Kemp",	"None."},
+	{"Mosley",	"None."},
+	{"Prince",	"None."},
+	{"Merritt",	"None."},
+	{"Hurst",	"None."},
+	{"Villanueva",	"None."},
+	{"Roach",	"None."},
+	{"Nolan",	"None."},
+	{"Lam",	"None."},
+	{"Yoder",	"None."},
+	{"Mccullough",	"None."},
+	{"Lester",	"None."},
+	{"Santana",	"None."},
+	{"Valenzuela",	"None."},
+	{"Winters",	"None."},
+	{"Barrera",	"None."},
+	{"Leach",	"None."},
+	{"Orr",	"None."},
+	{"Berger",	"None."},
+	{"Mckee",	"None."},
+	{"Strong",	"None."},
+	{"Conway",	"None."},
+	{"Stein",	"None."},
+	{"Whitehead",	"None."},
+	{"Bullock",	"None."},
+	{"Escobar",	"None."},
+	{"Knox",	"None."},
+	{"Meadows",	"None."},
+	{"Solomon",	"None."},
+	{"Velez",	"None."},
+	{"Odonnell",	"None."},
+	{"Kerr",	"None."},
+	{"Stout",	"None."},
+	{"Blankenship",	"None."},
+	{"Browning",	"None."},
+	{"Kent",	"None."},
+	{"Lozano",	"None."},
+	{"Bartlett",	"None."},
+	{"Pruitt",	"None."},
+	{"Buck",	"None."},
+	{"Barr",	"None."},
+	{"Gaines",	"None."},
+	{"Durham",	"None."},
+	{"Gentry",	"None."},
+	{"Mcintyre",	"None."},
+	{"Sloan",	"None."},
+	{"Melendez",	"None."},
+	{"Rocha",	"None."},
+	{"Herman",	"None."},
+	{"Sexton",	"None."},
+	{"Moon",	"None."},
+	{"Hendricks",	"None."},
+	{"Rangel",	"None."},
+	{"Stark",	"None."},
+	{"Lowery",	"None."},
+	{"Hardin",	"None."},
+	{"Hull",	"None."},
+	{"Sellers",	"None."},
+	{"Ellison",	"None."},
+	{"Calhoun",	"None."},
+	{"Gillespie",	"None."},
+	{"Mora",	"None."},
+	{"Knapp",	"None."},
+	{"Mccall",	"None."},
+	{"Morse",	"None."},
+	{"Dorsey",	"None."},
+	{"Weeks",	"None."},
+	{"Nielsen",	"None."},
+	{"Livingston",	"None."},
+	{"Leblanc",	"None."},
+	{"Mclean",	"None."},
+	{"Bradshaw",	"None."},
+	{"Glass",	"None."},
+	{"Middleton",	"None."},
+	{"Buckley",	"None."},
+	{"Schaefer",	"None."},
+	{"Frost",	"None."},
+	{"Howe",	"None."},
+	{"House",	"None."},
+	{"Mcintosh",	"None."},
+	{"Ho",	"None."},
+	{"Pennington",	"None."},
+	{"Reilly",	"None."},
+	{"Hebert",	"None."},
+	{"Mcfarland",	"None."},
+	{"Hickman",	"None."},
+	{"Noble",	"None."},
+	{"Spears",	"None."},
+	{"Conrad",	"None."},
+	{"Arias",	"None."},
+	{"Galvan",	"None."},
+	{"Velazquez",	"None."},
+	{"Huynh",	"None."},
+	{"Frederick",	"None."},
+	{"Randolph",	"None."},
+	{"Cantu",	"None."},
+	{"Fitzpatrick",	"None."},
+	{"Mahoney",	"None."},
+	{"Peck",	"None."},
+	{"Villa",	"None."},
+	{"Michael",	"None."},
+	{"Donovan",	"None."},
+	{"Mcconnell",	"None."},
+	{"Walls",	"None."},
+	{"Boyle",	"None."},
+	{"Mayer",	"None."},
+	{"Zuniga",	"None."},
+	{"Giles",	"None."},
+	{"Pineda",	"None."},
+	{"Pace",	"None."},
+	{"Hurley",	"None."},
+	{"Mays",	"None."},
+	{"Mcmillan",	"None."},
+	{"Crosby",	"None."},
+	{"Ayers",	"None."},
+	{"Case",	"None."},
+	{"Bentley",	"None."},
+	{"Shepard",	"None."},
+	{"Everett",	"None."},
+	{"Pugh",	"None."},
+	{"David",	"None."},
+	{"Mcmahon",	"None."},
+	{"Dunlap",	"None."},
+	{"Bender",	"None."},
+	{"Hahn",	"None."},
+	{"Harding",	"None."},
+	{"Acevedo",	"None."},
+	{"Raymond",	"None."},
+	{"Blackburn",	"None."},
+	{"Duffy",	"None."},
+	{"Landry",	"None."},
+	{"Dougherty",	"None."},
+	{"Bautista",	"None."},
+	{"Shah",	"None."},
+	{"Potts",	"None."},
+	{"Arroyo",	"None."},
+	{"Valentine",	"None."},
+	{"Meza",	"None."},
+	{"Gould",	"None."},
+	{"Vaughan",	"None."},
+	{"Fry",	"None."},
+	{"Rush",	"None."},
+	{"Avery",	"None."},
+	{"Herring",	"None."},
+	{"Dodson",	"None."},
+	{"Clements",	"None."},
+	{"Sampson",	"None."},
+	{"Tapia",	"None."},
+	{"Bean",	"None."},
+	{"Lynn",	"None."},
+	{"Crane",	"None."},
+	{"Farley",	"None."},
+	{"Cisneros",	"None."},
+	{"Benton",	"None."},
+	{"Ashley",	"None."},
+	{"Mckay",	"None."},
+	{"Finley",	"None."},
+	{"Best",	"None."},
+	{"Blevins",	"None."},
+	{"Friedman",	"None."},
+	{"Moses",	"None."},
+	{"Sosa",	"None."},
+	{"Blanchard",	"None."},
+	{"Huber",	"None."},
+	{"Frye",	"None."},
+	{"Krueger",	"None."},
+	{"Bernard",	"None."},
+	{"Rosario",	"None."},
+	{"Rubio",	"None."},
+	{"Mullen",	"None."},
+	{"Benjamin",	"None."},
+	{"Haley",	"None."},
+	{"Chung",	"None."},
+	{"Moyer",	"None."},
+	{"Choi",	"None."},
+	{"Horne",	"None."},
+	{"Yu",	"None."},
+	{"Woodward",	"None."},
+	{"Ali",	"None."},
+	{"Nixon",	"None."},
+	{"Hayden",	"None."},
+	{"Rivers",	"None."},
+	{"Estes",	"None."},
+	{"Mccarty",	"None."},
+	{"Richmond",	"None."},
+	{"Stuart",	"None."},
+	{"Maynard",	"None."},
+	{"Brandt",	"None."},
+	{"Oconnell",	"None."},
+	{"Hanna",	"None."},
+	{"Sanford",	"None."},
+	{"Sheppard",	"None."},
+	{"Church",	"None."},
+	{"Burch",	"None."},
+	{"Levy",	"None."},
+	{"Rasmussen",	"None."},
+	{"Coffey",	"None."},
+	{"Ponce",	"None."},
+	{"Faulkner",	"None."},
+	{"Donaldson",	"None."},
+	{"Schmitt",	"None."},
+	{"Novak",	"None."},
+	{"Costa",	"None."},
+	{"Montes",	"None."},
+	{"Booker",	"None."},
+	{"Cordova",	"None."},
+	{"Waller",	"None."},
+	{"Arellano",	"None."},
+	{"Maddox",	"None."},
+	{"Abenante",	"None."}, //Mata
+	{"Bonilla",	"None."},  // Bonilla
+	{"Stanton",	"None."},  //Stanton
+	{"Compton",	"None."},  //Compton
+	{"Kaufman",	"None."},
+	{"Dudley",	"None."},
+	{"Mcpherson",	"None."},
+	{"Beltran",	"None."},
+	{"Dickson",	"None."},
+	{"Mccann",	"None."},
+	{"Villegas",	"None."},
+	{"Proctor",	"None."},
+	{"Hester",	"None."},
+	{"Cantrell",	"None."},
+	{"Daugherty",	"None."},
+	{"Cherry",	"None."},
+	{"Bray",	"None."},
+	{"Davila",	"None."},
+	{"Rowland",	"None."},
+	{"Levine",	"None."},
+	{"Madden",	"None."},
+	{"Spence",	"None."},
+	{"Good",	"None."},
+	{"Irwin",	"None."},
+	{"Werner",	"None."},
+	{"Krause",	"None."},
+	{"Petty",	"None."},
+	{"Whitney",	"None."},
+	{"Baird",	"None."},
+	{"Hooper",	"None."},
+	{"Pollard",	"None."},
+	{"Zavala",	"None."},
+	{"Jarvis",	"None."},
+	{"Holden",	"None."},
+	{"Haas",	"None."},
+	{"Hendrix",	"None."},
+	{"Mcgrath",	"None."},
+	{"Bird",	"None."},
+	{"Lucero",	"None."},
+	{"Terrell",	"None."},
+	{"Riggs",	"None."},
+	{"Joyce",	"None."},
+	{"Mercer",	"None."},
+	{"Rollins",	"None."},
+	{"Galloway",	"None."},
+	{"Duke",	"None."},
+	{"Odom",	"None."},
+	{"Andersen",	"None."},
+	{"Downs",	"None."},
+	{"Hatfield",	"None."},
+	{"Benitez",	"None."},
+	{"Archer",	"None."},
+	{"Huerta",	"None."},
+	{"Travis",	"None."},
+	{"Mcneil",	"None."},
+	{"Hinton",	"None."},
+	{"Zhang",	"None."},
+	{"Hays",	"None."},
+	{"Mayo",	"None."},
+	{"Fritz",	"None."},
+	{"Branch",	"None."},
+	{"Mooney",	"None."},
+	{"Ewing",	"None."},
+	{"Ritter",	"None."},
+	{"Esparza",	"None."},
+	{"Frey",	"None."},
+	{"Braun",	"None."},
+	{"Gay",	"None."},
+	{"Riddle",	"None."},
+	{"Haney",	"None."},
+	{"Kaiser",	"None."},
+	{"Holder",	"None."},
+	{"Chaney",	"None."},
+	{"Mcknight",	"None."},
+	{"Gamble",	"None."},
+	{"Vang",	"None."},
+	{"Cooley",	"None."},
+	{"Carney",	"None."},
+	{"Cowan",	"None."},
+	{"Forbes",	"None."},
+	{"Ferrell",	"None."},
+	{"Davies",	"None."},
+	{"Barajas",	"None."},
+	{"Shea",	"None."},
+	{"Osborn",	"None."},
+	{"Bright",	"None."},
+	{"Cuevas",	"None."},
+	{"Bolton",	"None."},
+	{"Murillo",	"None."},
+	{"Lutz",	"None."},
+	{"Duarte",	"None."},
+	{"Kidd",	"None."},
+	{"Key",	"None."},
+	{"Cooke",	"None."},
+};
+
+/*
+function void DrawEllipse(int rx, int ry, int a, int b)
+{
+ int col,i,row,bnew;
+ int a_square,b_square,two_a_square,two_b_square,four_a_square,four_b_square,d;
+
+  b_square=b*b;
+  a_square=a*a;
+  row=b;
+  col=0;
+  two_a_square=a_square<<1;
+  four_a_square=a_square<<2;
+  four_b_square=b_square<<2;
+  two_b_square=b_square<<1;
+  SetFont("CONFONT");
+  d=two_a_square*((row-1)*(row))+a_square+two_b_square*(1-a_square);
+  while(a_square*(row)>b_square*(col))
+  {
+   HudMessage(s:"·";HUDMSG_PLAIN,++pid,20,((col+rx)<<16)+0.1,((row+ry)<<16)+0.1,3.0);
+   HudMessage(s:"·";HUDMSG_PLAIN,++pid,20,((col+rx)<<16)+0.1,((ry-row)<<16)+0.1,3.0);
+   HudMessage(s:"·";HUDMSG_PLAIN,++pid,20,((rx-col)<<16)+0.1,((row+ry)<<16)+0.1,3.0);
+   HudMessage(s:"·";HUDMSG_PLAIN,++pid,20,((rx-col)<<16)+0.1,((ry-row)<<16)+0.1,3.0);
+   if (d>=0)
+   {
+    row--;
+    d-=four_a_square*(row);
+   }
+   d+=two_b_square*(3+(col<<1));
+   col++;
+  }
+  d=two_b_square*(col+1)*col+two_a_square*(row*(row-2)+1)+(1-two_a_square)*b_square;
+  while ((row) + 1)
+  {
+   HudMessage(s:"·";HUDMSG_PLAIN,++pid,20,((col+rx)<<16)+0.1,((row+ry)<<16)+0.1,3.0);
+   HudMessage(s:"·";HUDMSG_PLAIN,++pid,20,((col+rx)<<16)+0.1,((ry-row)<<16)+0.1,3.0);
+   HudMessage(s:"·";HUDMSG_PLAIN,++pid,20,((rx-col)<<16)+0.1,((row+ry)<<16)+0.1,3.0);
+   HudMessage(s:"·";HUDMSG_PLAIN,++pid,20,((rx-col)<<16)+0.1,((ry-row)<<16)+0.1,3.0);
+   if (d<=0)
+   {
+    col++;
+    d+=four_b_square*col;
+   }
+   row--;
+   d+=two_a_square*(3-(row <<1));
+  }
+}
+*/
+
+function int distance (int tid1, int tid2)
+{
+	int x, y, z, d;
+	x = GetActorX(tid1) - GetActorX(tid2) >> 16; // Convert fixed point to integer
+	y = GetActorY(tid1) - GetActorY(tid2) >> 16;
+	z = GetActorZ(tid1) - GetActorZ(tid2) >> 16;
+	d = sqrt( x*x + y*y + z*z );
+	return d;
+}
+
+
+function int distance2 (int x1, int y1, int z1, int x2, int y2, int z2)
+{
+	int x, y, z, d;
+	x = (x1 - x2) >> 16; // Convert fixed point to integer
+	y = (y1 - y2) >> 16;
+	z = (z1 - z2) >> 16;
+	d = sqrt( x*x + y*y + z*z );
+	return d;
+}
+
+function int getspeed (int tid)
+{
+int x = GetActorX(tid);
+int y = GetActorY(tid);
+int z = GetActorZ(tid);
+int speed = distance2(x,y,z,kx[tid],ky[tid],kz[tid]);
+kx[tid]=GetActorX(tid);
+ky[tid]=GetActorY(tid);
+kz[tid]=GetActorZ(tid);
+return speed;
+}
+
+function int NextTID (void)
+{
+    for ( ; tidcounter < 0; tidcounter++)
+    {
+        if (!ThingCount (T_NONE, tidcounter))
+            return tidcounter;
+    }
+    return 0;
+}
+
+function void DrawRadar(int tid, int scale,int x1,int y1, int mod, int dist)
+{
+int x,y,z,dx,dy;
+int scan;
+SetHudSize(640,480,0);
+SetFont("UDVSMALL");
+//If(mod==0) HudMessage(s:"^";HUDMSG_PLAIN,1,13,(x1<<16)+0.1,(y1<<16)+0.1,0.2); //full scanner
+//Else If(mod==1) HudMessage(s:"^";HUDMSG_PLAIN,1,10,(x1<<16)+0.1,(y1<<16)+0.1,0.2); //visible scanner
+//Else If(mod==2) 
+HudMessage(s:"^";HUDMSG_PLAIN,1,3,(x1<<16)+0.1,(y1<<16)+0.1,0.2); //movement scanner
+for (int i=-32767;i<tidcounter;++i)
+{
+	z=(GetActorZ(i)-GetActorFloorZ(0)) >> 16; //Enemy height position in relation to player
+	x=GetActorX(tid)-GetActorX(i);
+	y=GetActorY(tid)-GetActorY(i);
+	//if (mod==1 && CheckActorInventory(i,"TargetIsAMarine")==1)
+	//	scan=distance(tid,i) <= dist;
+	//else if (mod==1) 
+	//	scan=distance(tid,i) <= dist && CheckSight(0,i,0);
+	//if (mod==0 || mod==2) 
+		scan=distance(tid,i) <= dist;
+		if (scan)
+		{
+			dx=((((FixedMul(x,cos(-GetActorAngle(0))))-(FixedMul(y,sin(-GetActorAngle(0)))))));
+			dy=((((FixedMul(x,sin(-GetActorAngle(0))))+(FixedMul(y,cos(-GetActorAngle(0)))))));
+			dx/=scale; dx+=y1<<16; dx=dx>>16; dx=dx<<16;
+			dy/=scale; dy+=x1<<16; dy=dy>>16; dy=dy<<16;
+			if (dx<0) dx-=0.1; else dx+=0.1;
+			if (dy<0) dy-=0.1; else dy+=0.1;
+			//if (GetActorProperty(i,APROP_Speed) == 0  && GetActorProperty(i,APROP_SpawnHealth) == 1000 && mod!=2)
+			//	HudMessage(s:"+";HUDMSG_PLAIN,i,16,dy,dx,0.1);
+			if (GetActorProperty(i,APROP_Speed) > 0  && GetActorProperty(i,APROP_Health)>0 && CheckActorInventory(i,"TargetIsAMarine")==1)// && mod!=2) // Marines Actor Name //&& GetActorProperty(i,APROP_SpawnHealth) == 200
+				HudMessage(s:"*";HUDMSG_PLAIN,i,CR_PURPLE,dy,dx,0.1);
+			/*else if (GetActorProperty(i,APROP_Speed) > 0  && GetActorProperty(i,APROP_SpawnHealth) > 999 && GetActorProperty(i,APROP_Health)>0 && mod!=2)
+			{
+				SetFont("GOLDDOT");
+				HudMessage(s:"A";HUDMSG_PLAIN,i,5,dy,dx,0.1);
+			}
+			else if (GetActorProperty(i,APROP_SpawnHealth)>0 && GetActorProperty(i,APROP_Health)>0 && mod!=2)
+			{
+				If(z <= -50)
+				{
+				SetFont("REDBELOW");
+					HudMessage(s:"A";HUDMSG_PLAIN,i,15,dy,dx,0.15);
+				}
+				else if(z >= 50)
+				{
+				SetFont("REDABOVE");
+					HudMessage(s:"A";HUDMSG_PLAIN,i,8,dy,dx,0.15);
+				}
+				Else
+				{
+				SetFont("REDDOT");
+					HudMessage(s:"A";HUDMSG_PLAIN,i,6,dy,dx,0.15);
+				}
+			}
+			else if (GetActorProperty(i,APROP_SpawnHealth)>0 && GetActorProperty(i,APROP_Health)<=0 && mod!=2) 
+				{}//Thing_ChangeTID(tid, (tid-10000));
+				//ACS_NamedExecuteAlways("RadarRemover", 0);
+				//HudMessage(s:"+";HUDMSG_PLAIN,i,12,dy,dx,0.1);
+			*/
+			else if (GetActorProperty(i,APROP_Speed) == 0  && GetActorProperty(i,APROP_SpawnHealth) == 1000);//&& mod==2);
+			else if (GetActorProperty(i,APROP_Speed) > 0  && GetActorProperty(i,APROP_SpawnHealth) > 999  && GetActorProperty(i,APROP_Health)>0)// && mod==2)
+			{
+				SetFont("GOLDDOT");
+				HudMessage(s:"A";HUDMSG_PLAIN,i,5,dy,dx,0.1);
+			}
+			else if (GetActorProperty(i,APROP_SpawnHealth)>0 && GetActorProperty(i,APROP_Health)>0 && getspeed(i)>0)//&& mod==2)
+			{
+				If(z <= -50)
+				{
+				SetFont("REDBELOW");
+					HudMessage(s:"A";HUDMSG_PLAIN,i,15,dy,dx,0.15);
+				}
+				else if(z >= 50)
+				{
+				SetFont("REDABOVE");
+					HudMessage(s:"A";HUDMSG_PLAIN,i,8,dy,dx,0.15);
+				}
+				Else
+				{
+				SetFont("REDDOT");
+					HudMessage(s:"A";HUDMSG_PLAIN,i,6,dy,dx,0.15);
+				}
+			}
+			else if (GetActorProperty(i,APROP_SpawnHealth)>0 && GetActorProperty(i,APROP_Health)<=0)// && mod==2) 
+				{}//Thing_ChangeTID(tid, (tid-10000));
+				//ACS_NamedExecuteAlways("RadarRemover", 0);
+				//Thing_ChangeTID(tid, 0);
+		}
+}
+if (count == 0) {
+		count=100;
+		ACS_NamedExecute("DrawRadarCircle",0);
+		//DrawEllipse(x1,y1,dist/scale,dist/scale);
+	}
+	--count;
+}
+
+Script "RadarChanger" (Void)
+{
+	if (GameType () != GAME_TITLE_MAP)
+	{
+	If( CheckActorProperty(0, APROP_Species, "Marine_Rifle") || CheckActorProperty(0, APROP_NameTag, "EvilMarine_UDV") )
+	{
+		SetActorProperty(0, APROP_NameTag, StrParam(s:sae_nameslist[random(0,26)][1], s:" ", s:sae_nameslist[random(0,999)][0]));
+	}
+	Else If (CheckActorProperty(0, APROP_Species, "ZombieMan"))
+	{
+			SetActorProperty(0, APROP_NameTag, StrParam(s:sae_nameslist[random(0,3)][1], s:" ", s:sae_nameslist[random(0,999)][0]));
+	}
+	Else If (CheckActorProperty(0, APROP_Species, "ShotgunGuy") || CheckActorProperty(0, APROP_Species, "ZSpecOpsMachinegun") || CheckActorProperty(0, APROP_Species, "Helltrooper") )
+	{
+		SetActorProperty(0, APROP_NameTag, StrParam(s:sae_nameslist[random(4,14)][1], s:" ", s:sae_nameslist[random(0,999)][0]));
+	}
+	Else If (CheckActorProperty(0, APROP_Species, "ChaingunGuy"))
+	{
+		SetActorProperty(0, APROP_NameTag, StrParam(s:sae_nameslist[random(15,26)][1], s:" ", s:sae_nameslist[random(0,999)][0]));
+	}
+	Else If (CheckActorProperty(0, APROP_Species, "Labguy"))
+	{
+		SetActorProperty(0, APROP_NameTag, StrParam(s:sae_nameslist[random(27,28)][1], s:" ", s:sae_nameslist[random(0,999)][0]));
+	}
+	Else If (CheckActorProperty(0, APROP_Species, "Nazi") || CheckActorProperty(0, APROP_Species, "WolfensteinSS") )
+	{
+		SetActorProperty(0, APROP_NameTag, sae_nameslist[random(29,44)][1]);
+	}
+		Thing_ChangeTID(ActivatorTID(), tidcounter++);
+	}
+}
+
+Script "RadarRemover" (void) NET
+{
+Thing_ChangeTID(0, 0);
+}
+
+Script "RadarMode" (Void) net {
+	int MRadarC = GetUserCVAR(PlayerNumber(),"UDV_Mradaron");//CheckInventory("MRadarOn");
+    If(MRadarC == 1) // Escape if gone!
+	{
+		SETFONT("UDVSMALL");
+		if (mode==1)
+		{
+			mode=2;
+			//If(GetUserCVAR(PlayerNumber(),"saehud_togglesound"))
+				//{
+					If (GetUserCVAR(PlayerNumber(),"udv_sounds") == 1)
+					{
+					LocalAmbientSound("scanmov",127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 2)
+					{
+					LocalAmbientSound("fvox/scanmov",127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 3)
+					{
+					LocalAmbientSound("gdos/scanmov",127);
+					}
+				//}
+			print(s:"\cdMovement Scanner");
+		}
+		//else if (mode==2)
+		//{
+		//	mode=0;
+		//	print(s:"Full Scanner");
+		//}
+		else
+		{
+			//If(GetUserCVAR(PlayerNumber(),"saehud_togglesound"))
+				//{
+					If (GetUserCVAR(PlayerNumber(),"udv_sounds") == 1)
+					{
+					LocalAmbientSOund("scanvis",127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 2)
+					{
+					LocalAmbientSOund("fvox/scanvis",127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 3)
+					{
+					LocalAmbientSOund("gdos/scanvis",127);
+					}
+				//}
+			print(s:"\ckVisible Scanner");
+			mode=1;
+		}
+	}
+}
+
+#define F_RADAR_SIZE 12
+str F_RADAR[F_RADAR_SIZE] = 
+    {"RADAR1", "RSAFEZ", "RSAFEZ1", "RSAFEZ2", "RSAFEZ3", "RSAFEZ4",
+    "RSAFEZ5", "RSAFEZ6", "RSAFEZ7", "RSAFEZ8", "RSAFEZ9", "RSAFEZA"};
+script "DrawRadarCircle" (VOID) NET
+{
+	int atic = 0;
+	
+	int MRadarC = GetUserCVAR(PlayerNumber(),"UDV_Mradaron");//CheckInventory("MRadarOn");
+	
+    while(MRadarC == 1) // Escape if gone!
+    {
+	    int Radar_aspect = GetAspectRatio();
+       SetHudSize(640,480,0);
+		If(!CheckInventory("sae_extcam") && !CheckInventory("sae_deathcam"))
+		{
+			SetFont(F_RADAR[atic]);
+			If(Radar_aspect == ASPECT_4_3 )
+			{ 	
+			HudMessage(c:'A'; HUDMSG_PLAIN | HUDMSG_ALPHA, 128, CR_UNTRANSLATED, 560.0, 70.0, 0, 0.25);
+			}
+			Else
+			{
+			HudMessage(c:'A'; HUDMSG_PLAIN | HUDMSG_ALPHA, 128, CR_UNTRANSLATED, 650.0, 70.0, 0, 0.25);
+			}
+		}
+		Else //draws nothing so it blanks out the radar
+		{
+			SetFont("DIGIFONTSMALL");
+			{
+			HudMessage(c:' '; HUDMSG_PLAIN | HUDMSG_ALPHA, 128, CR_UNTRANSLATED, 560.0, 70.0, 0, 0.25);
+			}
+		}
+		if(atic == 0) // Special case for first/last frames
+            delay(8);
+        else if(atic == F_RADAR_SIZE - 1)
+            delay(10);
+        else
+            delay(5);
+        
+        atic++;
+        atic %= F_RADAR_SIZE;
+	}
+}
+
+Script "RadarToggle" (VOID) NET
+{
+If (GameType() == 0)
+{
+	int mradarof = GetUserCVAR(PlayerNumber(),"UDV_Mradaron");//CheckInventory("MRadarOn");
+
+	If( mradarof == 1 && GetUserCVAR(PlayerNumber(),"UDV_RadarEnabled") )
+	{
+		SetUserCVAR(PlayerNumber(),"UDV_Mradaron", 0);//TakeInventory("MRadarOn", 99);	
+			//If(GetUserCVAR(PlayerNumber(),"saehud_togglesound"))
+				//{
+					If (GetUserCVAR(PlayerNumber(),"udv_sounds") == 1)
+					{
+					LocalAmbientSound("GenAlert",127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 2)
+					{
+					LocalAmbientSound("GenAlert",127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 3)
+					{
+					LocalAmbientSound("gdos/scanoff",127);
+					}
+						Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/ScannerOff", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/ScannerOff", 127);
+						}
+			print(s:"\cdMovement Scanner Disabled");
+				//}
+	ACS_NamedTerminate("DrawRadarCircle", 0);
+	ACS_NamedTerminate("RadarCheck", 0);
+	SetHudSize(640,480,0);
+        SetFont(" ");
+        HudMessage(s:"   "; HUDMSG_PLAIN, 128, CR_UNTRANSLATED, 317.0, 355.0, 0);
+	SetResultValue(0);		
+		Delay(1);
+	}
+	Else If( mradarof == 0 && GetUserCVAR(PlayerNumber(),"UDV_RadarEnabled") )
+	{
+	SetUserCVAR(PlayerNumber(),"UDV_Mradaron", 1);//GiveInventory("MRadarOn", 1);	
+			//If(GetUserCVAR(PlayerNumber(),"saehud_togglesound"))
+				//{
+					If (GetUserCVAR(PlayerNumber(),"udv_sounds") == 1)
+					{
+					LocalAmbientSound("GenAlert",127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 2)
+					{
+					LocalAmbientSound("GenAlert",127);
+					}
+					Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 3)
+					{
+					LocalAmbientSound("gdos/scanon",127);
+					}
+						Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/ScannerOn", 127);
+						}
+						Else If(GetUserCVAR(PlayerNumber(),"udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/ScannerOn", 127);
+						}
+			print(s:"\cdMovement Scanner Activated");
+				//}
+	ACS_NamedExecute("DrawRadarCircle", 0);
+	ACS_NamedExecute("RadarCheck", 0);
+//	ACS_Terminate(102, 0);
+//	TakeInventory("RadarOn", 99);
+	SetHudSize(640,480,0);
+        SetFont(" ");
+        HudMessage(s:"   "; HUDMSG_PLAIN, 128, CR_UNTRANSLATED, 317.0, 355.0, 0);
+	SetResultValue(1);	
+	Delay(1);
+	}
+	Else
+	{
+	LocalAmbientSound("GenAlert",127);
+	Print(s:"Radar Requires 'B' Module");
+	}
+}
+Else
+{
+Print(s:"Radar not available in multiplayer");
+}
+}
+
+
+Script "RadarCheck" (VOID) NET
+{
+	int MRadarC = GetUserCVAR(PlayerNumber(),"UDV_MradarOn");//CheckInventory("MRadarOn");
+	
+    while(MRadarC == 1) // Escape if gone!
+    {
+    int Radar_aspect = GetAspectRatio();
+	If ( !CheckInventory("sae_extcam") && !CheckInventory("sae_deathcam") )
+	{
+		If(Radar_aspect == Aspect_4_3)
+		{
+		DrawRadar(0,18,557,66,mode,900);
+		}
+		Else
+		{
+		DrawRadar(0,18,647,66,mode,900);
+		}
+	}
+        Delay(1);
+		//Restart;
+    }
+}
+
+Script "Enable Radar" Enter
+{
+	delay(35);
+	//If(tidcounter > -32767) 
+
+	If(CheckInventory("UDV_ModuleB") && GameType() == 0)
+	{
+	SetUserCVAR(PlayerNumber(),"UDV_RadarEnabled", 1);
+	If(GetUserCVAR(PlayerNumber(),"UDV_EnableRadar") && GetUserCVAR(PlayerNumber(),"UDV_MradarOn"))
+		{
+			//SetUserCVAR(PlayerNumber(),"UDV_Mradaron", 1);//GiveInventory("MRadarOn", 1);	
+			//SetUserCVAR(PlayerNumber(),"UDV_Mradaron", 1);
+			ACS_NamedExecute("DrawRadarCircle", 0);
+			ACS_NamedExecute("RadarCheck", 0);
+		}
+		Else SetUserCVAR(PlayerNumber(),"UDV_Mradaron", 0);
+
+	}
+	Else
+	{
+	//SetUserCVAR(PlayerNumber(),"UDV_Mradaron", 0);
+	SetUserCVAR(PlayerNumber(),"UDV_RadarEnabled", 0);
+	}
+	//TakeInventory("MradarOn",1);
+}

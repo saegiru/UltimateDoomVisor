@@ -1,0 +1,186 @@
+ACTOR MediKitReplacer replaces Medikit
+{
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	TNT1 A 3 A_JumpIf(ACS_NamedExecuteWithResult("CheckMedikit")==1,"SmartMedikitSpawn")
+	TNT1 A 1 A_SpawnItemEx("OGMediKit",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+	Stop
+	SmartMedikitSpawn:
+	TNT1 A 1 
+	TNT1 A 1 A_SpawnItemEx("UDV_SmartMedikit",0,0,0,0,0,0,0,SXF_TRANSFERSPECIAL | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288)
+	Stop
+	}
+}
+
+ACTOR OGMedikit : Health
+{
+  Inventory.Amount 25
+  Inventory.PickupMessage "$GOTMEDIKIT" // "Picked up a medikit."
+  Health.LowMessage 25, "$GOTMEDINEED" // "Picked up a medikit that you REALLY need!"
+  Inventory.Pickupsound "misc/L_HP_pickup"
+  States
+  {
+  Spawn:
+    MEDI A -1
+    Stop
+  }
+}
+
+ACTOR UDV_SmartMedikit : SwitchableDecoration //replaces Medikit
+{
+	+LOOKALLAROUND
+	+USESPECIAL
+	Activation THINGSPEC_Activate
+	Radius 5
+	States
+	{
+	Spawn:
+		SKIT A 1 A_Look
+		Loop
+	Active:
+		TNT1 A 0 A_PlaySound("OPENMED")
+		TNT1 A 0 A_Jump(256,"SpawnStims2")
+		Stop
+	See:
+		TNT1 A 0
+		//SKIT A 1 A_JumpIfCloser(36,"CheckPlayerHealth")//A_JumpIf(GetDistance(false, AAPTR_TARGET) < 15, "CheckPlayerHealth")
+		SKIT A 1 A_JumpIfCloser(36,"CheckWhichPlayer")
+		TNT1 A 0 A_ClearTarget
+		Goto Spawn
+		//Loop
+	CheckWhichPlayer:
+		TNT1 A 0 A_JumpIf(IsPointerEqual(AAPTR_TARGET, AAPTR_PLAYER1) == TRUE, "CheckPlayerHealth1")
+		TNT1 A 0 A_JumpIf(IsPointerEqual(AAPTR_TARGET, AAPTR_PLAYER2) == TRUE, "CheckPlayerHealth2")
+		TNT1 A 0 A_JumpIf(IsPointerEqual(AAPTR_TARGET, AAPTR_PLAYER3) == TRUE, "CheckPlayerHealth3")
+		TNT1 A 0 A_JumpIf(IsPointerEqual(AAPTR_TARGET, AAPTR_PLAYER4) == TRUE, "CheckPlayerHealth4")
+		TNT1 A 0 A_JumpIf(IsPointerEqual(AAPTR_TARGET, AAPTR_PLAYER5) == TRUE, "CheckPlayerHealth5")
+		TNT1 A 0 A_JumpIf(IsPointerEqual(AAPTR_TARGET, AAPTR_PLAYER6) == TRUE, "CheckPlayerHealth6")
+		TNT1 A 0 A_JumpIf(IsPointerEqual(AAPTR_TARGET, AAPTR_PLAYER7) == TRUE, "CheckPlayerHealth7")
+		TNT1 A 0 A_JumpIf(IsPointerEqual(AAPTR_TARGET, AAPTR_PLAYER8) == TRUE, "CheckPlayerHealth8")
+		TNT1 A 0 A_ClearTarget
+		Goto Spawn
+	CheckPlayerHealth1:
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15789,0,0,0), "SpawnKit" )//A_JumpIfHealthLower(76,"SpawnKit",AAPTR_TARGET)
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15790,0,0,0), "SpawnStims" )//A_JumpIfHealthLower(100,"SpawnStims",AAPTR_TARGET)
+		SKIT A 1
+		Goto See
+	CheckPlayerHealth2:
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15789,1,0,0), "SpawnKit" )//A_JumpIfHealthLower(76,"SpawnKit",AAPTR_TARGET)
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15790,1,0,0), "SpawnStims" )//A_JumpIfHealthLower(100,"SpawnStims",AAPTR_TARGET)
+		SKIT A 1
+		Goto See
+	CheckPlayerHealth3:
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15789,2,0,0), "SpawnKit" )//A_JumpIfHealthLower(76,"SpawnKit",AAPTR_TARGET)
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15790,2,0,0), "SpawnStims" )//A_JumpIfHealthLower(100,"SpawnStims",AAPTR_TARGET)
+		SKIT A 1
+		Goto See
+	CheckPlayerHealth4:
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15789,3,0,0), "SpawnKit" )//A_JumpIfHealthLower(76,"SpawnKit",AAPTR_TARGET)
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15790,3,0,0), "SpawnStims" )//A_JumpIfHealthLower(100,"SpawnStims",AAPTR_TARGET)
+		SKIT A 1
+		Goto See
+	CheckPlayerHealth5:
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15789,4,0,0), "SpawnKit" )//A_JumpIfHealthLower(76,"SpawnKit",AAPTR_TARGET)
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15790,4,0,0), "SpawnStims" )//A_JumpIfHealthLower(100,"SpawnStims",AAPTR_TARGET)
+		SKIT A 1
+		Goto See
+	CheckPlayerHealth6:
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15789,5,0,0), "SpawnKit" )//A_JumpIfHealthLower(76,"SpawnKit",AAPTR_TARGET)
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15790,5,0,0), "SpawnStims" )//A_JumpIfHealthLower(100,"SpawnStims",AAPTR_TARGET)
+		SKIT A 1
+		Goto See
+	CheckPlayerHealth7:
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15789,6,0,0), "SpawnKit" )//A_JumpIfHealthLower(76,"SpawnKit",AAPTR_TARGET)
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15790,6,0,0), "SpawnStims" )//A_JumpIfHealthLower(100,"SpawnStims",AAPTR_TARGET)
+		SKIT A 1
+		Goto See
+	CheckPlayerHealth8:
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15789,7,0,0), "SpawnKit" )//A_JumpIfHealthLower(76,"SpawnKit",AAPTR_TARGET)
+		TNT1 A 0 A_JumpIf( ACS_ExecuteWithResult(15790,7,0,0), "SpawnStims" )//A_JumpIfHealthLower(100,"SpawnStims",AAPTR_TARGET)
+		SKIT A 1
+		Goto See
+	SpawnKit:
+		TNT1 A 0 A_SpawnItemEx("UDV_NanoStim",0,0,0,0,0,0,0,0,230)
+		TNT1 A 0 A_SpawnItemEx("UDV_FullMedikit")
+		Stop
+	SpawnStims:
+		TNT1 A 0 A_PlaySound("OPENMED")
+		SKIT B 15
+		SKIT B 10 A_SpawnItemEx("UDV_NanoStim",0,0,0,frandom(6,8),0,frandom(6,8),random(0,360),0,230)
+		SKIT C 10 A_SpawnItemEx("UDV_Stim5",0,0,0,frandom(2,4),0,frandom(2,4),random(1,180))
+		SKIT DE 10 A_SpawnItemEx("UDV_Stim10",0,0,0,frandom(2,4),0,frandom(2,4),random(1,180))
+		//TNT1 A 0 A_SpawnItemEx("UDV_NanoStim",0,0,0,frandom(6,8),0,frandom(6,8),random(0,360),0,230)
+		SKIT E 70
+		TNT1 A 0 A_Jump(256, "FadeOut")
+	SpawnStims2:
+		TNT1 A 0 A_PlaySound("OPENMED")
+		SKIT B 15
+		SKIT B 10 A_SpawnItemEx("UDV_NanoStim",0,0,0,frandom(6,8),0,frandom(6,8),random(0,360),0,230)
+		SKIT C 10 A_SpawnItemEx("UDV_Stim5",0,0,0,frandom(2,4),0,frandom(2,4),random(0,360))
+		SKIT DE 10 A_SpawnItemEx("UDV_Stim10",0,0,0,frandom(2,4),0,frandom(2,4),random(0,360))
+		SKIT E 70
+	 FadeOut:
+		SKIT E 5 A_FadeOut(0.1,1)
+		Loop	
+	}
+}
+
+ACTOR UDV_NanoStim : UpgradeStamina 30783
+{
+   Scale 0.03
+   Inventory.Amount 5
+   Inventory.MaxAmount 80
+   Inventory.PickupMessage "UAC Nanobot Injector! Increase Max Health!"
+  +COUNTITEM
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP   
+  States
+  {
+  Spawn:
+    NANO ABCD 6
+    Loop
+  }
+}
+
+
+ACTOR UDV_Stim10 : Health
+{
+  Inventory.Amount 10
+  Inventory.PickupMessage "$GOTSTIM" // "Picked up a stimpack."
+  States
+  {
+  Spawn:
+    SSTI A -1
+    Stop
+  }
+}
+
+
+ACTOR UDV_Stim5 : Health
+{
+	Inventory.Amount 5
+	Inventory.PickupMessage "Picked up a MiniStim."
+	Inventory.PickupSound "misc/health_pkup"
+	States
+	{
+	Spawn:
+		MSTI A -1
+	    Stop
+	}
+}
+
+ACTOR UDV_FullMedikit : Health
+{
+	Inventory.Amount 25
+	Inventory.PickupMessage "$GOTMEDIKIT"
+	Health.LowMessage 25, "$GOTMEDINEED"
+	Inventory.Pickupsound "misc/L_HP_pickup"
+	States
+	{
+	Spawn:
+		SKIT A -1
+		Stop
+	}
+}

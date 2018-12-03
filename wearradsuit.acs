@@ -1,0 +1,277 @@
+#library "wearradsuit"
+#import "Aspect.acs"
+#include "zcommon.acs"
+
+#define MAXPLAYERS 8
+#define POWERTIME 60
+int radsuitOn[MAXPLAYERS];
+global int 37:radtime[];
+
+// Scripts
+int radsuitEmpty[8];
+int radsuitTime[8];
+
+Script "CheckHevSuit" (void) net
+{
+If(GetCvar("udv_hevsuitspawn")) SetResultValue(1);
+Else SetResultValue(0);
+}
+
+Script "getradsuitTime" (void)
+{
+	SetResultValue(radtime[PlayerNumber()]);
+}
+
+Script "RadsuitSwitch" (void) net
+{
+	if (radsuitOn[PlayerNumber()])
+		{
+		radsuitOn[PlayerNumber()] = 0;
+		Print(s:"\cnRemoving HEV");
+		LocalAmbientSound("CHGSUIT",127);
+		//ACS_NamedSuspend("RadsuitPower", 0);
+		Thing_Stop(0);
+		SetPlayerProperty(0, ON, PROP_TOTALLYFROZEN);
+		Delay(70);
+		SetPlayerProperty(0, OFF, PROP_TOTALLYFROZEN);
+		TakeInventory("HEVProtect", 1);
+		TakeInventory("HEVFeet", 1);
+		}
+	else
+		{
+		If(CheckInventory("UDV_HEVSuit") && !CheckInventory("HEVSuitUsed"))
+		{
+		Print(s:"\cnEquipping HEV");
+		GiveInventory("HEVSuitUsed", 1);
+		TakeInventory("UDV_HEVSuit", 1);
+		LocalAmbientSound("CHGSUIT",127);
+		GiveInventory("HEVFeet",1);
+		Thing_Stop(0);
+		SetPlayerProperty(0, ON, PROP_TOTALLYFROZEN);
+		Delay(70);
+		SetPlayerProperty(0, OFF, PROP_TOTALLYFROZEN);
+		radsuitOn[PlayerNumber()] = 1;
+		radsuitEmpty[PlayerNumber()] = 0;
+//		RadSuitPower();
+		}
+		Else If(CheckInventory("HEVSuitUsed"))
+		{
+		Print(s:"\cnEquipping Used HEV");
+		//TakeInventory("HEVSuit");
+		//GiveInventory("HEVSuitUsed");
+		LocalAmbientSound("CHGSUIT",127);
+		GiveInventory("HEVFeet",1);
+		Thing_Stop(0);
+		SetPlayerProperty(0, ON, PROP_TOTALLYFROZEN);
+		Delay(70);
+		SetPlayerProperty(0, OFF, PROP_TOTALLYFROZEN);
+		TakeInventory("HEVFeet",1);
+		radsuitOn[PlayerNumber()] = 1;
+		radsuitEmpty[PlayerNumber()] = 0;
+//		RadSuitPower();
+		}
+		Else Print(s:"No HEV Suit!");
+		//radsuitOn[PlayerNumber()] = 1;
+		//radsuitEmpty[PlayerNumber()] = 0;
+		}
+}
+
+Script "RadsuitHandling" ENTER
+{
+	radsuitEmpty[PlayerNumber()] = 0;
+	While(1)
+	{
+	int sae_ar = GetAspectRatio();
+	SetHudSize(550,360,1);
+	Until (radsuitEmpty[PlayerNumber()] == 1)
+	{
+		If(CheckInventory("HEVSuitUsed") && CheckInventory("HEVProtect") && !CheckInventory("PowerIronFeet"))
+		{
+			If(sae_ar == ASPECT_4_3)
+			{
+				If ( CheckInventory("UDValt") )
+				{
+					If(radsuitTime[PlayerNumber()] <= 100 && radsuitTime[PlayerNumber()] > 75)
+					{
+					SETFONT("RAD100");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 245.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 75 && radsuitTime[PlayerNumber()] > 50)
+					{
+					SETFONT("RAD75");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 245.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 50 && radsuitTime[PlayerNumber()] > 25)
+					{
+					SETFONT("RAD50");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 245.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 25 && radsuitTime[PlayerNumber()] > 15)
+					{
+					SETFONT("RAD25");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 245.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 15 )
+					{
+					TakeInventory("HEVProtect",1);
+					SETFONT("RAD00");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 245.0, 0.2, 0.5, 2.0, 0.50);
+					}
+					Delay(35*2);
+				}
+				Else
+				{
+					If(radsuitTime[PlayerNumber()] <= 100 && radsuitTime[PlayerNumber()] > 75)
+					{
+					SETFONT("RAD100");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 340.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 75 && radsuitTime[PlayerNumber()] > 50)
+					{
+					SETFONT("RAD75");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 340.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 50 && radsuitTime[PlayerNumber()] > 25)
+					{
+					SETFONT("RAD50");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 340.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 25 && radsuitTime[PlayerNumber()] > 15)
+					{
+					SETFONT("RAD25");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 340.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 15 )
+					{
+					TakeInventory("HEVProtect",1);
+					SETFONT("RAD00");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 466.0, 340.0, 0.2, 0.5, 2.0, 0.50);
+					}
+					Delay(35*2);
+				}
+			}
+			Else
+			{
+				If ( CheckInventory("UDValt") )
+				{
+					If(radsuitTime[PlayerNumber()] <= 100 && radsuitTime[PlayerNumber()] > 75)
+					{
+					SETFONT("RAD100");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 245.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 75 && radsuitTime[PlayerNumber()] > 50)
+					{
+					SETFONT("RAD75");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 245.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 50 && radsuitTime[PlayerNumber()] > 25)
+					{
+					SETFONT("RAD50");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 245.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 25 && radsuitTime[PlayerNumber()] > 15)
+					{
+					SETFONT("RAD25");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 245.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 15 )
+					{
+					TakeInventory("HEVProtect",1);
+	//				TakeInventory("HEVFeet",1);
+					SETFONT("RAD00");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 245.0, 0.2, 0.5, 2.0, 0.50);
+					}
+					Delay(35*2);
+				}
+				Else
+				{
+					If(radsuitTime[PlayerNumber()] <= 100 && radsuitTime[PlayerNumber()] > 75)
+					{
+					SETFONT("RAD100");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 340.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 75 && radsuitTime[PlayerNumber()] > 50)
+					{
+					SETFONT("RAD75");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 340.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 50 && radsuitTime[PlayerNumber()] > 25)
+					{
+					SETFONT("RAD50");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 340.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 25 && radsuitTime[PlayerNumber()] > 15)
+					{
+					SETFONT("RAD25");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 340.0, 1.0, 1.0, 2.0, 0.15);
+					}
+					Else If(radsuitTime[PlayerNumber()] <= 15 )
+					{
+					TakeInventory("HEVProtect",1);
+	//				TakeInventory("HEVFeet",1);
+					SETFONT("RAD00");
+					HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP, 0, 0, 533.0, 340.0, 0.2, 0.5, 2.0, 0.50);
+					}
+					Delay(35*2);
+				}
+			}
+		}
+		/*
+		if (radsuitOn[PlayerNumber()])
+			{
+				//ACS_NamedExecute("RadsuitPower",0);
+				RadSuitPower();
+			}
+		*/
+		Delay(1);
+	}
+	Delay (1);
+	}
+}
+
+//script "RadsuitPower" (void)
+//function void radsuitpower (void)
+Script "RadsuitPower" Enter
+{
+	While(true)
+	{
+		//If(CheckInventory("HEVSuitUsed"))
+		//{
+			if (radtime[PlayerNumber()] > 0 && CheckInventory("HEVSuitUsed") && radsuitOn[PlayerNumber()] )
+				{
+					radsuitTime[PlayerNumber()] = (radtime[PlayerNumber()]-- * 100) / POWERTIME;
+					GiveInventory("HEVProtect", 1);
+					GiveInventory("HEVFeet", 1);
+					Delay (35);
+				}
+			Else If(radtime[PlayerNumber()] == 0 && CheckInventory("HEVSuitUsed") && radsuitOn[PlayerNumber()] )
+				{
+					DropInventory(ActivatorTID(), "HEVSuitUsed");
+					TakeInventory("HEVProtect",1);
+					TakeInventory("HEVFeet", 1);
+					radsuitOn[PlayerNumber()] = 0;
+					Print(s:"HEV Suit Compromised");
+					Delay (1);
+					radsuitEmpty[PlayerNumber()] = 1;
+				}
+			Else If(radtime[PlayerNumber()] == 0) radtime[PlayerNumber()] = POWERTIME;
+			Else If (!CheckInventory("HevSuitUsed") && radsuitOn[PlayerNumber()] )
+			{
+			//LocalAmbientSound("NvgOFF",127);
+			TakeInventory("HEVProtect",1);
+			TakeInventory("HEVFeet",1);
+			radsuitOn[PlayerNumber()] = 0;
+			radtime[PlayerNumber()] = POWERTIME;
+			radsuitEmpty[PlayerNumber()] = 1;
+			}
+		//}
+		/*
+		Else
+		{
+			Print(s:"No HEV Suit!");
+			radsuitOn[PlayerNumber()] = 0;
+		}
+		*/
+	Delay(1);
+	}
+}

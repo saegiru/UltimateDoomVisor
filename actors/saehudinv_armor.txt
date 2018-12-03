@@ -1,0 +1,236 @@
+ACTOR sae_ArmorXTRM : Inventory {}
+ACTOR sae_ArmorBlue : Inventory {}
+ACTOR sae_ArmorGreen : Inventory {}
+ACTOR sae_Armor80d : Inventory {}
+ACTOR sae_Armor60d : Inventory {}
+ACTOR sae_ArmorYellow : Inventory {}
+ACTOR sae_Armor40d : Inventory {}
+ACTOR sae_ArmorRed : Inventory {}
+ACTOR sae_Armor20d : Inventory {}
+ACTOR sae_Armor10d : Inventory {}
+ACTOR sae_Armor0d : Inventory {}
+
+//---------------------------------------------------------
+
+ACTOR sae_ArmorExtreme : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_GiveInventory("sae_ArmorXTRM", 1)
+    Stop
+  }
+}
+
+ACTOR sae_ArmorAboveHundred : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+	TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_GiveInventory("sae_ArmorBlue", 1)
+    Stop
+  }
+}
+
+ACTOR sae_ArmorOk : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+	TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_GiveInventory("sae_ArmorGreen", 1)
+    Stop
+  }
+}
+
+ACTOR sae_Armor80 : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+	TNT1 A 0 A_GiveInventory("sae_Armor80d", 1)
+    Stop
+  }
+}
+
+ACTOR sae_Armor60 : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+	TNT1 A 0 A_GiveInventory("sae_Armor60d", 1)
+    Stop
+  }
+}
+
+ACTOR sae_ArmorLow : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+	TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_GiveInventory("sae_ArmorYellow", 1)
+    Stop
+  }
+}
+
+ACTOR sae_Armor40 : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+	TNT1 A 0 A_GiveInventory("sae_Armor40d", 1)
+    Stop
+  }
+}
+
+ACTOR sae_ArmorVeryLow : CustomInventory
+{
+  States
+  {
+  Pickup:
+    TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+	TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_GiveInventory("sae_ArmorRed", 1)
+    Stop
+  }
+}
+
+ACTOR sae_Armor20 : CustomInventory
+{
+  States
+  {
+  Pickup:
+
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_GiveInventory("sae_Armor20d", 1)
+    Stop
+  }
+}
+
+ACTOR sae_Armor10 : CustomInventory
+{
+  States
+  {
+  Pickup:
+
+    TNT1 A 0 A_TakeInventory("sae_Armor0d", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_GiveInventory("sae_Armor10d", 1)
+    Stop
+  }
+}
+
+ACTOR sae_ArmorZero : CustomInventory
+{
+  States
+  {
+  Pickup:
+
+    TNT1 A 0 A_TakeInventory("sae_ArmorGreen", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorRed", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorYellow", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorBlue", 1)
+    TNT1 A 0 A_TakeInventory("sae_ArmorXTRM", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor80d", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor60d", 1)
+	TNT1 A 0 A_TakeInventory("sae_Armor40d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor20d", 1)
+    TNT1 A 0 A_TakeInventory("sae_Armor10d", 1)
+    TNT1 A 0 A_GiveInventory("sae_Armor0d", 1)
+    Stop
+  }
+}

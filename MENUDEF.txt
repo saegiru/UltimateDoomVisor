@@ -1,0 +1,372 @@
+OptionMenuSettings
+{
+	Linespacing 8
+}
+AddOptionMenu "OptionsMenu"
+{
+	StaticText " "
+	Submenu "--Ultimate DoomVisor Options--",			"DHUD"
+
+}
+
+OptionMenu "DHUD"
+{
+  Title "Ultimate DoomVisor HUD"
+    SafeCommand "Apply All Changes Now", "Pukename UDVReset", "Apply All Changes Now?"
+  StaticText " "
+  Submenu "Customize Controls",		"CustomizeControls"
+  Submenu "Visor Options", "UDVMessages"
+  Submenu "Damage Options", "UDVDamageMenu"
+  Submenu "Tools Options", "UDVToolsMenu"
+  Submenu "Enemy Health Bar Options", "UDVHUDOptions"
+  Submenu "Gameplay Options", "UDVGameplayOptions"
+  Option "Use Generic Weapon Script", "udv_disableweapon", "YesNo"
+  Option "Disable Weapon Switch on Pickup", "neverswitchonpickup", "YesNo"
+  Option "Interval Autosave", "saehud_autosave", "OnOff"
+  Slider "Minutes Between Saves", "saehud_savetime", 1, 10, 1, 0
+  Slider "Number of autosaves", "autosavecount", 1, 20, 1, 0
+  Option "$MISCMNU_ENABLEAUTOSAVES", "disableautosave", "Autosave"
+
+}
+
+/*
+OptionValue "FlashlightPOS"
+{
+	4, "Center"
+	36, "Shoulder"
+}
+*/
+
+OptionValue "NanoClean"
+{
+	1, "Auto + Manual"
+	0, "Manual Only"
+}
+
+OptionValue "DarkDoom"
+{
+	0, "Default"
+	40, "Dark"
+	80, "Darker"
+	255, "Pitch Black"
+}
+
+
+OptionMenu "UDVControls"
+{
+	Control 	"Activate EMS",		"UDVActivateEMS"
+	Control		"Toggle Flashlight", "UDVToggleFlashlight"
+}
+
+OptionMenu "UDVHUDOptions"
+{
+	Title "Enemy Health Bar Options"
+	Option "Enemy health bar type", "udv_hud_enemyhealthbar", "UDVHUD_EnemyBarType"
+	SubMenu "Horizontal Bar Position", "UDVHUD_Horizontal"
+	SubMenu "Vertical Bar Position", "UDVHUD_Vertical"
+	Slider "Minimum HP to trigger display", "udv_hud_MinimumHP", 10, 5000, 10, 0
+	Option "Show Numerical Health", "udv_hud_drawHealth", "YesNo"
+	Option "Draw enemy tag", "udv_hud_drawenemytag", "YesNo"
+	Option "Assign Names/Classes", "udv_AssignName", "YesNo"
+	Option "Default Class instead of Name Tag", "udv_hud_usegeneric", "YesNo"
+	StaticText " "
+	StaticText "Smaller values increase graphic size"
+	Slider "X scaled resolution", "udv_hud_xresolution", 0, 10000, 8, 0
+	Slider "Y scaled resolution", "udv_hud_yresolution", 0, 10000, 8, 0
+	StaticText " "
+	Slider "X Font scaled resolution", "udv_hud_font_xresolution", 0, 10000, 8, 0
+	Slider "Y Font scaled resolution", "udv_hud_font_yresolution", 0, 10000, 8, 0
+	StaticText " "
+	Command "Reset Wide Display Defaults", "pukename HealthBarDefaults"
+	Command "Reset 4:3 	Display Defaults", "pukename HealthBarDefaults43"
+}
+
+
+OptionMenu "UDVHUD_Horizontal"
+{
+	Title "Horizontal Bar Position"
+	Command "Preset: Crosshair Bar", "pukename HealthBarCrosshairH"
+	Slider "Global X offset", "hud_h_globalxoffset", -10000, 10000, 5, 0
+	Slider "Global Y offset", "hud_h_globalyoffset", -10000, 10000, 5, 0
+	Slider "Tag X offset", "HUD_h_TagXOffset", -2500, 2500, 5, 0
+	Slider "Tag Y offset", "HUD_h_TagYOffset",  -2500, 2500, 5, 0
+	Slider "Bar X offset", "HUD_h_BarXOffset", -320, 2240, 1, 0
+	Slider "Bar Y offset", "HUD_h_BarYOffset", -240, 1320, 1, 0
+	Slider "Health X offset", "HUD_h_HPXOffset", -2500, 2500, 5, 0
+	Slider "Health Y offset", "HUD_h_HPYOffset", -2500, 2500, 5, 0
+}
+
+OptionMenu "UDVHUD_Vertical"
+{
+	Title "Vertical Bar Position"
+	Command "Preset: Crosshair Bar", "pukename HealthBarCrosshairV"
+	Slider "Global X offset", "hud_v_globalxoffset", -10000, 10000, 5, 0
+	Slider "Global Y offset", "hud_v_globalyoffset", -10000, 10000, 5, 0
+	Slider "Tag X offset", "HUD_v_TagXOffset", -2500, 2500, 5, 0
+	Slider "Tag Y offset", "HUD_v_TagYOffset", -2500, 2500, 5, 0
+	Slider "Bar X offset", "HUD_v_BarXOffset", -320, 2240, 1, 0
+	Slider "Bar Y offset", "HUD_v_BarYOffset", -240, 1320, 1, 0
+	Slider "Health X offset", "HUD_v_HPXOffset", -2500, 2500, 5, 0
+	Slider "Health Y offset", "HUD_v_HPYOffset", -2500, 2500, 5, 0
+}
+
+OptionMenu "UDVMessages"
+{
+	Title "Visor Options"
+	Submenu "$HUDMNU_SCALEOPT",				"ScalingOptions"
+	Option "Visor Graphics Quality", "udv_toggleLQ", "UDV_Quality"
+	Option "Helmet Animation on Start", "udv_helmettoggleOnStart", "YesNo"
+	Option "Helmet Animation on Armor Pickup", "udv_helmettoggle", "YesNo"
+	Option "Show Mugshot", "saehud_togglemug", "YesNo"
+	Option "Show Weapon List", "saehud_togglelist", "YesNo"
+	Option "Show Reserve Ammo Display", "saehud_toggleammo", "YesNo"
+	Option "Show Kills", "udv_togglekills", "YesNo"
+	Option "Show Secrets", "udv_togglesecrets", "YesNo"
+	Option "Show Items", "udv_toggleitems", "YesNo"
+	Option "Show Stat Totals", "udv_totalstats", "YesNo"
+	Option "Show Name Display", "udv_togglename", "YesNo"
+	Option "Show Level Time", "udv_toggletime", "YesNo"
+	Option "Show Visor Inventory", "saehud_toggleinv", "YesNo"
+	Option "Show Face Reflection", "UDV_Reflect", "YesNo"
+	Option "Keep Face on Screen Always", "UDV_FaceAlways", "YesNo"
+	Slider "Reflection Transparency", "UDV_FaceAlpha", 0, 1, 0.01, 2
+	Option "Enable Other Visor Messages", "saehud_togglemessage", "YesNo"
+	Option "AI Alerts", "udv_sounds", "UDV_SoundsType"
+}	
+
+OptionMenu "UDVToolsMenu"
+{
+Title "UDV Tools Menu"
+  StaticText " "
+Command "Disable Power/Armor for all Tools", "pukename Disable_Power"
+StaticText " "
+  Slider "Min Armor Req. for Tools", "UDV_ToolArmor", 0, 200, 1, 0
+  StaticText " "
+Slider "Starting Accessory Power", "UDV_AccBatteryAmt", 0, 200, 1, 0
+//Slider "Battery Drain Multiplier", "UDV_BattMult", 1, 2, 1
+Option "Spawn Accessory Batteries", "udv_spawnbattery", "YesNo"
+Slider "Max AMT Accessory Batt. Spawns", "udv_accamt", 0, 20, 1, 0
+Slider "Max AMT EX Accessory Batt. Spawns", "udv_accexamt", 0, 20, 1, 0
+StaticText " "
+StaticText  "Flashlight Options"
+StaticText " "
+  Control "Toggle Flashlight Key", "UDVToggleFlashlight"
+  Option "Require Power for Flashlight", "udv_lightpower", "YesNo"//0, 100, 1, 0
+  Option "Use LQ Flashlight", "UDV_FlashlightLQ", "YesNo"  
+  //Option "Flashlight Position", "saehud_flashlightpos", "FlashlightPOS"
+StaticText " "
+StaticText  "Emergency Medical System Options"
+StaticText " "
+  Control "Activate EMS Key", "UDVActivateEMS"
+  //Slider "Min Armor for EMS", "UDV_EMSArmor", 0, 200, 1, 0
+  Slider "Min Health for EMS", "UDV_EMSHealth", 1, 99, 1, 0
+  Slider "Acc. Power Req. for EMS", "UDV_EMSBattery", 0, 200, 1, 0
+StaticText " "
+SubMenu "Radar Options", "Radar"
+}
+
+OptionMenu "Radar"
+{
+	Title  "Radar Options"
+	StaticText " "
+	Control "Radar Toggle Key", "udv_mradar"
+	Option "Require Power for Radar", "udv_radarpower", "YesNo"
+	//Option "Allow Radar on Map Start", "UDV_RadarStart", "YesNo"
+	Option "Default Radar Mode", "UDV_RadarMode", "RadarModes"
+	StaticText " "
+	StaticText "Setting the following option to 'Disable'"
+	StaticText "may increase performance at the cost of tracking monsters"
+	StaticText "and requires map restart to take effect"
+	StaticText " "
+	Option "Monster Tracking", "UDV_DisableGiver", "TIDAssign"
+}
+
+OptionMenu "UDVDamageMenu"
+{
+Title "UDV Damage Options"
+  Slider "Starting Armor", "saehud_startarmor", 0, 200, 1, 0
+  Option "Dynamic Visor Damage", "saehud_toggledamage", "OnOff"
+  Option "Red Tint on Low Health", "udv_redtint", "OnOff"
+  Option "Dynamic Mugshot Damage", "saehud_dynamicmug", "OnOff"
+  Option "Blood Splatter", "udv_splatter", "OnOff"
+  Option "Nano Cleaning Mode", "udv_autoclean", "NanoClean"
+  StaticText " "
+  StaticText  "Hold forward+back at the same time"
+  StaticText  "to clean off blood."
+}
+
+OptionMenu "UDVGameplayOptions"
+{
+	Title "UDV Gameplay Options"
+    SafeCommand "Apply All Changes Now", "Pukename UDVReset", "Apply All Changes?"
+	StaticText "*May Require Level Restart or Apply Now"
+	//StaticText "and can be overriden by Difficulty Settings"
+	StaticText " "
+  Option "Critical Bleeding / Energize", "UDV_toggleBleeding", "YesNo"
+	Slider "Critical Health", "UDV_HealthCritical", 1, 99, 1, 0
+	Slider "Energized Health", "UDV_HealthEnergize", 101, 500, 1, 0
+	StaticText " "
+  Option "Aiming Momentum", "UDV_toggleRealAim", "YesNo"
+  Option "Screen Shake on Damage", "UDV_ToggleShake", "YesNo"
+  StaticText " "
+  Option "Outdoor Air Loss Damage", "udv_skydamage", "YesNo"
+  Slider "Min. Armor to Display Hole", "udv_skyarmor", 0, 200, 1, 0
+  Option "Armor Damage Warning Alarm",	"udv_dangeralarm", "YesNo"
+  Slider "Seconds Before Air Loss", "udv_skydamagetime", 0, 60, 1, 0
+  StaticText " "
+  SubMenu "Item Options", "UDVItemOptions"
+  StaticText " "
+  StaticText  "Map Atmosphere Options"
+  //Option "Replace music with UDV Ambient sound", "udv_ambient", "YesNo"
+  //Option "Light Level", "udv_darkdoom", "DarkDoom"
+  SubMenu "*Fog Options", "UDV_Fog"
+  SubMenu "*Light Color Options", "UDV_LightColor"
+  SubMenu "*Light Level Options", "UDV_Dark"
+  StaticText " "
+  StaticText "Multiplayer Options"
+  StaticText " "
+  Option "Enable CoopLives", "udv_cooplives", "YesNo"
+  Slider "Number of lives before restart", "udv_numcooplives", 1, 100, 1, 0
+  //StaticText " "
+}
+
+OptionMenu "UDVItemOptions"
+{
+  StaticText  "Item Options"
+  StaticText " "
+  Slider "Berserk Limiter in Minutes", "udv_berserk", 0, 10, 1, 0
+  StaticText " "
+  Option "Enable HEV Suit", "udv_HevSuitSpawn", "YesNo"
+  Slider "Max AMT of HEV Suit Spawns", "udv_hevamt", 0, 10, 1, 0
+  StaticText " "
+  Option "Enable Reusable Goggles", "udv_GogglesSpawn", "YesNo"
+  Slider "Max AMT of Goggles Spawns", "udv_infamt", 0, 10, 1, 0
+  StaticText " "
+  Option "Enable SmartMediKit", "udv_smartmedikitspawn", "YesNo"
+}
+
+OptionValue "TIDAssign"
+{
+	1, "Disable"
+	0, "Enable"
+}
+
+OptionValue "RadarModes"
+{
+	0, "Disabled"
+	1, "Local"
+	2, "Movement"
+	3, "Full"
+}
+
+OptionValue "UDVHUD_EnemyBarType"
+{
+	0, "No bar"
+	1, "Horizontal"
+	2, "Vertical"
+}
+
+OptionValue "UDV_SoundsType"
+{
+	0, "OFF"
+	1, "Original"
+	2, "HL FVox"
+	3, "GlaDOS"
+	4, "Male"
+	5, "Omega"
+	6, "Cortana"
+	7, "Rallinth"
+}
+
+OptionValue "UDV_Quality"
+{
+	0, "HIGH"
+	1, "LOW"
+}
+
+OptionMenu "UDV_Fog"
+{
+	Title "Fog Options"
+	Option "Enable Fog Effects", "UDV_ToggleFog", "YesNo"
+	StaticText " "
+    SafeCommand "Apply These Changes", "pukename RunFog", "Change Fog Options?"
+	StaticText " "
+	Option "Fog Color", "udv_fogcolor", "FogColor"//"YesNo"
+	StaticText " "
+	StaticText "Manual Fog Color"
+	StaticText " "
+	Command "Preset: Default", "pukename fog_default"
+	Command "Preset: Dark", "pukename fog_dark"
+	Command "Preset: Red", "pukename fog_red"
+	Command "Preset: Green", "pukename fog_green"
+	Command "Preset: Blue", "pukename fog_blue"
+	StaticText " "
+	Command "Save Current", "pukename SaveFog"
+	Command "Load Saved", "pukename LoadFog"
+	StaticText " "
+	Slider "Red", "udv_getred", 1, 255, 1, 0
+	Slider "Green", "udv_getgreen", 1, 255, 1, 0
+	Slider "Blue", "udv_getblue", 1, 255, 1, 0
+	StaticText " "
+	Option "Fog Density", "udv_fograndom", "FogDensity"//"YesNo"
+	Slider "Max Fog Density", "udv_fogdensity", 0, 20, 1, 0
+	StaticText " "
+}
+
+OptionValue "FogDensity"
+{
+0, "Manual"
+1, "Random"
+}
+
+OptionValue "FogColor"
+{
+0, "Manual"
+1, "Random"
+}
+
+OptionValue "UDV_LightColor"
+{
+	0, "Manual"
+	1, "Match Fog"
+	2, "Random"
+}
+
+OptionMenu "UDV_LightColor"
+{
+	Title "Light Color Options"
+ 	Option "Enable Light Effects", "udv_togglelight", "YesNo"
+	StaticText " "
+   SafeCommand "Apply These Changes", "pukename ColorLight", "Change Light Colors?"
+	StaticText " "
+	Option "Light Color", "udv_lightcolor", "UDV_LightColor"//"YesNo"
+   StaticText " "
+	StaticText "Manual Light Color"
+	StaticText " "
+	Command "Preset: Default", "pukename light_default"
+	Command "Preset: Dark", "pukename light_dark"
+	Command "Preset: Red", "pukename light_red"
+	Command "Preset: Green", "pukename light_green"
+	Command "Preset: Blue", "pukename light_blue"
+	StaticText " "
+	Command "Save Current", "pukename SaveColorLight"
+	Command "Load Saved", "pukename LoadColorLight"
+	StaticText " "
+	Slider "Red", "udv_getlred", 0, 255, 1, 0
+	Slider "Green", "udv_getlgreen", 0, 255, 1, 0
+	Slider "Blue", "udv_getlblue", 0, 255, 1, 0
+	StaticText " "
+	Option "Allow Desaturation", "udv_enabdes", "YesNo"
+	Slider "Desaturation", "udv_getldesat", 0, 255, 1, 0
+}
+
+OptionMenu "UDV_Dark"
+{
+	Title "Light Level Options"
+	Option "Enable Light Level", "udv_enabledark", "YesNo"
+	StaticText " "
+	SafeCommand "Apply These Changes", "pukename DoDark", "Change Light Level?"
+	StaticText " "
+  Option "Random Light Level", "udv_darkrandom", "YesNo"
+  Option "Light Level", "udv_darkdoom", "DarkDoom"
+}

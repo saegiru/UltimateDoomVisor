@@ -1,0 +1,47 @@
+ACTOR sae_deathcam : Inventory 
+{
+inventory.maxamount 1
+}
+
+ACTOR sae_extcam : Inventory
+{
+inventory.maxamount 1
+}
+
+/*
+ACTOR DoomerUDV : Doomer Replaces Doomer
+{
+	States
+	{
+	Death.HKFT:
+	Death.BHFT:
+	Death.RVFT:
+		TNT1 A 0 A_GiveInventory("sae_deathcam", 1)
+		TNT1 A 0 A_PlaySound("BLANKSND", CHAN_WEAPON,1.0,0)
+		TNT1 A 1 A_PlayerScream
+		TNT1 A 1 A_NoBlocking
+        TNT1 A 0 A_GiveToTarget("Curbstomp_Marine",1)
+		TNT1 A -1
+        Stop
+
+	Death.TriteFatalityMarine:
+		TNT1 A 0 A_GiveInventory("sae_deathcam", 1)
+		TNT1 A 0 A_PlaySound("BLANKSND", CHAN_WEAPON,1.0,0)
+		TNT1 A 1 A_PlayerScream
+		TNT1 A 1 A_NoBlocking
+		TNT1 A 0 A_GiveToTarget("Trite_Fatality_Marine",1)
+		TNT1 A -1
+        Stop
+
+    Death.ImpFatalityMarine:
+		TNT1 A 0 A_GiveInventory("sae_deathcam", 1)
+		TNT1 A 0 A_PlaySound("BLANKSND", CHAN_WEAPON,1.0,0)
+		TNT1 A 1 A_PlayerScream
+		TNT1 A 1 A_NoBlocking
+        TNT1 A 0 A_GiveToTarget("Fatality_Marine",1)
+		TNT1 A -1
+        Stop
+	Stop
+	}
+}
+*/

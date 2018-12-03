@@ -1,0 +1,296 @@
+#library "saeweap"
+#import "Aspect.acs"
+#include "zcommon.acs"
+
+global int 42:sae_WNAME;
+int sae_SecAmmoCap;
+
+//Constants
+
+#define D_AMMOEMPTY			0	// Ammo Empty
+#define D_AMMOLOW			40  // If ammo % < this number, the bar and counters will become yellow
+#define D_AMMOVERYLOW		20  // If ammo % < this number, the bar and counters will become red
+
+// Number of ammo types to be shown on the HUD as part of the future all-ammo/reserve ammo display - If
+// you add more ammo types in the array below, make sure the number here reflects that.
+// Currently not implemented.
+
+#define D_NUMBEROFRESAMMOTYPES	6
+
+// Reserve ammo types list - This is required by the "highlight" feature of the all-ammo/reserve
+// ammo display. This is NOT for showing the ammo types on the HUD. The ammo types still need to be
+// added manually in SBARINFO. Columns descriptions are as follows:
+// 1st column ---> ammo types.
+// 2nd column ---> ammo types' "id". The id should be in the range of 0-29, so you're limited by 30
+//                 ammo types by default. The limit can still be increased if needed -- it can be
+//                 done from 'saehudinv_ammo.txt' file located in the 'actors' directory.
+
+str sae_resammotypeslist[D_NUMBEROFRESAMMOTYPES][2] =
+{
+  {"Clip",            "0"},
+  {"Shell",              "1"},
+  {"RocketAmmo",         "2"},
+  {"Cell",               "3"},
+  {"MiniHellRocketAmmo", "4"},
+  {"Gas",				 "5"},
+};
+
+// -------------------------
+
+// Number of available weapons - If you add more weapons in the array below, make sure the number
+// here reflects that.
+
+#define D_NUMBEROFWEAPONS	1
+#define D_WEAPONSLIST 0 //Number of standard weapons to show in weaponslist
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+// 6th column ---> Display name of weapon for Weapons list
+
+str sae_weaponslist[D_NUMBEROFWEAPONS][7] =
+{
+  {" ",              " ",          	" ", 			" ",	" ",	" "},
+};
+
+// AMMO Count Functions
+
+Function void AmmoBarForHUD (str ammotype, str ammoempty, str ammoverylow, str ammolow, str ammogood)
+{
+  // Store ammo type's current amount in a variable as a percentage
+  int sae_ammoper = CheckInventory(ammotype) * 100 / GetAmmoCapacity(ammotype);
+  
+  If(CheckInventory(ammotype) == D_AMMOEMPTY)
+  {
+	GiveInventory(ammoverylow, 1);
+	GiveInventory(ammoempty, 1);
+  }
+  Else If(sae_ammoper <= D_AMMOVERYLOW && sae_ammoper > D_AMMOEMPTY) GiveInventory(ammoverylow, 1);
+  Else If(sae_ammoper >= D_AMMOVERYLOW && sae_ammoper < D_AMMOLOW) GiveInventory(ammolow, 1);
+  Else If(sae_ammoper >= D_AMMOLOW) GiveInventory(ammogood, 1);
+  
+}
+
+Function void GetEquippedWeaponAndAmmo (void)
+{
+  For(int i; i < D_NUMBEROFWEAPONS; i++)
+  {
+    If(CheckWeapon(sae_weaponslist[i][0]))
+    {
+	  GiveInventory("sae_known", 1);
+	  sae_WNAME = sae_weaponslist[i][4];
+	  sae_SecAmmoCap = GetAmmoCapacity(sae_weaponslist[i][2]);
+	  If ( sae_SecAmmoCap > 2 ) GiveInventory("UDV_SecAmmoCap", 1);
+	  Else TakeInventory("UDV_SecAmmoCap", 1);
+      AmmoBarForHUD(sae_weaponslist[i][1], "sae_PAE", "sae_PrimaryAmmoVeryLow", "sae_PrimaryAmmoLow", "sae_PrimaryAmmoOk");
+      AmmoBarForHUD(sae_weaponslist[i][2], "sae_SAE", "sae_SecondaryAmmoVeryLow", "sae_SecondaryAmmoLow", "sae_SecondaryAmmoOk");
+	  
+	  If((sae_weaponslist[i][3]) == "Yes") GiveInventory("sae_Secondary", 1);
+	  Else TakeInventory("sae_Secondary", 1);
+
+	  If( sae_weaponslist[i][1] == "NoPrimary" ) 
+		{
+			GiveInventory("sae_Melee", 1);
+		}
+	  Else
+		{
+			TakeInventory("sae_Melee", 1);
+		}
+
+      Break;
+    }
+	Else
+	{
+		TakeInventory("sae_known", 1);
+		sae_WNAME = StrLeft(GetWeapon(), 10);
+	}
+  }
+}
+
+//BEGIN Weapon List
+
+int WpnCntr = D_WEAPONSLIST;
+
+Function void BuildWeaponList (void)
+{
+	If(CheckInventory("exverify"))
+	{
+		WpnCntr = D_WEAPONSLIST + 1;
+	}
+	
+  For(int i; i <= WpnCntr; i++)
+  {
+    int list_aspect = GetAspectRatio();
+	SetHudSize(930,730,1);
+	SetFont("UDVSmall");
+	If(CheckWeapon(sae_weaponslist[i][0]))
+	{
+		If(list_aspect == ASPECT_4_3)
+		{
+		HudMessage(s:sae_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+		}
+		Else
+		{
+		HudMessage(s:sae_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+		}
+	}
+	Else If(CheckInventory(sae_weaponslist[i][0]))
+	{
+		If(list_aspect == ASPECT_4_3)
+		{
+		HudMessage(s:sae_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+		}
+		Else
+		{
+		HudMessage(s:sae_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+		}
+	}
+	Else
+	{
+		If(list_aspect == ASPECT_4_3)
+		{
+		HudMessage(s:sae_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+		}
+		Else
+		{
+		HudMessage(s:sae_weaponslist[i][5];
+		HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+		}
+	}
+  }
+}
+
+// Scripts ---------------------------------------------------
+
+
+
+Script 2500 Enter
+{
+
+	if (GameType () != GAME_TITLE_MAP)
+	{
+		int acount = 1; //counter for low ammo
+		int acount2 = 1; //counter for empty ammo
+		//int acount3 = 1; //counter for low clip ammo
+		SETFONT("UDVSMALL");
+
+	  While(TRUE)
+	  {
+		
+		GetEquippedWeaponAndAmmo();
+		/*
+		If( GetCvar("saehud_togglelist") )//&& GameType() == GAME_SINGLE_PLAYER )
+		{
+			If ( !CheckInventory("sae_extcam") && !CheckInventory("sae_deathcam") )
+			{
+				BuildWeaponList();
+			}
+		}
+	
+		If( CheckInventory("sae_PrimaryAmmoRed") && (CheckInventory("sae_melee") == FALSE) && !CheckInventory("sae_PrimaryAmmoEmpty") )
+		{
+		Until ( acount > 1 )
+			{
+				//If(GetCVar("udv_sounds") > 0 )
+				//{
+					If(GetCVar("udv_sounds") == 1)
+					{
+					LocalAmbientSound("ammolo", 127);
+					}
+					Else If(GetCVar("udv_sounds") == 2)
+					{
+					LocalAmbientSound("fvox/ammolo", 127);
+					}
+					Else If(GetCVar("udv_sounds") == 3)
+					{
+					LocalAmbientSound("gdos/ammolo", 127);
+					}
+						Else If(GetCVar("udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/AmmoLow", 127);
+						}
+						Else If(GetCVar("udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/AmmoLow", 127);
+						}
+				//}
+				If(GetCvar("saehud_togglemessage"))
+				{
+					print(s:"\cgWarning -- Ammunition Critical");
+				}
+					acount++;
+			}
+		}
+		ELSE
+		{
+			acount = 1;
+		}
+		
+		If( CheckInventory("sae_PrimaryAmmoEmpty") && (CheckInventory("sae_melee") == FALSE) )
+		{
+		Until ( acount2 > 1 )
+			{
+				//If(GetCVar("udv_sounds") > 0 )
+				//{
+					If(GetCVar("udv_sounds") == 1)
+					{
+					LocalAmbientSound("ammoem", 127);
+					}
+					Else If(GetCVar("udv_sounds") == 2)
+					{
+					LocalAmbientSound("fvox/ammoem", 127);
+					}
+					Else If(GetCVar("udv_sounds") == 3)
+					{
+					LocalAmbientSound("gdos/ammoem", 127);
+					}
+						Else If(GetCVar("udv_sounds") == 4)
+						{
+						LocalAmbientSound("Graham/AmmoEmpty", 127);
+						}
+						Else If(GetCVar("udv_sounds") == 5)
+						{
+						LocalAmbientSound("Omega/AmmoEmpty", 127);
+						}
+
+				//}
+				If(GetCvar("saehud_togglemessage"))
+				{
+					print(s:"\cgWarning -- Ammunition Depleted");
+				}
+					acount2++;
+			}
+		}
+		ELSE
+		{
+			acount2 = 1;
+		}
+		
+		If( CheckInventory("sae_SecondaryAmmoRed") && CheckInventory("sae_secondary") && sae_SecAmmoCap > 2 )
+		{
+		Until ( acount3 > 1 )
+			{
+				//If(GetCVar("udv_sounds") > 0 )
+				//{
+					LocalAmbientSound("clipwarn", 127);
+				//}
+				acount3++;
+			}
+		}
+		ELSE
+		{
+			acount3 = 1;
+		}
+		*/
+		Delay(1);
+	  }
+  }
+}

@@ -1,0 +1,42 @@
+#library "randomspawn"
+#include "zcommon.acs"
+
+str UDV_BatteryArray[2] =
+{
+"UDV_AccBattery", "UDV_AccBatteryEX",
+};
+
+Script "UDV_TheGiver" Enter
+{
+	Delay(5);
+	SpawnForced("UDV_ItemGiver", 0.0, 0.0, 0.0); // Gives all actors inventory item that triggers TID Script
+}
+
+Script "UDV_RandomItemSpawner" (void)
+{
+	int randomchance = random(0, 100);
+	//int power_disabled = (!GetCVar("udv_lightpower") && !GetCVar("udv_EMSBattery") && !GetCVar("udv_radarpower"));
+	int x = GetActorX(0);
+	int y = GetActorY(0);
+	int z = GetActorZ(0);
+	If ( x != 0 && y != 0 && z != 0 )
+	{
+		y = y + 15.0;
+		If (randomchance >= 0 && randomchance <=5 && ThingCountName("UDV_AccBattery",0) < GetCVAR("udv_accamt") ) 
+			{
+				If (GetCVAR("udv_spawnbattery")) SpawnForced("UDV_AccBattery", x, y, z);
+			}
+		Else If(randomchance > 5 && randomchance <= 7 && ThingCountName("UDV_AccBatteryEX",0) < GetCVAR("udv_accexamt") )
+			{
+				If (GetCVAR("udv_spawnbattery")) SpawnForced("UDV_AccBatteryEX", x, y, z);
+			}
+		Else If (randomchance > 7 && randomchance <= 10 && ThingCountName("UDV_HevSuit", 0) < GetCVAR("udv_hevamt") ) 
+			{
+				If(GetCvar("udv_hevsuitspawn")) SpawnForced("UDV_HevSuit", x, y, z);
+			}
+		Else If (randomchance > 10 && randomchance <= 13 && ThingCountName("UDV_Infrared2", 0) < GetCVAR("udv_infamt") )
+			{
+				If(GetCvar("udv_gogglesspawn")) SpawnForced("UDV_Infrared2", x, y, z);
+			}
+	}
+}

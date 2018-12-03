@@ -1,0 +1,4 @@
+AddKeySection "HEV Suit" RadiationSuit
+AddMenuKey "Toggle HEV Suit" "ToggleRadsuit"
+Alias "ToggleRadsuit" "PukeName RadsuitSwitch"
+DefaultBind "K" "ToggleRadsuit"

@@ -1,0 +1,62 @@
+#library "face"
+#include "zcommon.acs"
+
+Script 18755 (void)
+{
+	if (GameType () != GAME_TITLE_MAP)
+	{
+	While(true)
+		{
+			If( GetUserCVAR(PlayerNumber(),"UDV_Reflect") )
+			{
+				If ( !CheckInventory("sae_extcam") )//&& !CheckInventory("sae_deathcam") )
+				{
+					SetHudSize(320, 200, 0);
+					int facehealth = GetActorProperty(ActivatorTID(), APROP_Health);
+					//If(CheckActorProperty(0, APROP_Invulnerable, 1)) SETFONT("FaceG");
+					If (CheckActorProperty(ActivatorTID(), APROP_Invulnerable, 1)) SETFONT("IFace1_0");
+					Else If (CheckInventory("PowerStrength"))
+					{
+						If(facehealth >= 80) SETFONT("BFace1_0");
+						Else If(facehealth < 80 && facehealth >=60) SETFONT("BFace2_0");
+						Else If(facehealth < 60 && facehealth >=40) SETFONT("BFace3_0");
+						Else If(facehealth < 40 && facehealth >=20) SETFONT("BFace4_0");
+						Else If(facehealth < 20 && facehealth >0) SETFONT("BFace5_0");
+						Else If(facehealth <= 0) SETFONT("Face6");
+					}
+					Else
+					{
+						If(facehealth >= 80) SETFONT("Face1_0");
+						Else If(facehealth < 80 && facehealth >=60) SETFONT("Face2_0");
+						Else If(facehealth < 60 && facehealth >=40) SETFONT("Face3_0");
+						Else If(facehealth < 40 && facehealth >=20) SETFONT("Face4_0");
+						Else If(facehealth < 20 && facehealth >0) SETFONT("Face5_0");
+						Else If(facehealth <= 0) SETFONT("Face6");
+					}
+					If( GetUserCVAR(PlayerNumber(),"UDV_FaceAlways") )
+					{
+						HudMessage(s:"A"; HUDMSG_PLAIN | HUDMSG_ALPHA | HUDMSG_LAYER_UNDERHUD, 313, 0, 160.0, 100.0, 0, GetUserCVAR(PlayerNumber(),"UDV_FaceAlpha"));
+					}
+					Else
+					{
+						HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA | HUDMSG_LAYER_UNDERHUD, 313, 0, 160.0, 100.0, 0.5, random(0.5,1.0), random(0.5,1.0), GetUserCVAR(PlayerNumber(),"UDV_FaceAlpha"));
+					}
+					//Delay(35*5);
+					//Delay(random(35*60, 35*240));
+				}
+				Else HudMessage(s:" "; HUDMSG_PLAIN | HUDMSG_ALPHA | HUDMSG_LAYER_UNDERHUD, 313, 0, 160.0, 100.0, 0, GetUserCVAR(PlayerNumber(),"UDV_FaceAlpha"));
+
+			}
+			//Delay(35*5);
+			//Delay(35*5);
+			If( GetUserCVAR(PlayerNumber(),"UDV_FaceAlways") )
+			{
+				Delay(1);
+			}
+			Else
+			{
+				Delay(random(35*30, 35*120));
+			}
+		}
+	}
+}

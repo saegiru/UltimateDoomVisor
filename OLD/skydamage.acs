@@ -1,0 +1,96 @@
+#library "skydamage"
+#include "zcommon.acs"
+
+
+//global int 53:totaldamage[PlayerNumber()];
+int skycnt = 0;
+int skydamagetime; //= GetUserCVAR(PlayerNumber(),"udv_skydamagetime");
+
+Script "Checksky" Enter
+{
+	if (GameType () != GAME_TITLE_MAP)
+	{
+		ACS_NamedExecute("hole",0);
+		While(true)
+		{
+			int skyarmor = GetUserCVAR(PlayerNumber(),"udv_skyarmor");
+			If (CheckActorCeilingTexture(ActivatorTID(), "F_SKY1") && CheckInventory("Armor") <= skyarmor && GetActorProperty(ActivatorTID(), APROP_HEALTH) > 0 && GetUserCVAR(PlayerNumber(),"udv_skydamage") ) 
+				{
+					//PrintBold(s:"OUTSIDE!");
+					SetMugshotState("OUCH");
+					ACS_NamedExecute("SkyDamage", 0);
+				}
+			Else
+				{
+				If(skycnt > 0) 
+					{
+					PlaySound(ActivatorTID(),"INHALE", 5, 1.0);
+					ACS_NamedTerminate("skydamage",0);
+					//PrintBold(s:"INSIDE");
+					skycnt = 0;
+					}
+				}
+			Delay(1);
+		}
+	}
+}
+
+
+script "skydamage" (void) net// -- outdoor damage Script
+{
+	skydamagetime = GetUserCVAR(PlayerNumber(),"udv_skydamagetime");
+	If( skycnt <= skydamagetime )
+	{
+		Delay(35);//(35*10);
+		//PlaySound(0,"CHOKE", 5, 1.0);//("CHOKE",127);
+		skycnt++;// = 1;
+		HudMessage(s:"--Seconds of oxygen remaining--\n", d:(skydamagetime+1)-skycnt;
+		HUDMSG_FADEINOUT, 1156, CR_RED, 1.5, 0.6, 1.0, 1.0, 1.0);				
+		//PrintBold(d:11 - skycnt);
+		ACS_NamedTerminate("skydamage",0);
+		//Restart;
+	}
+		//PrintBold(d:skycnt);
+	SetMugShotState("OUCH");
+	HudMessage(s:"--FIND BREATHABLE ENVIRONMENT IMMEDIATELY--";
+	HUDMSG_FADEINOUT, 1156, CR_RED, 1.5, 0.6, 0.5,
+	2.0, 2.0);	
+	int skyrandomdmg = random(1,10);
+	DamageThing(skyrandomdmg,MOD_WATER);
+	PlaySound(ActivatorTID(),"CHOKE", 5, 1.0,TRUE);//("CHOKE",127);
+	totaldamage[PlayerNumber()] = totaldamage[PlayerNumber()]-skyrandomdmg;
+	skycnt = skydamagetime+1;
+	Delay(35*6);
+}
+
+Script "hole" (void) net//(void) // -- Add broken hole to visor for effect
+{
+	int holex = 0;
+	int holey = 0;
+	While(true)
+	{
+		If(CheckInventory("Armor") <= GetUserCVAR(PlayerNumber(),"udv_skyarmor"))
+		{
+		Until( holex > 0 && holey > 0 )
+			{
+				holex = random(1300,1500)*1.0;
+				holey = random(650,850)*1.0;
+				}
+				SetHudSize(1920,1080);
+				SetFont("HOLE");
+				//If(!CheckInventory("sae_deathcam") && !CheckInventory("sae_extcam") )
+				If( !CheckInventory("sae_extcam") )
+				{
+					HudMessage(s:"A";
+					HUDMSG_PLAIN | HUDMSG_LAYER_UNDERHUD, 1266, CR_RED, holex, holey, 0.1,
+					1.0);				
+				}
+		}
+		Else
+		{
+			holex = 0;
+			holey = 0;
+		}
+		Delay(1);
+	}
+}

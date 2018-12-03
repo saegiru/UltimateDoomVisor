@@ -1,0 +1,1587 @@
+#library "saeweap"
+#include "zcommon.acs"
+#import "Aspect.acs"
+#import "gamechecker.acs"
+
+global int 42:sae_WNAME[8];
+int sae_SecAmmoCap[8];
+
+//Constants
+
+#define D_AMMOEMPTY			0	// Ammo Empty
+#define D_AMMOLOW			40  // If ammo % < this number, the bar and counters will become yellow
+#define D_AMMOVERYLOW		20  // If ammo % < this number, the bar and counters will become red
+
+// Number of ammo types to be shown on the HUD as part of the future all-ammo/reserve ammo display - If
+// you add more ammo types in the array below, make sure the number here reflects that.
+// Currently not implemented.
+
+
+// -------------------------
+
+// Number of available weapons - If you add more weapons in the arrays below, make sure the number
+// here reflects that. For ammo counts, ensure that all weapons are listed in the first array for each mod.
+
+#define NONE_NUMBEROFWEAPONS	1
+#define NONE_STANDARDWEAPONS 0 //Number of standard weapons to show in weaponslist
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+// 6th column ---> Display name of weapon for Weapons list
+
+str NONE_weaponslist[NONE_NUMBEROFWEAPONS][6] =
+{
+  {" ",              	" ",        " ", " ",	" ", " "},
+};
+
+#define VANILLA_NUMBEROFWEAPONS	11
+#define VANILLA_STANDARDWEAPONS 7 //Number of standard weapons to show in weaponslist
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+// 6th column ---> Display name of weapon for Weapons list
+
+str VANILLA_weaponslist[VANILLA_NUMBEROFWEAPONS][6] =
+{
+  {"Chainsaw",              	"NoPrimary",        "NoSecondary", "No",	"SAW", "Chain Saw"},
+  {"Pistol",           			"Clip",             "NoSecondary", "No",	"PISTL", "Pistol"},
+  {"Shotgun",                  	"Shell",            "NoSecondary", "No",	"SHOT", "Shotgun"},
+  {"SuperShotgun",              "Shell",            "NoSecondary", "No",	"SSG", "Super Shotgun"},
+  {"Chaingun",                  "Clip",             "NoSecondary", "No",	"CHAIN", "Chaingun"},
+  {"RocketLauncher",			"RocketAmmo",		"NoSecondary", "No",	"RCKTL", "Rocket Launcher"},
+  {"PlasmaRifle",               "Cell",             "NoSecondary", "No",	"PLSMA", "Plasma Rifle"},
+  {"BFG9000",       			"Cell",        		"NoSecondary", "No",	"BFG9K", "BFG 9000"},
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+// Put all special weapons under this line (Fists, Dual weapons, Alternate Fire Modes, human shields, etc.)
+  {"Fist",		          		"NoPrimary",        "NoSecondary", "No",	"FIST", "PlaceHolder"},
+};
+
+#define BRUTAL_NUMBEROFWEAPONS	36
+#define BRUTAL_STANDARDWEAPONS 15 //Number of standard weapons to show in weaponslist starting from 0
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+// 6th column ---> Display name of weapon for Weapons list
+
+str BRUTAL_weaponslist[BRUTAL_NUMBEROFWEAPONS][6] =
+{
+  {"Chain_Saw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
+  {"BrutalPistol",			 "Clip2",				"BDPistolAmmo",		"Yes",	"FSVN", "FN Pistol"},
+  {"Rifle",                  "Clip2",               	"RifleAmmo",    		"Yes",	"RIFLE", "Assault Rifle"},
+  {"Shot_Gun",               "Shell",              	"ShotgunAmmo",  		"Yes",	"SHOT", "Shotgun"},
+  {"SSG",                    "Shell",              	"SSGAmmo",  		"Yes",	"SSG", "Super Shotgun"},
+  {"AssaultShotgun",		"Shell",				"AssaultShotgunAmmo",	"Yes",	"AA12", "Assault Shotgun"},
+  {"MiniGun",               "Clip2",               	"NoSecondary",  		"No",	"MINI", "Mini Gun"},
+  {"Rocket_Launcher",        "RocketAmmo",         	"RocketRounds", 		"Yes",	"RCKTL", "Rocket Launcher"},
+  {"GrenadeLauncher",       "RocketAmmo",         	"NoSecondary",  			"No",	"GRENL", "Grenade Launcher"}, //v20
+  {"Plasma_Gun",             "Cell",               	"PlasmaAmmo",   		"Yes",	"PLSMA", "Plasma Gun"},
+  {"RailGun",               "Cell",               	"RailgunAmmo",  		"Yes",	"RAIL", "Rail Gun"},
+  {"BIG_FUCKING_GUN",        "Cell",               	"NoSecondary",  		"No",	"BFG9K", "BFG 9000"},
+  {"BFG10k",				 "Cell",				"NoSecondary", 			"No",	"BFG10", "BFG 10000"}, 
+  {"HellishMissileLauncher", "MiniHellRocketAmmo", 	"MiniHellRocketAmmo",  	"No",	"HELL", "Revenant Launcher"},
+  {"FlameCannon",            "Gas",                	"NoSecondary",  		"No",	"FLAME", "Flame Cannon"},
+  {"MP40",      "Clip2",               	"MP40Ammo",  				"Yes",	"MP40", "MP40"},
+// My pipebomb AND satchel charge goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+// Put all special weapons under this line (Fists, Dual weapons, Alternate Fire Modes, human shields, etc.)
+  {"HandGrenades",      "GrenadeAmmo",         	"NoSecondary",  				"No",	"FRAG", "PlaceHolder"},
+  {"Melee_Attacks",          "NoPrimary",          	"NoSecondary", 			"No",	"FIST", "PlaceHolder"},
+  {"DualRifles",			 "Clip2",				"DoubleRifleAmmo",		"Yes",	"DRIFL", "PlaceHolder"}, //v20
+  {"DualPlasmaRifles",		 "Cell",				"DoublePlasmaAmmo",	"Yes",	"DPLSM", "PlaceHolder"}, //v20
+  {"ImpShield",				 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
+  {"ZmanShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
+  {"SguyShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
+  {"ClassicFist",          "NoPrimary",          	"NoSecondary", 			"No",	"FIST", "PlaceHolder"},
+  {"ClassicSaw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
+  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"Pistol", "Pistol"},
+  {"ClassicShotgun",               "Shell",              	"NoSecondary",  		"No",	"SHOT", "Shotgun"},
+  {"ClassicSSG",                    "Shell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
+  {"ClassicChaingun",               "Clip2",               	"NoSecondary",  		"No",	"CHGUN", "Chain Gun"},
+  {"ClassicRocketLauncher",       "RocketAmmo",         	"NoSecondary",  			"No",	"RCKTL", "Rocket Launcher"}, //v20
+  {"ClassicPlasmaRifle",        "RocketAmmo",         	"NoSecondary", 		"No",	"PLSMA", "Plasma Rifle"},
+  {"VanillaBFG9000",        "Cell",               	"NoSecondary",  		"No",	"BFG9K", "BFG 9000"},
+  {"b_jawbone",			 	 "jawboneammo",			"NoSecondary",			"No",	"JAWB", "PlaceHolder"},
+  {"HitlersBuzzsaw",	"BuzzsawAmmo",					"NoSecondary", "No",		"MG42",	"Hitler's Buzzsaw"},
+};
+
+// The array below is a special case for v20's "Purist" class vanilla weapons and weaponlist.
+
+#define BRUTAL_PURIST_NUMBEROFWEAPONS	10
+#define BRUTAL_PURIST_STANDARDWEAPONS 7 //Number of standard weapons to show in weaponslist
+
+str BRUTAL_PURIST_weaponslist[BRUTAL_PURIST_NUMBEROFWEAPONS][6] =
+{
+  {"ClassicSaw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
+  //{"ClassicSaw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
+  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"Pistol", "Pistol"},
+  {"ClassicShotgun",               "Shell",              	"NoSecondary",  		"No",	"SHOT", "Shotgun"},
+  {"ClassicSSG",                    "Shell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
+  {"ClassicChaingun",               "Clip2",               	"NoSecondary",  		"No",	"CHGUN", "Chain Gun"},
+  {"ClassicRocketLauncher",       "RocketAmmo",         	"NoSecondary",  			"No",	"RCKTL", "Rocket Launcher"}, //v20
+  {"ClassicPlasmaRifle",        "RocketAmmo",         	"NoSecondary", 		"No",	"PLSMA", "Plasma Rifle"},
+  {"VanillaBFG9000",        "Cell",               	"NoSecondary",  		"No",	"BFG9K", "BFG 9000"},
+  //{"HellishMissileLauncher", "MiniHellRocketAmmo", 	"MiniHellRocketAmmo",  	"No",	"HELL", "Revenant Launcher"},
+  //{"FlameCannon",            "Gas",                	"NoSecondary",  		"No",	"FLAME", "Flame Cannon"},
+  //{"MP40",      "Clip2",               	"MP40Ammo",  				"Yes",	"MP40", "MP40"},
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+// Put all special weapons under this line (Fists, Dual weapons, Alternate Fire Modes, human shields, etc.)
+/*
+  {"BrutalPistol",			 "Clip2",				"BDPistolAmmo",		"Yes",	"FSVN", "FN Pistol"},
+  {"Rifle",                  "Clip2",               	"RifleAmmo",    		"Yes",	"RIFLE", "Assault Rifle"},
+  {"Shot_Gun",               "Shell",              	"ShotgunAmmo",  		"Yes",	"SHOT", "Shotgun"},
+  {"SSG",                    "Shell",              	"SSGAmmo",  		"Yes",	"SSG", "Super Shotgun"},
+  {"AssaultShotgun",		"Shell",				"AssaultShotgunAmmo",	"Yes",	"AA12", "Assault Shotgun"},
+  {"MiniGun",               "Clip2",               	"NoSecondary",  		"No",	"MINI", "Mini Gun"},
+  {"Rocket_Launcher",        "RocketAmmo",         	"RocketRounds", 		"Yes",	"RCKTL", "Rocket Launcher"},
+  {"GrenadeLauncher",       "RocketAmmo",         	"NoSecondary",  			"No",	"GRENL", "Grenade Launcher"}, //v20
+  {"Plasma_Gun",             "Cell",               	"PlasmaAmmo",   		"Yes",	"PLSMA", "Plasma Gun"},
+  {"RailGun",               "Cell",               	"RailgunAmmo",  		"Yes",	"RAIL", "Rail Gun"},
+  {"BIG_FUCKING_GUN",        "Cell",               	"NoSecondary",  		"No",	"BFG9K", "BFG 9000"},
+  {"BFG10k",				 "Cell",				"NoSecondary", 			"No",	"BFG10", "BFG 10000"}, 
+  {"HitlersBuzzsaw",	"BuzzsawAmmo",					"NoSecondary", "No",		"MG42",	"Hitler's Buzzsaw"},
+*/
+};
+
+#define UAC_EXP_WEAPONS 2 // Number of special circumstance weapons (Pipebombs and Satchel Charge)
+
+#define PB_NUMBEROFWEAPONS	76
+#define PB_STANDARDWEAPONS 26 //Number of standard weapons to show in weaponslist
+
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+
+str PB_weaponslist[PB_NUMBEROFWEAPONS][6] =
+{
+  //{"Sledge",				 "NoPrimary",		   "NoSecondary", "No",				"SLEDG", "Sledge"},//	0
+  {"Chain_Saw",              "NoPrimary",          "NoSecondary", "No",				"SAW", "Chain Saw"},//	0
+  {"BDPistol",           "PistolBullets",               "PistolAmmo", "Yes",		"B950", "Pistol"},//	3
+  {"Revolver",				"PistolBullets",				"RevolverAmmo","Yes",	"RVLVR", "Revolver"},//	2
+  {"CompactSMG",			"PistolBullets",		"SMGAmmo", "Yes",				"SMG", "Compact SMG"},//	1
+  {"Shot_Gun",               "NewShell",              "ShotgunAmmo",  "Yes",			"SHOT", "Shotgun"},//	5
+  {"AutoShotgun",			"NewShell",			"AutoShotgunAmmo", "Yes",			"AUTO", "Auto Shotgun"},//	4
+  {"SSG",                    "NewShell",              "SSGAmmoCounter",  "Yes",		"SSG", "Sawed-Off"},//	6
+  {"Quad_SSG",			"NewShell",						"QSSGAmmoCounter",	"Yes",	"QUAD", "Quad Shotgun"},
+  {"Rifle",                  "NewClip",               "RifleAmmo", "Yes",			"UAC30", "UAC30 DMR"},//	10
+  {"Mini_Gun",               "NewClip",               "NoSecondary", "No",			"MINI", "Minigun"},//	8
+  {"Carbine",				"NewClip",				"XRifleAmmo",	"Yes",			"UAC41", "UAC41 Carbine"},//	9
+  {"LMG",                  "NewClip",               "LMGAmmo", "Yes",			"UC349", "UAC349 LMG"},//	10
+  {"HMG",					"NewClip",				"HMGAmmo", "Yes",			"HMG", "Heavy Machine Gun"},//	7
+  {"Excavator",				"HighExplosiveGrenadeRounds",	"HMGAmmo",	"Yes",	"DRILL",	"Excavator"}, 
+//  {"Grenade_Launcher",       "HighExplosiveGrenadeRounds",         "NoSecondary",  "No",				"GRENL", "Grenade Launcher"},//	12
+  {"Super_Grenade_Launcher", "SpecialGrenadeRounds",			"GrenadeRounds", "Yes",			"IMPCT", "Super G Launcher"},//	11
+  {"Rocket_Launcher",        "RocketAmmo",         "RocketRounds", "Yes",			"RCKTL", "Rocket Launcher"},//	13
+  {"Plasma_Gun",             "Cell",               "PlasmaAmmo",   "Yes",			"PLSMA", "Plasma Rifle"},//	15
+  {"PulseCannon",			"Cell",					"PulseCannonAmmo",		"Yes",	"PULSE",	"Pulse Cannon"},
+  {"M2PlasmaRifle",			"Cell",					"M2PlasmaAmmo", "Yes",			"PLSM2", "M2 Plasma Rifle"},//	14
+  {"Rail_Gun",               "Cell",               "RailgunAmmo",  "Yes",			"RAIL", "Rail Gun"},//	16
+  {"FreezerRifle",			"Cell",					"FreezerAmmo", "Yes",			"FMISL", "Freezer Rifle"},//	17
+  {"BHGEN",					"Cell",					"Cell",		"No",				"BHGEN", "Black Hole Gen"},//	18
+  {"PlasmaBeam",			"Cell",					"NoSecondary", "No",			"BM11K", "BFG Beam 11K"},//	19
+  {"BIG_FUCKING_GUN_MKIV",        "Cell",               "NoSecondary",  "No",			"BFG9K", "BFG9K MKIV"},//	20
+  {"HellishMissileLauncher", "MiniHellRocketAmmo", "MiniHellRocketAmmo",  "No",		"HELL", "Revenant Launcher"},//	21
+  {"FlameCannon",            "Gas",                "NoSecondary",  "No",			"FLAME", "Flame Cannon"},//	22
+  {"Hell_rifle",			"DemonPower",			"HellAmmo", "Yes",				"HRIFL", "Hell Rifle"},//	23
+  //{"Quad_SSG",				"NewShell",				"NoSecondary", "No",			"QUAD", "Quad-Barrel"},//	25
+  {"SecretWeapon_MP40",      "NewClip",               "MP40Ammo",  "Yes",				"MP40", "MP40"},//	24
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "Detonator"},// 25 - For my Pipebombs mod
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+// Put all special weapons under this line (Fists, Dual weapons, Alternate Fire Modes, human shields, etc.)
+  {"Melee_Attacks",          "NoPrimary",          "NoSecondary", "No",				"FIST", "PlaceHolder"},//	26 -1
+  {"ImpShield",				 "Meatshieldgunammo",	"MeatAmmo",				"No",	"UAC30", "PlaceHolder"},// 27 -2
+  {"ZmanShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"UAC30", "PlaceHolder"},// 28 -3
+  {"SguyShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"UAC30", "PlaceHolder"},// 29 -4
+  {"b_jawbone",			 	 "jawboneammo",			"NoSecondary",			"No",	"JAWB", "PlaceHolder"},// 30 -5
+  {"HasFragmentation",		 "RocketAmmo",			"NoSecondary",			"No",	"FRAG", "PlaceHolder"},// 31 -6
+  {"DualMagnums",			"PistolBullets",		"AkimboAMmo",	"Yes",			"DUALR", "PlaceHolder"},// 32 -7
+  {"DualAutoShotguns",		 "NewShell",			"DoubleASGAmmo",			"Yes",	"DUALA", "PlaceHolder"},// 33 -8
+  {"DualSSG",				"NewShell",				"DualSSGAmmo",			"Yes",	"DUALS", "PlaceHolder"},// 34 -9
+  {"DualRifles",			"NewClip",				"DoubleRifleAmmo",		"Yes",	"DUALU", "PlaceHolder"},// 35 -10
+  {"DualCarbines",			"NewClip",				"DoubleCarbineAmmo",	"Yes",	"DUALC", "PlaceHolder"},// 36 -11
+  {"DualPlasmaRifles",		"Cell",					"DoublePlasmaGunAmmo",		"Yes",	"DLPLS", "PlaceHolder"},// 37 -12
+  {"DualM2PlasmaRifles",	"Cell",					"DoubleM2PlasmaGunAmmo",	"Yes",	"DLPM2", "PlaceHolder"},// 38 -13
+  {"Handgun",				"PistolBullets",				"HandgunAmmo", "Yes",	"DUALP", "PlaceHolder"},//	39 -14
+  {"HasSlugs",				"NewShell",				"ShotgunAmmo",			"Yes",	"SLUG", "PlaceHolder"},// 40 -15
+  {"SilencerEquipped",		"PistolBullets",		"PistolAmmo",			"Yes",	"B950S", "PlaceHolder"},// 41 -16
+  {"EquipDeathDealer",		"NewClip",				"NoSecondary",			"No",	"TPLMG", "PlaceHolder"},// 42 -17
+  {"HasRailGun",			"MiniHellRocketAmmo",	"MiniHellRocketAmmo",	"No",	"HRAIL", "PlaceHolder"},//	43 -18
+  {"DaedabusSlimeSelected",	"Gas",					"NoSecondary",	"No",			"SLIME", "PlaceHolder"},//	44 -19
+  {"FireModeFreezerBeam",	"Cell",					"FreezerAmmo",	"Yes",			"FRZRY", "PlaceHolder"},//	45 -20
+  {"Super_Grenade_Launcher_LVG", "SpecialGrenadeRounds",			"GrenadeRounds", "Yes",		"STCKY", "PlaceHolder"},//	46 -21
+  {"Super_Grenade_Launcher_Incendiary", "SpecialGrenadeRounds",		"GrenadeRounds", "Yes",	"INCEN", "PlaceHolder"},//	47 -22
+  {"Super_Grenade_Launcher_Cryo", "SpecialGrenadeRounds",			"GrenadeRounds", "Yes",		"CRYO", "PlaceHolder"},//	48 -23
+  {"Super_Grenade_Launcher_Acid", "SpecialGrenadeRounds",			"GrenadeRounds", "Yes",		"ACID", "PlaceHolder"},//	49 -24
+  {"InfraredActivated",               "Cell",               "RailgunAmmo",  "Yes",			"INFRD", "PlaceHolder"},//	50 -25
+  {"BFGGuardMode",        "Cell",               "NoSecondary",  "No",			"GUARD", "PlaceHolder"},//	51 -26
+  {"BFGLaserMode",        "Cell",               "NoSecondary",  "No",			"LASER", "PlaceHolder"},//	52 -27
+  {"FireModeAcidGun",			"DemonPower",			"HellAmmo", "Yes",				"CAUST", "PlaceHolder"},//	53 -28
+  {"EquippedNailRounds",	"NewClip",			"HMGAmmo",	"Yes",	"NAIL",		"PlaceHolder"},//	54 -29
+  {"VanillaRifle",           "NewClip",               	"VanillaRifleAmmo",    		"Yes",	"Rifle", "PlaceHolder"}, //55 -30
+  {"DualVanillaRifles",			"NewClip",				"DoubleVanillaRifleAmmo",		"Yes",	"DLAR", "PlaceHolder"},// 56 -31
+  {"Vanilla_Mini_Gun",               "NewClip",               "NoSecondary", "No",			"MINI", "Minigun"},//	8 -32
+  {"Vanilla_SSG",               "NewShell",               "SSGAmmoCounter2", "Yes",			"SSG", "Coach Gun"},//	57 -33
+  {"BIG_FUCKING_GUN",        "Cell",               "NoSecondary",  "No",			"BFG9K", "BFG 9000"},//	20 -34
+  {"Traditional_Fist",        "NoPrimary",               "NoSecondary",  "No",			"FIST", "PlaceHolder"},//	58 -35
+  {"Traditional_Chainsaw",        "NoPrimary",               "NoSecondary",  "No",			"SAW", "Chain Saw"},//	65 -36
+  {"Traditional_Pistol",         "NewClip",               "NoSecondary",  "No",			"9MM", "9mm Pistol"},//	58 -37
+  {"Traditional_Shotgun",        "NewShell",               "NoSecondary",  "No",			"SHOT", "Shotgun"},//	59 -38
+  {"Traditional_SSG",       	 "NewShell",               "NoSecondary",  "No",			"SSG", "Super Shotgun"},//	60 -39
+  {"Traditional_ChainGun",       "NewClip",               "NoSecondary",  "No",			"CHAIN", "Chain Gun"},//	61 -40
+  {"Traditional_RocketLauncher",       "RocketAmmo",               "NoSecondary",  "No",			"RCKTL", "Rocket Launcher"},//	62 -41
+  {"Traditional_PlasmaRifle",       "Cell",               "NoSecondary",  "No",			"PLSMA", "Plasma Gun"},//	63 -42
+  {"Traditional_BFG",       "Cell",               		"NoSecondary",  "No",			"BFG9K", "BFG 9000"},//	64 -43
+  {"HasDragonBreath",	"NewShell",						"NoSecondary", "No",		"DRGNB", "PLACEHOLDER"}, // -44
+  {"DropShotMode",		"HighExplosiveGrenadeRounds",	"HMGAmmo",	"Yes",		"DROP",	"Excavator"},
+  {"HitlersBuzzsaw",	"BuzzsawAmmo",					"NoSecondary", "No",		"MG42",	"Hitler's Buzzsaw"},
+};
+// The array below is a special case for PB's "Classic v20" weaponlist.
+
+#define PB_CLASSIC_NUMBEROFWEAPONS	13
+#define PB_CLASSIC_STANDARDWEAPONS 10 //Number of standard weapons to show in weaponslist
+
+str PB_CLASSIC_weaponslist[PB_CLASSIC_NUMBEROFWEAPONS][6] =
+{
+  {"Vanilla_Chain_saw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
+  {"VanillaRifle",           "NewClip",               	"VanillaRifleAmmo",    		"Yes",	"Rifle", "Assault Rifle"},
+  {"Shot_Gun",               "NewShell",              "ShotgunAmmo",  "Yes",			"SHOT", "Shotgun"},//	5
+  {"Vanilla_SSG",                    "NewShell",              "SSGAmmoCounter",  "Yes",		"SSG", "Super Shotgun"},//	6
+  {"Vanilla_Mini_Gun",               "NewClip",               "NoSecondary", "No",			"MINI", "Minigun"},//	8
+  {"Rocket_Launcher",        "RocketAmmo",         "RocketRounds", "Yes",			"RCKTL", "Rocket Launcher"},//	13
+  {"Plasma_Gun",             "Cell",               "PlasmaAmmo",   "Yes",			"PLSMA", "Plasma Rifle"},//	15
+  {"BIG_FUCKING_GUN",        "Cell",               "NoSecondary",  "No",			"BFG9K", "BFG 9000"},//	20
+  {"HellishMissileLauncher", "MiniHellRocketAmmo", "MiniHellRocketAmmo",  "No",		"HELL", "Revenant Launcher"},//	21
+  {"FlameCannon",            "Gas",                "NoSecondary",  "No",			"FLAME", "Flame Cannon"},//	22
+  {"SecretWeapon_MP40",      "NewClip",               "NoSecondary",  "No",				"MP40", "MP40"},//	24
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+  
+};
+
+#define PB_TRAD_NUMBEROFWEAPONS	10
+#define PB_TRAD_STANDARDWEAPONS 7 //Number of standard weapons to show in weaponslist
+
+str PB_TRAD_weaponslist[PB_TRAD_NUMBEROFWEAPONS][6] =
+{
+  {"Traditional_Chainsaw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
+  {"Traditional_Pistol",           "NewClip",               	"VanillaRifleAmmo",    		"Yes",	"Rifle", "9mm"},
+  {"Traditional_Shotgun",               "NewShell",              "ShotgunAmmo",  "Yes",			"SHOT", "Shotgun"},//	5
+  {"Traditional_SSG",                    "NewShell",              "SSGAmmoCounter",  "Yes",		"SSG", "Super Shotgun"},//	6
+  {"Traditional_Chaingun",               "NewClip",               "NoSecondary", "No",			"MINI", "Chain Gun"},//	8
+  {"Traditional_RocketLauncher",        "RocketAmmo",         "RocketRounds", "Yes",			"RCKTL", "Rocket Launcher"},//	13
+  {"Traditional_PlasmaRifle",             "Cell",               "PlasmaAmmo",   "Yes",			"PLSMA", "Plasma Gun"},//	15
+  {"Traditional_BFG",        "Cell",               "NoSecondary",  "No",			"BFG9K", "BFG 9000"},//	20
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+};
+
+#define BP_NUMBEROFWEAPONS	32
+#define BP_STANDARDWEAPONS 12 //Number of standard weapons to show in weaponslist
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+// 6th column ---> Display name of weapon for Weapons list
+
+str BP_weaponslist[BP_NUMBEROFWEAPONS][6] =
+{
+  {"Chain_Saw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
+  {"MP40",      "Clip3",               	"MP40Ammo",  				"Yes",	"MP40", "MP40"},
+  {"BP_Pistol",        		"Clip3",               	"PistolAmmo",  		"Yes",	"PISTOL", "Beretta"},
+  {"SSG",                    "Shell",              	"SSGAmmo",  		"Yes",	"SSG", "Super Shotgun"},
+  {"Shot_Gun",               "Shell",              	"ShotgunAmmo",  		"Yes",	"SHOT", "Shotgun"},
+  {"Mini_Gun",               "Clip2",               	"NoSecondary",  		"No",	"MINI", "Mini Gun"},
+  {"HeavyRifle",        		"Clip2",         	"Mp40Ammo2", 		"Yes",	"HEAVY", "Heavy Rifle"},
+  {"Rifle",                  "Clip2",               	"RifleAmmo",    		"Yes",	"RIFLE", "Assault Rifle"},
+  {"Rocket_Launcher",        "RocketAmmo",         	"RocketRounds", 		"Yes",	"RCKTL", "Rocket Launcher"},
+  {"Plasma_Gun",             "Cell",               	"PlasmaAmmo",   		"Yes",	"PLSMA", "Plasma Gun"},
+  {"BIG_FUCKING_GUN",        "Cell",               	"NoSecondary",  		"No",	"BFG9K", "BFG 9000"},
+  {"HellishMissileLauncher", "MiniHellRocketAmmo", 	"MiniHellRocketAmmo",  	"No",	"HELL", "Revenant Launcher"},
+  {"FlameCannon",            "Gas",                	"NoSecondary",  		"No",	"FLAME", "Flame Cannon"},
+//  {"BFG10000",				 "Cell",				"NoSecondary", 			"No",	"BFG10", "BFG 10000"},
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+// Put all special weapons under this line (Fists, Dual weapons, Alternate Fire Modes, human shields, etc.)
+  {"HandGrenades",      "GrenadeAmmo",         	"NoSecondary",  				"No",	"FRAG", "Hand Grenades"},
+  {"Melee_Attacks",          "NoPrimary",          	"NoSecondary", 			"No",	"FIST", "PlaceHolder"},
+  {"DualRifles",			 "Clip2",				"DoubleRifleAmmo",		"Yes",	"DRIFL", "PlaceHolder"}, //v20
+  {"BrutalPistol",			 "Clip",				"BDPistolAmmo",			"Yes",	"PISTL", "PlaceHolder"},
+  {"Grenade_Launcher",       "RocketAmmo",         	"NoSecondary",  			"No",	"GRENL", "PlaceHolder"}, //v19 backwards compatibility
+  {"DualPlasmaRifles",		 "Cell",				"DoublePlasmagunAmmo",	"Yes",	"DPLSM", "PlaceHolder"}, //v20
+  {"ImpShield",				 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
+  {"ZmanShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
+  {"SguyShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},//
+//  {"ClassicFist",          "NoPrimary",          	"NoSecondary", 			"No",	"FIST", "PlaceHolder"},
+  {"sdfasdf",              "GrenadeAmmo",          	"NoSecondary", 			"No",	"GREN", "Hand Grenade"},
+  {"b_jawbone",			 	 "jawboneammo",			"NoSecondary",			"No",	"JAWB", "PlaceHolder"},
+  {"Quad_Shotgun",       "Shell",         	"QuadAmmo",  			"Yes",	"QUAD", "Quad Shotgun"}, //v20
+  {"NewChain_Gun",               "Clip2",               	"NoSecondary",  		"No",	"CHGUN", "Chain Gun"},
+  {"M60",                    "Clip2",              	"HMGAmmo",  		"Yes",	"HMG", "Heavy Machine Gun"},
+  {"GrenadeLauncher",               "RocketAmmo",              	"MortarRound",  		"Yes",	"GLCHR", "Grenade Launcher"},
+//  {"GrenadeLauncher",       "RocketAmmo",         	"NoSecondary",  			"No",	"GRENL", "Grenade Launcher"}, //v20
+  {"RailGun",               "Cell",               	"RailgunAmmo",  		"Yes",	"RAIL", "Rail Gun"},
+  {"M2",                  "Cell",               	"M2Ammo",    		"Yes",	"M2", "M2 Plasma Rifle"},
+};
+
+// The array below is a special case for v20's "Purist" class vanilla weapons and weaponlist.
+
+#define BP_PURIST_NUMBEROFWEAPONS	13
+#define BP_PURIST_STANDARDWEAPONS 10 //Number of standard weapons to show in weaponslist
+
+str BP_PURIST_weaponslist[BP_PURIST_NUMBEROFWEAPONS][6] =
+{
+  {"ClassicSaw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
+  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"Pistol", "Pistol"},
+  {"ClassicShotgun",               "Shell",              	"NoSecondary",  		"No",	"SHOT", "Shotgun"},
+  {"ClassicSSG",                    "Shell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
+  {"ClassicChaingun",               "Clip2",               	"NoSecondary",  		"No",	"CHGUN", "Chain Gun"},
+  {"ClassicRocketLauncher",       "RocketAmmo",         	"NoSecondary",  			"No",	"RCKTL", "Rocket Launcher"}, //v20
+  {"ClassicPlasmaRifle",        "RocketAmmo",         	"NoSecondary", 		"No",	"PLSMA", "Plasma Rifle"},
+  {"VanillaBFG9000",        "Cell",               	"NoSecondary",  		"No",	"BFG9K", "BFG 9000"},
+  {"HellishMissileLauncher", "MiniHellRocketAmmo", 	"MiniHellRocketAmmo",  	"No",	"HELL", "Revenant Launcher"},
+  {"FlameCannon",            "Gas",                	"NoSecondary",  		"No",	"FLAME", "Flame Cannon"},
+  {"MP40",      "Clip2",               	"MP40Ammo",  				"Yes",	"MP40", "MP40"},
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+};
+
+#define JOHNNY_NUMBEROFWEAPONS	18
+#define JOHNNY_STANDARDWEAPONS 11 //Number of standard weapons to show in weaponslist
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+// 6th column ---> Display name of weapon for Weapons list
+
+str JOHNNY_weaponslist[JOHNNY_NUMBEROFWEAPONS][6] =
+{
+  {"Chain_Saw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
+  {"BrutalPistol",			 "BDPistolAmmo",				"BDPistolAmmo",			"No",	"PISTL", "Pistol"},
+  {"Rifle",                  "NewClip",               	"RifleAmmo",    		"Yes",	"RIFLE", "Assault Rifle"},
+  {"Shot_Gun",               "NewShell",              	"ShotgunAmmo",  		"Yes",	"SHOT", "Combat Shotgun"},
+  {"SSG",                    "NewShell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
+  {"Mini_Gun",               "NewClip",               	"NoSecondary",  		"No",	"MINI", "Mini Gun"},
+  {"Rocket_Launcher",        "NewRocketAmmo",         	"RocketRounds", 		"Yes",	"RCKTL", "Rocket Launcher"},
+  {"Plasma_Gun",             "PlasmaHeat",               	"NewCell",   		"Yes",	"PLSMA", "Plasma Rifle"},
+  {"BIG_FUCKING_GUN",        "NewCell",               	"NoSecondary",  		"No",	"BFG", "BFG 9600"},
+  {"HellishMissileLauncher", "MiniHellRocketAmmo", 	"MiniHellRocketAmmo",  	"No",	"HELL", "Revenant Seeker"},
+  {"FlameCannon",            "Gas",                	"NoSecondary",  		"No",	"FLAME", "Flame Cannon"},
+  {"AllyRadio",			 	 "RadioCalls",			"NoSecondary",			"No",	"RADIO", "Support Radio"},
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+// Put all special weapons under this line (Fists, Dual weapons, Alternate Fire Modes, human shields, etc.)
+  {"ImpShield",				 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
+  {"ZmanShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
+  {"SguyShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
+  {"b_jawbone",			 	 "jawboneammo",			"NoSecondary",			"No",	"JAWB", "PlaceHolder"},
+};
+
+#define BRUTAL64_NUMBEROFWEAPONS	21
+#define BRUTAL64_STANDARDWEAPONS 9 //Number of standard weapons to show in weaponslist
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+// 6th column ---> Display name of weapon for Weapons list
+
+str BRUTAL64_weaponslist[BRUTAL64_NUMBEROFWEAPONS][6] =
+{
+// Put all regular weapons in order under this line
+  {"64Chainsaw",              "SawGas",          	"NoSecondary", 			"No",	"SAW",	"Chain Saw"},
+  {"64Pistol",                  "Clip",               	"NoSecondary",    		"No",	"PISTOL", "Pistol"},
+  {"64Shotgun",               "Shell",              	"NoSecondary",  		"No",	"SHOT", "Shotgun"},
+  {"64SuperShotgun",                    "Shell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
+  {"64Rifle",				"Clip",						"NoSecondary",			"No",	"RIFLE",	"Rifle"},
+  {"64Chaingun",               "Clip",               	"NoSecondary",  		"No",	"CHAIN", "Chaingun"},
+  {"64RocketLauncher",        "RocketAmmo",         	"NoSecondary", 		"No",	"RCKTL", "Rocket Launcher"},
+  {"64PlasmaRifle",             "Cell",               	"NoSecondary",   		"No",	"PLSMA", "Plasma Rifle"},
+  {"64BFG9000",        "Cell",               	"NoSecondary",  		"No",	"BFG9K", "BFG 9000"},
+  {"Unmaker",            "SoulAmmo",                	"NoSecondary",  		"No",	"UNMKR", "Unmaker"},
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+// Put all special weapons under this line (Fists, Dual weapons, Alternate Fire Modes, human shields, etc.)
+  {"64Fist",          "NoPrimary",          	"NoSecondary", 			"No",	"FIST", "PlaceHolder"},
+  {"Lasergun",				"Cell",					"NoSecondary",			"No",	"LASER",	"Laser Gun"},
+  {"64RifleTactical",		"Clip",					"RifleAmmo",			"Yes",	"TRIFL", "Rifle"},
+  {"64ShotgunTACTICAL",		"Shell",				"ShotgunAmmo",			"Yes",	"TSHOT",	"Shotgun"},
+  {"64ChaingunTACTICAL",	"Clip",					"NoSecondary",			"No",	"TCGUN",	"Chaingun"},
+  {"64RocketLauncherTactical", "RocketAmmo",		"NoSecondary",			"No",	"TRCKT",	"Rocket Launcher"},
+  {"64PlasmaRifleTACTICAL",	"Cell",					"PlasmaRifleAmmo",		"Yes",	"TPLSM",	"Plasma Rifle"},
+  {"GrenadeLauncher",       "RocketAmmo",         	"NoSecondary",  			"No",	"GRENL", "Grenade Launcher"}, //v20
+  {"b_jawbone",			 	 "jawboneammo",			"NoSecondary",			"No",	"JAWB", "PlaceHolder"},
+};
+
+#define BRUTAL64_TACTICAL_NUMBEROFWEAPONS	11
+#define BRUTAL64_TACTICAL_STANDARDWEAPONS 8 //Number of standard weapons to show in weaponslist
+
+// Weapons list - Columns descriptions are as follows:
+// 1st column ---> weapon.
+// 2nd column ---> primary ammo (put "NoPrimary" if the weapon doesn't use primary ammo).
+// 3rd column ---> secondary ammo (put "NoSecondary" if the weapon doesn't use secondary ammo).
+// 4th column ---> Shows Secondary Ammo Counter (put "Yes" if it does or "No" if the weapon doesn't show a unique secondary counter).
+// 5th column ---> Display name of weapon for Ammo Counter (Needs to be 5 or fewer characters to fit on display in all resolutions)
+// 6th column ---> Display name of weapon for Weapons list
+
+str BRUTAL64_TACTICAL_weaponslist[BRUTAL64_TACTICAL_NUMBEROFWEAPONS][6] =
+{
+// Put all regular weapons in order under this line
+  {"64Chainsaw",              "SawGas",          	"NoSecondary", 			"No",	"SAW",	"Chain Saw"},
+  {"64RifleTactical",		"Clip",					"RifleAmmo",			"Yes",	"TRIFL", "Rifle"},
+  {"64ShotgunTACTICAL",		"Shell",				"ShotgunAmmo",			"Yes",	"TSHOT",	"Shotgun"},
+  {"64SuperShotgun",                    "Shell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
+  {"64ChaingunTACTICAL",	"Clip",					"NoSecondary",			"No",	"TCGUN",	"Chaingun"},
+  {"64RocketLauncherTactical", "RocketAmmo",		"NoSecondary",			"No",	"TRCKT",	"Rocket Launcher"},
+  {"64PlasmaRifleTACTICAL",	"Cell",					"PlasmaRifleAmmo",		"Yes",	"TPLSM",	"Plasma Rifle"},
+  {"64BFG9000",        "Cell",               	"NoSecondary",  		"No",	"BFG9K", "BFG 9000"},
+  {"Unmaker",            "SoulAmmo",                	"NoSecondary",  		"No",	"UNMKR", "Unmaker"},
+// My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
+  {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
+  {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
+// Put all special weapons under this line (Fists, Dual weapons, Alternate Fire Modes, human shields, etc.)
+/*
+  {"64Fist",          "NoPrimary",          	"NoSecondary", 			"No",	"FIST", "PlaceHolder"},
+  {"64Pistol",                  "Clip",               	"NoSecondary",    		"No",	"PISTOL", "Pistol"},
+  {"64Shotgun",               "Shell",              	"NoSecondary",  		"No",	"SHOT", "Shotgun"},
+  {"64Chaingun",               "Clip",               	"NoSecondary",  		"No",	"CHAIN", "Chaingun"},
+  {"64Rifle",				"Clip",						"NoSecondary",			"No",	"RIFLE",	"Rifle"},
+  {"64RocketLauncher",        "RocketAmmo",         	"NoSecondary", 		"No",	"RCKTL", "Rocket Launcher"},
+  {"64PlasmaRifle",             "Cell",               	"NoSecondary",   		"No",	"PLSMA", "Plasma Rifle"},
+  {"Lasergun",				"Cell",					"NoSecondary",			"No",	"LASER",	"Laser Gun"},
+  {"GrenadeLauncher",       "RocketAmmo",         	"NoSecondary",  			"No",	"GRENL", "Grenade Launcher"}, //v20
+  {"b_jawbone",			 	 "jawboneammo",			"NoSecondary",			"No",	"JAWB", "PlaceHolder"},
+*/
+};
+
+
+//End Weapon Arrays
+
+// AMMO Count Functions
+
+
+Function void AmmoBarForHUD (str ammotype, str ammoempty, str ammoverylow, str ammolow, str ammogood)
+{
+  // Store ammo type's current amount in a variable as a percentage
+  int sae_ammoper = CheckInventory(ammotype) * 100 / GetAmmoCapacity(ammotype);
+  
+  If(ammotype == "PlasmaHeat") //for Johnny Doom
+  {
+	If(sae_ammoper >= 0 && sae_ammoper < 60) GiveInventory(ammogood,1);
+	Else If(sae_ammoper >= 60 && sae_ammoper < 80) GiveInventory(ammolow,1);
+	Else If (sae_ammoper >=80) GiveInventory(ammoverylow,1);
+  }
+  Else
+  {
+  If(CheckInventory(ammotype) == D_AMMOEMPTY)
+  {
+	GiveInventory(ammoverylow, 1);
+	GiveInventory(ammoempty, 1);
+  }
+  Else If(sae_ammoper <= D_AMMOVERYLOW && sae_ammoper > D_AMMOEMPTY) GiveInventory(ammoverylow, 1);
+  Else If(sae_ammoper >= D_AMMOVERYLOW && sae_ammoper < D_AMMOLOW) GiveInventory(ammolow, 1);
+  Else If(sae_ammoper >= D_AMMOLOW) GiveInventory(ammogood, 1);
+  }
+  
+}
+
+Function void GetEquippedWeaponAndAmmo (void)
+{
+  	If(is_vanilla)
+	{
+		For(int i; i < VANILLA_NUMBEROFWEAPONS; i++)
+		  {
+			If(CheckWeapon(VANILLA_weaponslist[i][0]))
+			{
+			  GiveInventory("sae_known", 1);
+			  sae_WNAME[PlayerNumber()] = VANILLA_weaponslist[i][4];
+			  sae_SecAmmoCap[PlayerNumber()] = GetAmmoCapacity(VANILLA_weaponslist[i][2]);
+			  If ( sae_SecAmmoCap[PlayerNumber()] > 2 ) GiveInventory("UDV_SecAmmoCap", 1);
+			  Else TakeInventory("UDV_SecAmmoCap", 1);
+			  AmmoBarForHUD(VANILLA_weaponslist[i][1], "sae_PAE", "sae_PrimaryAmmoVeryLow", "sae_PrimaryAmmoLow", "sae_PrimaryAmmoOk");
+			  AmmoBarForHUD(VANILLA_weaponslist[i][2], "sae_SAE", "sae_SecondaryAmmoVeryLow", "sae_SecondaryAmmoLow", "sae_SecondaryAmmoOk");
+			  
+			  If((VANILLA_weaponslist[i][3]) == "Yes") GiveInventory("sae_Secondary", 1);
+			  Else TakeInventory("sae_Secondary", 1);
+
+			  If( VANILLA_weaponslist[i][1] == "NoPrimary" ) 
+				{
+					GiveInventory("sae_Melee", 1);
+				}
+			  Else
+				{
+					TakeInventory("sae_Melee", 1);
+				}
+
+			  Break;
+			}
+			Else
+			{
+				TakeInventory("sae_known", 1);
+				sae_WNAME[PlayerNumber()] = StrLeft(GetWeapon(), 10);
+			}
+		  }
+	}
+	Else If(is_brutal)
+	{
+		  For(int i; i < BRUTAL_NUMBEROFWEAPONS; i++)
+		  {
+			If(CheckWeapon(BRUTAL_weaponslist[i][0]))
+			{
+			  GiveInventory("sae_known", 1);
+			  sae_WNAME[PlayerNumber()] = BRUTAL_weaponslist[i][4];
+			  sae_SecAmmoCap[PlayerNumber()] = GetAmmoCapacity(BRUTAL_weaponslist[i][2]);
+			  If ( sae_SecAmmoCap[PlayerNumber()] > 2 ) GiveInventory("UDV_SecAmmoCap", 1);
+			  Else TakeInventory("UDV_SecAmmoCap", 1);
+			  AmmoBarForHUD(BRUTAL_weaponslist[i][1], "sae_PAE", "sae_PrimaryAmmoVeryLow", "sae_PrimaryAmmoLow", "sae_PrimaryAmmoOk");
+			  AmmoBarForHUD(BRUTAL_weaponslist[i][2], "sae_SAE", "sae_SecondaryAmmoVeryLow", "sae_SecondaryAmmoLow", "sae_SecondaryAmmoOk");
+			  
+			  If((BRUTAL_weaponslist[i][3]) == "Yes") GiveInventory("sae_Secondary", 1);
+			  Else TakeInventory("sae_Secondary", 1);
+
+			  If( BRUTAL_weaponslist[i][1] == "NoPrimary" ) 
+				{
+					GiveInventory("sae_Melee", 1);
+				}
+			  Else
+				{
+					TakeInventory("sae_Melee", 1);
+				}
+
+			  Break;
+			}
+			Else
+			{
+				TakeInventory("sae_known", 1);
+				sae_WNAME[PlayerNumber()] = StrLeft(GetWeapon(), 10);
+			}
+		  }
+	}//End is_brutal
+	Else If(is_brutality)
+	{
+		 int UDVWeaponTotal = PB_STANDARDWEAPONS + UAC_EXP_WEAPONS;
+		  For(int i; i < PB_NUMBEROFWEAPONS; i++)
+		  {
+			If(CheckWeapon(PB_weaponslist[i][0]))
+			{
+			  GiveInventory("sae_known", 1);
+			  sae_WNAME[PlayerNumber()] = PB_weaponslist[i][4];
+			  If(CheckInventory("GrenadeTypeLVG") && CheckWeapon("Super_Grenade_Launcher") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 22][4];
+				}
+			  Else If( CheckInventory("GrenadeTypeIncendiary") && CheckWeapon("Super_Grenade_Launcher") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 23][4];
+				}
+			  Else If(CheckInventory("GrenadeTypeCryo") && CheckWeapon("Super_Grenade_Launcher") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 24][4];
+				}
+			  Else If(CheckInventory("GrenadeTypeAcid") && CheckWeapon("Super_Grenade_Launcher") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 25][4];
+				}
+			  Else If(CheckInventory("FiremodeFreezerBeam") && CheckWeapon("FreezerRifle") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 21][4];
+				}
+			  Else If(CheckInventory("HasRailGun") && CheckWeapon("HellishMissileLauncher") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 19][4];
+				}
+			  Else If(CheckInventory("DaedabusSlimeSelected") && CheckWeapon("FlameCannon") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 20][4];
+				}
+			  Else If(CheckInventory("HasFragmentation") && CheckWeapon("Grenade_Launcher") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 7][4];
+				}
+			  Else If(CheckInventory("HasSlugs") && CheckWeapon("Shot_Gun") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 16][4];
+				}
+			  Else If(CheckInventory("SilencerEquipped") && CheckWeapon("BDPistol") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 17][4];
+				}
+			  Else If(CheckInventory("EquipDeathDealer") && CheckWeapon("Mini_Gun") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 18][4];
+				}
+			  Else If(CheckInventory("InfraredActivated") && CheckWeapon("Rail_gun") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 26][4];
+				}
+			  Else If(CheckInventory("BFGGuardMode") && CheckWeapon("BIG_FUCKING_GUN_MKIV") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 27][4];
+				}
+			  Else If(CheckInventory("BFGLaserMode") && CheckWeapon("BIG_FUCKING_GUN_MKIV") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 28][4];
+				}
+			  Else If(CheckInventory("FireModeAcidGun") && CheckWeapon("Hell_rifle") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 29][4];
+				}
+			  Else If( CheckInventory("EquippedNailRounds") && CheckWeapon("HMG") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 30][4];
+				}
+			  Else If(CheckInventory("HasDragonBreath") && CheckWeapon("Shot_Gun") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 45][4];
+				}
+			  Else If(CheckInventory("DropShotMode") && CheckWeapon("Excavator") )
+				{
+					sae_WNAME[PlayerNumber()] = PB_weaponslist[UDVWeaponTotal + 46][4];
+				}
+			  sae_SecAmmoCap[PlayerNumber()] = GetAmmoCapacity(PB_weaponslist[i][2]);
+			  If ( sae_SecAmmoCap[PlayerNumber()] > 2 ) GiveInventory("UDV_SecAmmoCap", 1);
+			  Else TakeInventory("UDV_SecAmmoCap", 1);
+			  AmmoBarForHUD(PB_weaponslist[i][1], "sae_PAE", "sae_PrimaryAmmoVeryLow", "sae_PrimaryAmmoLow", "sae_PrimaryAmmoOk");
+			  AmmoBarForHUD(PB_weaponslist[i][2], "sae_SAE", "sae_SecondaryAmmoVeryLow", "sae_SecondaryAmmoLow", "sae_SecondaryAmmoOk");
+
+			  If((PB_weaponslist[i][3]) == "Yes") GiveInventory("sae_Secondary", 1);
+			  Else TakeInventory("sae_Secondary", 1);
+
+			  If( PB_weaponslist[i][1] == "NoPrimary" ) 
+				{
+					GiveInventory("sae_Melee", 1);
+				}
+			  Else
+				{
+					TakeInventory("sae_Melee", 1);
+				}
+			  Break;
+			}
+			Else
+			{
+				TakeInventory("sae_known", 1);
+				sae_WNAME[PlayerNumber()] = StrLeft(GetWeapon(), 10);
+			}
+		  }
+	}//end is_brutality
+	Else If (is_brutalpack)
+	{
+		  For(int i; i < BP_NUMBEROFWEAPONS; i++)
+		  {
+			If(CheckWeapon(BP_weaponslist[i][0]))
+			{
+			  GiveInventory("sae_known", 1);
+			  sae_WNAME[PlayerNumber()] = BP_weaponslist[i][4];
+			  sae_SecAmmoCap[PlayerNumber()] = GetAmmoCapacity(BP_weaponslist[i][2]);
+			  If ( sae_SecAmmoCap[PlayerNumber()] > 2 ) GiveInventory("UDV_SecAmmoCap", 1);
+			  Else TakeInventory("UDV_SecAmmoCap", 1);
+			  AmmoBarForHUD(BP_weaponslist[i][1], "sae_PAE", "sae_PrimaryAmmoVeryLow", "sae_PrimaryAmmoLow", "sae_PrimaryAmmoOk");
+			  AmmoBarForHUD(BP_weaponslist[i][2], "sae_SAE", "sae_SecondaryAmmoVeryLow", "sae_SecondaryAmmoLow", "sae_SecondaryAmmoOk");
+			  
+			  If((BP_weaponslist[i][3]) == "Yes") GiveInventory("sae_Secondary", 1);
+			  Else TakeInventory("sae_Secondary", 1);
+
+			  If( BP_weaponslist[i][1] == "NoPrimary" ) 
+				{
+					GiveInventory("sae_Melee", 1);
+				}
+			  Else
+				{
+					TakeInventory("sae_Melee", 1);
+				}
+
+			  Break;
+			}
+			Else
+			{
+				TakeInventory("sae_known", 1);
+				sae_WNAME[PlayerNumber()] = StrLeft(GetWeapon(), 10);
+			}
+		  }
+	}//end is_brutalpack
+	Else If (is_johnny)
+	{
+		  For(int i; i < JOHNNY_NUMBEROFWEAPONS; i++)
+		  {
+			If(CheckWeapon(JOHNNY_weaponslist[i][0]))
+			{
+			  GiveInventory("sae_known", 1);
+			  sae_WNAME[PlayerNumber()] = JOHNNY_weaponslist[i][4];
+			  sae_SecAmmoCap[PlayerNumber()] = GetAmmoCapacity(JOHNNY_weaponslist[i][2]);
+			  If ( sae_SecAmmoCap[PlayerNumber()] > 2 ) GiveInventory("UDV_SecAmmoCap", 1);
+			  Else TakeInventory("UDV_SecAmmoCap", 1);
+			  AmmoBarForHUD(JOHNNY_weaponslist[i][1], "sae_PAE", "sae_PrimaryAmmoVeryLow", "sae_PrimaryAmmoLow", "sae_PrimaryAmmoOk");
+			  AmmoBarForHUD(JOHNNY_weaponslist[i][2], "sae_SAE", "sae_SecondaryAmmoVeryLow", "sae_SecondaryAmmoLow", "sae_SecondaryAmmoOk");
+			  
+			  If((JOHNNY_weaponslist[i][3]) == "Yes") GiveInventory("sae_Secondary", 1);
+			  Else TakeInventory("sae_Secondary", 1);
+
+			  If( JOHNNY_weaponslist[i][1] == "NoPrimary" ) 
+				{
+					GiveInventory("sae_Melee", 1);
+				}
+			  Else
+				{
+					TakeInventory("sae_Melee", 1);
+				}
+
+			  Break;
+			}
+			Else
+			{
+				TakeInventory("sae_known", 1);
+				sae_WNAME[PlayerNumber()] = StrLeft(GetWeapon(), 10);
+			}
+		  }
+	}//end is_johnny
+	Else If(is_brutal64)
+	{
+		  For(int i; i < BRUTAL64_NUMBEROFWEAPONS; i++)
+		  {
+			If(CheckWeapon(BRUTAL64_weaponslist[i][0]))
+			{
+			  GiveInventory("sae_known", 1);
+			  sae_WNAME[PlayerNumber()] = BRUTAL64_weaponslist[i][4];
+			  sae_SecAmmoCap[PlayerNumber()] = GetAmmoCapacity(BRUTAL64_weaponslist[i][2]);
+			  If ( sae_SecAmmoCap[PlayerNumber()] > 2 ) GiveInventory("UDV_SecAmmoCap", 1);
+			  Else TakeInventory("UDV_SecAmmoCap", 1);
+			  AmmoBarForHUD(BRUTAL64_weaponslist[i][1], "sae_PAE", "sae_PrimaryAmmoVeryLow", "sae_PrimaryAmmoLow", "sae_PrimaryAmmoOk");
+			  AmmoBarForHUD(BRUTAL64_weaponslist[i][2], "sae_SAE", "sae_SecondaryAmmoVeryLow", "sae_SecondaryAmmoLow", "sae_SecondaryAmmoOk");
+			  
+			  If((BRUTAL64_weaponslist[i][3]) == "Yes") GiveInventory("sae_Secondary", 1);
+			  Else TakeInventory("sae_Secondary", 1);
+
+			  If( BRUTAL64_weaponslist[i][1] == "NoPrimary" ) 
+				{
+					GiveInventory("sae_Melee", 1);
+				}
+			  Else
+				{
+					TakeInventory("sae_Melee", 1);
+				}
+
+			  Break;
+			}
+			Else
+			{
+				TakeInventory("sae_known", 1);
+				sae_WNAME[PlayerNumber()] = StrLeft(GetWeapon(), 10);
+			}
+		  }
+	}//End is_brutal64
+	
+	
+	//add aditional ELSE IF above this line
+	Else//Unidentified Mod
+	{
+		  For(int i; i < NONE_NUMBEROFWEAPONS; i++)
+		  {
+			If(CheckWeapon(NONE_weaponslist[i][0]))
+			{
+			  GiveInventory("sae_known", 1);
+			  sae_WNAME[PlayerNumber()] = NONE_weaponslist[i][4];
+			  sae_SecAmmoCap[PlayerNumber()] = GetAmmoCapacity(NONE_weaponslist[i][2]);
+			  If ( sae_SecAmmoCap[PlayerNumber()] > 2 ) GiveInventory("UDV_SecAmmoCap", 1);
+			  Else TakeInventory("UDV_SecAmmoCap", 1);
+			  AmmoBarForHUD(NONE_weaponslist[i][1], "sae_PAE", "sae_PrimaryAmmoVeryLow", "sae_PrimaryAmmoLow", "sae_PrimaryAmmoOk");
+			  AmmoBarForHUD(NONE_weaponslist[i][2], "sae_SAE", "sae_SecondaryAmmoVeryLow", "sae_SecondaryAmmoLow", "sae_SecondaryAmmoOk");
+			  
+			  If((NONE_weaponslist[i][3]) == "Yes") GiveInventory("sae_Secondary", 1);
+			  Else TakeInventory("sae_Secondary", 1);
+
+			  If( NONE_weaponslist[i][1] == "NoPrimary" ) 
+				{
+					GiveInventory("sae_Melee", 1);
+				}
+			  Else
+				{
+					TakeInventory("sae_Melee", 1);
+				}
+
+			  Break;
+			}
+			Else
+			{
+				TakeInventory("sae_known", 1);
+				sae_WNAME[PlayerNumber()] = StrLeft(GetWeapon(), 10);
+			}
+		  }
+	}// End Unidentified Mod
+}
+
+//BEGIN Weapon List
+
+
+Function void BuildWeaponList (void)
+{
+	Int WpnCntr;
+	Int WpnCntr2;
+	Int WpnCntr3;
+	Int WpnCntr4;
+	
+	//VANILLA
+	If(is_vanilla)
+	{
+		GiveInventory("sae_vanilla",1);
+		If(CheckInventory("exverify"))	WpnCntr = VANILLA_STANDARDWEAPONS + 2;
+		Else WpnCntr = VANILLA_STANDARDWEAPONS;
+  
+	  For(int i; i <= WpnCntr; i++)
+	  {
+		int list_aspect = GetAspectRatio();
+		SetHudSize(930,730,1);
+		SetFont("UDVSmall");
+		If(CheckWeapon(VANILLA_weaponslist[i][0]))
+		{
+			If(list_aspect == ASPECT_4_3)
+			{
+			HudMessage(s:VANILLA_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+			}
+			Else
+			{
+			HudMessage(s:VANILLA_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+			}
+		}
+		Else If(CheckInventory(VANILLA_weaponslist[i][0]))
+		{
+			If(list_aspect == ASPECT_4_3)
+			{
+			HudMessage(s:VANILLA_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+			}
+			Else
+			{
+			HudMessage(s:VANILLA_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+			}
+		}
+		Else
+		{
+			If(list_aspect == ASPECT_4_3)
+			{
+			HudMessage(s:VANILLA_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+			}
+			Else
+			{
+			HudMessage(s:VANILLA_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+			}
+		}
+	  }
+	}
+	Else If(is_brutal)
+	{
+		GiveInventory("sae_BDv20",1);
+		If( PlayerClass(PlayerNumber()) ==  0 || PlayerClass(PlayerNumber()) == 1 || PlayerClass(PlayerNumber()) == 2 )
+		{
+			If(CheckInventory("exverify")) WpnCntr = BRUTAL_STANDARDWEAPONS + 2;
+			Else WpnCntr = BRUTAL_STANDARDWEAPONS;
+			
+		  For(int i; i <= WpnCntr; i++)
+		  {
+			int list_aspect = GetAspectRatio();
+			SetHudSize(930,730,1);
+		SetFont("UDVSmall");
+			If(CheckWeapon(BRUTAL_weaponslist[i][0]))
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:BRUTAL_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+				}
+				Else
+				{
+				HudMessage(s:BRUTAL_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+				}
+			}
+			Else If(CheckInventory(BRUTAL_weaponslist[i][0]))
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:BRUTAL_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+				}
+				Else
+				{
+				HudMessage(s:BRUTAL_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+				}
+			}
+			Else
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:BRUTAL_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:BRUTAL_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+			}
+		  }
+		}
+		Else If( PlayerClass(PlayerNumber()) == 3 )
+		{
+			  If(CheckInventory("exverify")) WpnCntr2 = BRUTAL_PURIST_STANDARDWEAPONS + 2;
+			  Else WpnCntr2 = BRUTAL_PURIST_STANDARDWEAPONS;
+			
+		  For(int j; j <= WpnCntr2; j++)
+		  {
+			int list_aspect2 = GetAspectRatio();
+			SetHudSize(930,730,1);
+		SetFont("UDVSmall");
+			If(CheckWeapon(BRUTAL_PURIST_weaponslist[j][0]))
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:BRUTAL_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 1.0);
+				}
+				Else
+				{
+				HudMessage(s:BRUTAL_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 1.0);
+				}
+			}
+			Else If(CheckInventory(BRUTAL_PURIST_weaponslist[j][0]))
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:BRUTAL_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 0.35);
+				}
+				Else
+				{
+				HudMessage(s:BRUTAL_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 0.35);
+				}
+			}
+			Else
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:BRUTAL_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:BRUTAL_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 0.15);
+				}
+			}
+		  }
+		}
+	}//End is_brutal
+	Else If(is_brutality)
+	{
+		GiveInventory("sae_PA1N",1);
+		If( PlayerClass(PlayerNumber()) == 0 )
+		{
+		If(CheckInventory("exverify")) WpnCntr = PB_STANDARDWEAPONS + 2;
+		Else WpnCntr = PB_STANDARDWEAPONS;
+			
+		  For(int i; i <= WpnCntr; i++)
+		  {
+			int list_aspect = GetAspectRatio();
+			SetHudSize(930,730,1);
+		SetFont("UDVSmall");
+			If(CheckWeapon(PB_weaponslist[i][0]))
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+				}
+				Else
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+				}
+			}
+			Else If(CheckInventory(PB_weaponslist[i][0]))
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				If (CheckInventory("LMG") && i == 10)//necessary for the special case of the LMG upgrade
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else If (CheckInventory("PulseCannon") && i == 16)//necessary for the special case of the PulseCannon upgrade
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else If (CheckInventory("Quad_SSG") && i == 6)//necessary for the special case of the Quad SSG upgrade
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+				}
+				}
+				Else
+				{
+				If (CheckInventory("LMG") && i == 10)//necessary for the special case of the LMG upgrade
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else If (CheckInventory("PulseCannon") && i == 16)//necessary for the special case of the PulseCannon upgrade
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else If (CheckInventory("Quad_SSG") && i == 6)//necessary for the special case of the PulseCannon upgrade
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+				}
+				}
+			}
+			Else
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:PB_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+			}
+		  }
+		}
+		Else If( PlayerClass(PlayerNumber()) == 1 )//( PlayerClass(PlayerNumber()) == 1 )
+		{
+		If(CheckInventory("exverify")) WpnCntr2 = PB_CLASSIC_STANDARDWEAPONS + 2;
+		Else Wpncntr2 = PB_CLASSIC_STANDARDWEAPONS;
+			
+		  For(int j; j <= WpnCntr2; j++)
+		  {
+			int list_aspect2 = GetAspectRatio();
+			SetHudSize(930,730,1);
+		SetFont("UDVSmall");
+			If(CheckWeapon(PB_CLASSIC_weaponslist[j][0]))
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:PB_CLASSIC_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 1.0);
+				}
+				Else
+				{
+				HudMessage(s:PB_CLASSIC_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 1.0);
+				}
+			}
+			Else If(CheckInventory(PB_CLASSIC_weaponslist[j][0]))
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:PB_CLASSIC_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 0.35);
+				}
+				Else
+				{
+				HudMessage(s:PB_CLASSIC_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 0.35);
+				}
+			}
+			Else
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:PB_CLASSIC_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:PB_CLASSIC_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 0.15);
+				}
+			}
+		  }
+		}
+
+		Else If( PlayerClass(PlayerNumber()) == 2 )
+		{
+		If(CheckInventory("exverify"))	WpnCntr3 = PB_TRAD_STANDARDWEAPONS + 2;
+		Else WpnCntr3 = PB_TRAD_STANDARDWEAPONS;
+			
+		  For(int k; k <= WpnCntr3; k++)
+		  {
+			int list_aspect3 = GetAspectRatio();
+			SetHudSize(930,730,1);
+		SetFont("UDVSmall");
+			If(CheckWeapon(PB_TRAD_weaponslist[k][0]))
+			{
+				If(list_aspect3 == ASPECT_4_3)
+				{
+				HudMessage(s:PB_TRAD_weaponslist[k][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (k+455), "SaeHUDGr", 105.0, ((k*10)<<16)+22.1, 0.2, 1.0);
+				}
+				Else
+				{
+				HudMessage(s:PB_TRAD_weaponslist[k][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (k+455), "SaeHUDGr", -20.0, ((k*10)<<16)+22.1, 0.2, 1.0);
+				}
+			}
+			Else If(CheckInventory(PB_TRAD_weaponslist[k][0]))
+			{
+				If(list_aspect3 == ASPECT_4_3)
+				{
+				HudMessage(s:PB_TRAD_weaponslist[k][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (k+455), "SaeHUDGr", 105.0, ((k*10)<<16)+22.1, 0.2, 0.35);
+				}
+				Else
+				{
+				HudMessage(s:PB_TRAD_weaponslist[k][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (k+455), "SaeHUDGr", -20.0, ((k*10)<<16)+22.1, 0.2, 0.35);
+				}
+			}
+			Else
+			{
+				If(list_aspect3 == ASPECT_4_3)
+				{
+				HudMessage(s:PB_TRAD_weaponslist[k][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (k+455), "SaeHUDGr", 105.0, ((k*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:PB_TRAD_weaponslist[k][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (k+455), "SaeHUDGr", -20.0, ((k*10)<<16)+22.1, 0.2, 0.15);
+				}
+			}
+		  }
+		}
+
+	}//end is_brutality
+	Else If (is_brutalpack)
+	{
+	GiveInventory("sae_BDv20",1);
+	If( PlayerClass(PlayerNumber()) == 0 )
+	{
+	If(CheckInventory("exverify"))	WpnCntr = BP_STANDARDWEAPONS + 2;
+	Else WpnCntr = BP_STANDARDWEAPONS;
+	
+	  For(int i; i <= WpnCntr; i++)
+	  {
+		int list_aspect = GetAspectRatio();
+		SetHudSize(930,730,1);
+	SetFont("UDVSmall");
+		If(CheckWeapon(BP_weaponslist[i][0]))
+		{
+			If(list_aspect == ASPECT_4_3)
+			{
+			HudMessage(s:BP_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+			}
+			Else
+			{
+			HudMessage(s:BP_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+			}
+		}
+		Else If(CheckInventory(BP_weaponslist[i][0]))
+		{
+			If(list_aspect == ASPECT_4_3)
+			{
+			HudMessage(s:BP_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+			}
+			Else
+			{
+			HudMessage(s:BP_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+			}
+		}
+		Else
+		{
+			If(list_aspect == ASPECT_4_3)
+			{
+			HudMessage(s:BP_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+			}
+			Else
+			{
+			HudMessage(s:BP_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+			}
+		}
+	  }
+	}
+	Else If( PlayerClass(PlayerNumber()) == 1 )
+	{
+		If(CheckInventory("exverify"))	WpnCntr2 = BP_PURIST_STANDARDWEAPONS + 2;
+		Else WpnCntr2 = BP_PURIST_STANDARDWEAPONS;
+			
+		  For(int j; j <= WpnCntr2; j++)
+		  {
+			int list_aspect2 = GetAspectRatio();
+			SetHudSize(930,730,1);
+			If(CheckWeapon(BP_PURIST_weaponslist[j][0]))
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:BP_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 1.0);
+				}
+				Else
+				{
+				HudMessage(s:BP_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 1.0);
+				}
+			}
+			Else If(CheckInventory(BP_PURIST_weaponslist[j][0]))
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:BP_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 0.35);
+				}
+				Else
+				{
+				HudMessage(s:BP_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 0.35);
+				}
+			}
+			Else
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:BP_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:BP_PURIST_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 0.15);
+				}
+			}
+		  }
+		}
+	}//end is_brutalpack
+	Else If (is_johnny)
+	{
+		GiveInventory("sae_BDJ20",1);
+			If(CheckInventory("exverify"))	WpnCntr = JOHNNY_STANDARDWEAPONS + 2;
+			Else WpnCntr = JOHNNY_STANDARDWEAPONS;
+			
+		  For(int i; i <= WpnCntr; i++)
+		  {
+			int list_aspect = GetAspectRatio();
+			SetHudSize(930,730,1);
+			SetFont("UDVSmall");
+			If(CheckWeapon(JOHNNY_weaponslist[i][0]))
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:JOHNNY_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+				}
+				Else
+				{
+				HudMessage(s:JOHNNY_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+				}
+			}
+			Else If(CheckInventory(JOHNNY_weaponslist[i][0]))
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:JOHNNY_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+				}
+				Else
+				{
+				HudMessage(s:JOHNNY_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+				}
+			}
+			Else
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:JOHNNY_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:JOHNNY_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+			}
+		  }
+	}//end is_johnny
+	Else If (is_brutal64)
+	{
+	GiveInventory("udv_BD64",1);
+	If( PlayerClass(PlayerNumber()) == 0 )
+	{
+	If(CheckInventory("exverify"))	WpnCntr = BRUTAL64_STANDARDWEAPONS + 2;
+	Else WpnCntr = BRUTAL64_STANDARDWEAPONS;
+	
+	  For(int i; i <= WpnCntr; i++)
+	  {
+		int list_aspect = GetAspectRatio();
+		SetHudSize(930,730,1);
+	SetFont("UDVSmall");
+		If(CheckWeapon(BRUTAL64_weaponslist[i][0]))
+		{
+			If(list_aspect == ASPECT_4_3)
+			{
+			HudMessage(s:BRUTAL64_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+			}
+			Else
+			{
+			HudMessage(s:BRUTAL64_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+			}
+		}
+		Else If(CheckInventory(BRUTAL64_weaponslist[i][0]))
+		{
+			If(list_aspect == ASPECT_4_3)
+			{
+			HudMessage(s:BRUTAL64_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+			}
+			Else
+			{
+			HudMessage(s:BRUTAL64_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+			}
+		}
+		Else
+		{
+			If(list_aspect == ASPECT_4_3)
+			{
+			HudMessage(s:BRUTAL64_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+			}
+			Else
+			{
+			HudMessage(s:BRUTAL64_weaponslist[i][5];
+			HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+			}
+		}
+	  }
+	}
+	Else If( PlayerClass(PlayerNumber()) == 1 )
+	{
+		If(CheckInventory("exverify"))	WpnCntr2 = BRUTAL64_TACTICAL_STANDARDWEAPONS + 2;
+		Else WpnCntr2 = BRUTAL64_TACTICAL_STANDARDWEAPONS;
+			
+		  For(int j; j <= WpnCntr2; j++)
+		  {
+			int list_aspect2 = GetAspectRatio();
+			SetHudSize(930,730,1);
+			If(CheckWeapon(BRUTAL64_TACTICAL_weaponslist[j][0]))
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:BRUTAL64_TACTICAL_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 1.0);
+				}
+				Else
+				{
+				HudMessage(s:BRUTAL64_TACTICAL_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 1.0);
+				}
+			}
+			Else If(CheckInventory(BRUTAL64_TACTICAL_weaponslist[j][0]))
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:BRUTAL64_TACTICAL_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 0.35);
+				}
+				Else
+				{
+				HudMessage(s:BRUTAL64_TACTICAL_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 0.35);
+				}
+			}
+			Else
+			{
+				If(list_aspect2 == ASPECT_4_3)
+				{
+				HudMessage(s:BRUTAL64_TACTICAL_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", 105.0, ((j*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:BRUTAL64_TACTICAL_weaponslist[j][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (j+455), "SaeHUDGr", -20.0, ((j*10)<<16)+22.1, 0.2, 0.15);
+				}
+			}
+		  }
+		}
+	}//End is_brutal64
+	
+	//add additional ELSE IF above this line
+	Else // Unidentified Mod
+	{
+			If(CheckInventory("exverify"))	WpnCntr = NONE_STANDARDWEAPONS + 2;
+			Else WpnCntr = NONE_STANDARDWEAPONS;
+			
+		  For(int i; i <= WpnCntr; i++)
+		  {
+			int list_aspect = GetAspectRatio();
+			SetHudSize(930,730,1);
+			SetFont("UDVSmall");
+			If(CheckWeapon(NONE_weaponslist[i][0]))
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:NONE_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+				}
+				Else
+				{
+				HudMessage(s:NONE_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 1.0);
+				}
+			}
+			Else If(CheckInventory(NONE_weaponslist[i][0]))
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:NONE_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+				}
+				Else
+				{
+				HudMessage(s:NONE_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.35);
+				}
+			}
+			Else
+			{
+				If(list_aspect == ASPECT_4_3)
+				{
+				HudMessage(s:NONE_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", 105.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+				Else
+				{
+				HudMessage(s:NONE_weaponslist[i][5];
+				HUDMSG_PLAIN | HUDMSG_COLORSTRING | HUDMSG_ALPHA | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, (i+455), "SaeHUDGr", -20.0, ((i*10)<<16)+22.1, 0.2, 0.15);
+				}
+			}
+		  }
+	}//end Unidentified Mod
+}
+
+
+// Scripts ---------------------------------------------------
+
+
+Script 24008 Enter
+{
+	if (GameType () != GAME_TITLE_MAP)
+	{
+
+	//GiveInventory("sae_Vanilla", 1);
+	//GiveInventory("udv_ModuleB", 1);
+
+	SETFONT("SMALLFONT");
+
+	  While(TRUE)
+	  {
+		
+		GetEquippedWeaponAndAmmo();
+				If( GetUserCVAR(PlayerNumber(), "saehud_togglelist"))
+				{
+					If ( !CheckInventory("sae_extcam") && !CheckInventory("sae_deathcam") )
+					{
+						BuildWeaponList();
+					}
+				}
+
+		/*
+		If( GetUserCVAR(PlayerNumber(), "saehud_togglelist"))
+		{
+			If ( !CheckInventory("sae_extcam") && !CheckInventory("sae_deathcam") )
+			{
+				BuildWeaponList();
+			}
+		}
+		*/
+		
+		Delay(1);
+	  }
+  }
+}
+
+/*
+Script 24009 Enter //Clientside
+{
+	if (GameType () != GAME_TITLE_MAP)
+	{
+		SETFONT("SMALLFONT");
+		While(TRUE)
+		{
+				If( GetUserCVAR(PlayerNumber(), "saehud_togglelist"))
+				{
+					If ( !CheckInventory("sae_extcam") && !CheckInventory("sae_deathcam") )
+					{
+						BuildWeaponList();
+					}
+				}
+				Delay(1);
+		}
+	}
+}
+*/

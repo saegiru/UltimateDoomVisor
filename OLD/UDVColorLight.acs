@@ -1,0 +1,123 @@
+#library "UDVColorLight"
+#include "zcommon.acs"
+
+script 32660 (void) NET
+{
+Delay(5);
+ACS_ExecuteAlways(32659,0);
+}
+
+Script 1140 (void)
+{
+SetCVAR(  "save_lightred", GetCVAR(  "udv_getlred"));
+SetCVAR(  "save_lightgreen",GetCVAR(  "udv_getlgreen"));
+SetCVAR(  "save_lightblue",GetCVAR(  "udv_getlblue"));
+SetCVAR(  "save_ldesat",GetCVAR(  "udv_getldesat"));
+SetCVAR(  "save_enabdes",GetCVAR( "udv_enabdes"));
+}
+
+Script 1142 (void)
+{
+SetCVAR( "udv_getlred", GetCVAR( "save_lightred"));
+SetCVAR( "udv_getlgreen", GetCVAR( "save_lightgreen"));
+SetCVAR( "udv_getlblue", GetCVAR( "save_lightblue"));
+SetCVAR( "udv_getldesat", GetCVAR( "save_ldesat"));
+SetCVAR( "udv_enabdes", GetCVAR( "save_enabdes"));
+SetCVAR(  "udv_lightcolor", 0);
+ACS_ExecuteAlways(32659, 0);
+}
+
+script 32659 (void) NET
+{
+//Delay(1);
+		int local0;
+		int goto_block;
+		int Lightcolor = GetCVAR(  "udv_lightcolor");
+		int enabledes = GetCVAR(  "udv_enabdes");
+		int LightRed;
+		int LightGreen;
+		int LightBlue;
+		int LightDesat;
+		int fog_getred = GetCVAR(  "udv_getred");
+		int fog_getgreen = GetCVAR(  "udv_getgreen");
+		int fog_getblue = GetCVAR(  "udv_getblue");
+		
+	If(Lightcolor == 2)
+	{
+		LightRed = random(0,255);
+		LightGreen = random(0,255);
+		LightBlue = random(0,255);
+		SetCVAR(  "udv_getlred", LightRed);
+		SetCVAR(  "udv_getlgreen", LightGreen);
+		SetCVAR(  "udv_getlblue", LightBlue);
+		if (enabledes)
+		{
+		LightDesat = random(0,255);
+		SetCVAR(  "udv_getldesat", LightDesat);
+		}
+		else LightDesat = 0;
+	}
+	Else If(LightColor == 1)
+	{
+		If ( fog_getred > 0 ) { LightRed = fog_getred + 60; }
+		Else { LightRed = fog_getred; }
+		If ( fog_getgreen > 0 )	{ LightGreen = fog_getgreen + 60; }
+		Else { LightGreen = fog_getgreen; } 
+		If ( fog_getblue > 0 ) { LightBlue = fog_getblue + 60; }
+		Else { LightBlue = fog_getblue; }
+		SetCVAR(  "udv_getlred", LightRed);
+		SetCVAR(  "udv_getlgreen", LightGreen);
+		SetCVAR(  "udv_getlblue", LightBlue);
+		if (enabledes)
+		{
+		LightDesat=GetCVAR(  "udv_getldesat");
+		}
+		else LightDesat = 0;
+	}
+	Else
+	{
+		LightRed = GetCVAR(  "udv_getlred");
+		LightGreen = GetCVAR(  "udv_getlgreen");
+		LightBlue = GetCVAR(  "udv_getlblue");
+		if (enabledes)
+		{
+		LightDesat = GetCVAR(  "udv_getldesat");
+		}
+		else LightDesat = 0;
+	}	
+	
+	If (GetCVAR(  "udv_togglelight"))
+	{
+		
+		switch (goto_block) 
+		{
+		case 0:
+			if ((PlayerNumber() == 0)) 
+			{
+				local0 = 0;
+				goto_block = 2; restart;
+			} 
+			else 
+			{
+				goto_block = 3; restart;
+			}
+
+		case 2:
+			if ((local0 < 10000)) 
+			{
+				Delay(1);
+				Sector_SetColor(local0,LightRed,LightGreen,LightBlue,LightDesat);
+				local0++;
+				goto_block = 2; restart;
+			}  
+			else 
+			{
+				goto_block = 3; restart;
+			}
+
+		case 3:
+			Terminate;
+
+		}
+	}
+}
