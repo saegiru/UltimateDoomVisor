@@ -103,11 +103,29 @@ Aspectratio "4:3"
 	{
 		Alpha 0.1
 		DrawSwitchableImage udv_LQ, "ADMG4300", "LQAD4300", 0, 0;
-		DrawImage "ArmorGr", 44, 184;
 		Alpha 0.75
 		{
-		DrawBar "HealthFu", "HealthEm", Armor, horizontal, interpolate(8), 55, 184;
-		drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
+		InInventory BasicArmor, 201
+		{
+			DrawImage "ArmorBl", 44, 184;
+			Alpha 0.2
+			DrawBar "HealthBl", "HealthWW", Armor (200), horizontal, interpolate(8), 30, 184;
+			DrawBar "HealthWh", "HealthTR", Armor (400), horizontal, interpolate(8), 30, 184;
+			DrawNumber 3, digifont_large, WHITE, Armor, Alignment(right), whennotzero, 94, 188;
+		}
+		Else InInventory BasicArmor, 101
+		{
+			DrawImage "ArmorBl", 44, 184;
+			DrawBar "HealthFu", "HealthEm", Armor (100), horizontal, interpolate(8), 55, 184;
+			DrawBar "HealthBl", "HealthBB", Armor (200), horizontal, interpolate(8), 30, 184;
+			DrawNumber 3, digifont_large, cyan, Armor, Alignment(right), whennotzero, 94, 188;
+		}
+		Else
+		{
+			DrawImage "ArmorGr", 44, 184;
+			DrawBar "HealthFu", "HealthEm", Armor, horizontal, interpolate(8), 55, 184;
+			drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
+		}
 		DrawNumber 2, digifont_small, SaeHudGR,poweruptime blursphere, Alignment(right), 71, 195;
 		DrawString digifont_small, saehudgr, "Active Camo", 65, 195;
 		}
@@ -1369,19 +1387,40 @@ ELSE
 	//{
 	//}
 	// ARMOR
+
 	InInventory PowerInvisibility, 1
 	{
 		Alpha 0.1
 		DrawSwitchableImage udv_LQ, "A_DMG00", "LQADMG00", -54, 0;
-		DrawImage "ArmorGr", 10, 183;
 		Alpha 0.75
 		{
-		DrawBar "HealthFu", "HealthEm", Armor, horizontal, interpolate(8), 23, 183;
-		drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
+		InInventory BasicArmor, 201
+		{
+			DrawImage "ArmorBl", 10, 183;
+			Alpha 0.2
+			DrawBar "HealthBl", "HealthWW", Armor (200), horizontal, interpolate(8), -2, 183;
+			DrawBar "HealthWh", "HealthTR", Armor (400), horizontal, interpolate(8), -2, 183;
+			DrawNumber 3, DIGIFONT_LARGE, WHITE, Armor, Alignment(right), whennotzero, 65, 185;
+		}
+		Else InInventory BasicArmor, 101
+		{
+			DrawImage "ArmorBl", 10, 183;
+			DrawBar "HealthFu", "HealthEm", Armor (100), horizontal, interpolate(8), 23, 183;
+			DrawBar "HealthBl", "HealthBB", Armor (200), horizontal, interpolate(8), -2, 183;
+			DrawNumber 3, DIGIFONT_LARGE, cyan, Armor, Alignment(right), whennotzero, 65, 185;
+		}
+		Else
+		{
+			DrawImage "ArmorGr", 10, 183;
+			DrawBar "HealthFu", "HealthEm", Armor, horizontal, interpolate(8), 23, 183;
+			drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
+		}
 		DrawNumber 2, digifont_small, SaeHudGR,poweruptime blursphere, Alignment(right), 67, 192;
 		DrawString digifont_small, saehudgr, "Active Camo", 61, 192;
 		}
 	}
+	
+	
 	Else InInventory BasicArmor, 201//sae_ArmorXTRM
 	{
 	DrawSwitchableImage udv_LQ, "A_DMG00", "LQADMG00", -54, 0;
@@ -2666,20 +2705,23 @@ ELSE
 Aspectratio "4:3"
 {
 	// ARMOR
+	
 	InInventory PowerInvisibility, 1
 	{
 		//Alpha 0.1
 		//DrawSwitchableImage udv_LQ, "ADMG4300", "LQAD4300", 0, 0;
-		DrawImage "ArmorGr", 44, 184;
+		//DrawImage "ArmorGr", 44, 184;
 		Alpha 0.75
 		{
-		DrawBar "HealthFu", "HealthEm", Armor, horizontal, interpolate(8), 55, 184;
-		drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
+		//DrawBar "HealthFu", "HealthEm", Armor, horizontal, interpolate(8), 55, 184;
+		//drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 		DrawNumber 2, digifont_small, SaeHudGR,poweruptime blursphere, Alignment(right), 71, 195;
 		DrawString digifont_small, saehudgr, "Active Camo", 65, 195;
 		}
 	}
-	Else InInventory BasicArmor, 201//sae_ArmorXTRM
+	
+	
+	/*Else*/ InInventory BasicArmor, 201//sae_ArmorXTRM
 	{
 	//DrawImage "ADMG4300", 0, 0;
 	DrawImage "EXTREM01", 30, 184;
@@ -3828,16 +3870,16 @@ ELSE
 	{
 		//Alpha 0.1
 		//DrawSwitchableImage udv_LQ, "A_DMG00", "LQADMG00", -54, 0;
-		DrawImage "ArmorGr", 10, 183;
+		//DrawImage "ArmorGr", 10, 183;
 		Alpha 0.75
 		{
-		DrawBar "HealthFu", "HealthEm", Armor, horizontal, interpolate(8), 23, 183;
-		drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
+		//DrawBar "HealthFu", "HealthEm", Armor, horizontal, interpolate(8), 23, 183;
+		//drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 		DrawNumber 2, digifont_small, SaeHudGR,poweruptime blursphere, Alignment(right), 67, 192;
 		DrawString digifont_small, saehudgr, "Active Camo", 61, 192;
 		}
 	}
-	Else InInventory BasicArmor, 201//sae_ArmorXTRM
+	/*Else*/ InInventory BasicArmor, 201//sae_ArmorXTRM
 	{
 		//DrawImage "A_DMG00", -54, 0;
 		DrawImage "EXTREM01", -2, 183;

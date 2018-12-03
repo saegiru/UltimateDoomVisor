@@ -12,7 +12,7 @@ global int 43:totaldamage[];//totaldamage counter
 global int 49:givestartarmor;
 global int 51:givestartbattery;
 
-str UDV_Version = "2.12c"; //Current UDV Version
+//str UDV_Version = "2.12c"; //Current UDV Version
 
 int	UDV_SpeedFatigued[8]; //global fatigued speed variable
 int	UDV_SpeedEnergized[8]; //global energized speed variable
@@ -257,9 +257,8 @@ Script "HealthDamage" ENTER
 	}
 }
 
-Script "StartupMessage" (void)
+Script 472 (void)
 {
-Delay(1);
 		bool helmetmessage;
 		If( !CheckInventory("sae_extcam") && !CheckInventory("D4BaronHUD") && !CheckInventory("Revenant_Rune") ) helmetmessage = TRUE;
 		Else helmetmessage = FALSE; 
@@ -273,7 +272,7 @@ Delay(1);
 			//SETFONT("DIGIFONT_LARGE");
 			SetHudSize(320,200,1);
 			SETFONT("DIGIFONT_SMALL");
-			HudMessage(s:"UAC DEFENSIVE VISOR VERSION ", s:UDV_Version, s:" ONLINE"; HUDMSG_TYPEON | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 356, "SaeHUDGr", 160.0, 22.0, 2.0, 0.05, 0.25);
+			HudMessage(s:"UAC DEFENSIVE VISOR VERSION ", s:GetUserCVAR(PlayerNumber(), "UDV_Version"), s:" ONLINE"; HUDMSG_TYPEON | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 356, "SaeHUDGr", 160.0, 22.0, 2.0, 0.05, 0.25);
 			delay(35*2);
 			HudMessage(s:"UAC IDENTITY '", n:0, s:"' VERIFIED"; HUDMSG_TYPEON | HUDMSG_ALPHA | HUDMSG_COLORSTRING , 357, "SaeHUDGr", 160.0, 25.0, 2.7, 0.05, 0.25);
 			delay(35);
@@ -383,7 +382,7 @@ Script "DisplayVersion" Enter
 		{
 			SetFont("smallfont");
 			{
-				HudMessage(s:UDV_Version; HUDMSG_ALPHA | HUDMSG_COLORSTRING, 2674, "SaeHUDGr", 0.0, 0.0, 0.1, 0.05);
+				HudMessage(s:GetUserCVAR(PlayerNumber(), "UDV_Version"); HUDMSG_ALPHA | HUDMSG_COLORSTRING, 2674, "SaeHUDGr", 0.0, 0.0, 0.1, 0.05);
 			}
 		}
 		Delay(1);
@@ -403,7 +402,7 @@ Script "MainUDVScript" Enter
 		If ( CheckInventory("udv_ambient") ) ACS_NamedExecute("AmbientScript",0);
 	    //ACS_Execute(470, 0); //RealAim
 		//ACS_Execute(4755, 0); //Bleeding/Critical
-		ACS_NamedExecute("StartupMessage", 0); //UDV Startup Message
+		ACS_Execute(472, 0); //UDV Startup Message
 		ACS_Execute(18755,0); //Face Script
 		//ACS_Execute(4278,0); //Screen Shake on Damage
 		//ACS_Execute(32660,0); //Light Color Script
@@ -1392,7 +1391,7 @@ script "armorcheck" ENTER
 						SetWeapon("udv_helmet");
 						Delay(1);
 						}
-						ACS_NamedExecute("StartupMessage",0); //UDV Startup Message
+						ACS_Execute(472,0); //UDV Startup Message
 					}
 				//End Helmet Animation
 					totaldamage[PlayerNumber()] = 0;

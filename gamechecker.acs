@@ -34,6 +34,7 @@ bool is_bpv9 = false;
 
 Script "GameChecker" Enter
 {
+	//Delay(5);
 		is_vanilla = CheckInventory("Fist") && (GetBaseGame()==BASEGAME_DOOM || GetBaseGame()==BASEGAME_UNKNOWN);
 		is_heretic = CheckInventory("Staff") && (GetBaseGame()==BASEGAME_HERETIC || GetBaseGame()==BASEGAME_UNKNOWN);
 		is_blasphemer = CheckInventory("Staff") && (GetBaseGame()==BASEGAME_BLASPHEMER || GetBaseGame()==BASEGAME_UNKNOWN);
@@ -46,7 +47,7 @@ Script "GameChecker" Enter
 		is_PB203 = ( !CheckInventory("QSSGAmmoCounter") && CheckInventory("IsPlayingAsProjectBrutality") );
 		is_PB3 = ( ( CheckInventory("QSSGAmmoCounter") && CheckInventory("IsPlayingAsProjectBrutality") ) || ( CheckInventory("VanillaRifle") && CheckInventory("IsPlayingAsPurist") ) || ( CheckInventory("Traditional_Fist") && CheckInventory("IsPlayingAsTraditional") ) );
 		is_brutalv20 = ( ( GetActorProperty(ActivatorTID(),APROP_Mass)==100 && !CheckInventory("IsPlayingAsPurist") && CheckInventory("Melee_Attacks") ) || ( GetActorProperty(ActivatorTID(),APROP_Mass)==100 && CheckInventory("ClassicFist") ) );
-		is_brutalv21 = ( ( GetActorProperty(ActivatorTID(),APROP_Mass)==500 && !CheckInventory("BP_Pistol") && !CheckInventory("IsTacticalClass") && CheckInventory("Melee_Attacks") ) || CheckInventory("BrutalPistol") || CheckInventory("IsTacticalClass") || ( GetActorProperty(ActivatorTID(),APROP_Mass)==500 && CheckInventory("IsPlayingAsPurist") ) );
+		is_brutalv21 = ( ( GetActorProperty(ActivatorTID(),APROP_Mass)==130 && !CheckInventory("BP_Pistol") && !CheckInventory("IsTacticalClass") && CheckInventory("Melee_Attacks") ) || CheckInventory("BrutalPistol") || CheckInventory("IsTacticalClass") || ( GetActorProperty(ActivatorTID(),APROP_Mass)==500 && CheckInventory("IsPlayingAsPurist") ) );
 		is_bpv9 = ( CheckInventory("BP_Pistol") && GetActorProperty(ActivatorTID(),APROP_Mass)==500 );
 		//is_brutal = (((CheckInventory("Melee_Attacks")&&!CheckInventory("TargetIsAMarine")&&!CheckInventory("IsPlayingAsPurist")&&!CheckInventory("IsPlayingAsProjectBrutality")) || CheckInventory("ClassicFist"))&&GetActorProperty(ActivatorTID(),APROP_Mass)==100);
 		//is_brutalv20 = ( (CheckInventory("Melee_Attacks") && !CheckInventory("TargetIsAMarine") && GetActorProperty(ActivatorTID(), APROP_Mass) == 100)  )

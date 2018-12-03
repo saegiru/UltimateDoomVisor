@@ -1,3 +1,5 @@
+user string UDV_Version = "2.12c";
+
 //user bool saehud_togglestats = true;
 user bool saehud_togglemug = true;
 user bool saehud_toggleinv = true;
