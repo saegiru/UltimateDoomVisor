@@ -40,6 +40,10 @@ user bool udv_dangeralarm = false;
 user bool udv_disableweapon = false;
 user bool udv_autoclean = false;
 user int UDV_RadarMode = 0;
+user float udv_damagefactor = 1.0;
+user bool udv_enabledf = false;
+user bool udv_geiger = true;
+user bool UDV_AutoEMS = false;
 
 //server variables
 server int saehud_startarmor = 0;
@@ -69,7 +73,8 @@ server int UDV_AccBatteryAmt = 100;
 server bool UDV_DisableGiver = false;
 server bool udv_cooplives = false;
 server int udv_numcooplives = 8;
-
+server bool udv_speedlimit = false;
+server float udv_speedvalue = 0.6;
 /*
 //server variables to be implemented later
 server int saehud_startarmor = 0;

@@ -105,7 +105,7 @@ Aspectratio "4:3"
 		DrawSwitchableImage udv_LQ, "ADMG4300", "LQAD4300", 0, 0;
 		Alpha 0.75
 		{
-		InInventory BasicArmor, 201
+		InInventory sae_ArmorXTRM
 		{
 			DrawImage "ArmorBl", 44, 184;
 			Alpha 0.2
@@ -113,7 +113,7 @@ Aspectratio "4:3"
 			DrawBar "HealthWh", "HealthTR", Armor (400), horizontal, interpolate(8), 30, 184;
 			DrawNumber 3, digifont_large, WHITE, Armor, Alignment(right), whennotzero, 94, 188;
 		}
-		Else InInventory BasicArmor, 101
+		Else InInventory sae_ArmorBlue
 		{
 			DrawImage "ArmorBl", 44, 184;
 			DrawBar "HealthFu", "HealthEm", Armor (100), horizontal, interpolate(8), 55, 184;
@@ -130,7 +130,7 @@ Aspectratio "4:3"
 		DrawString digifont_small, saehudgr, "Active Camo", 65, 195;
 		}
 	}
-	Else InInventory BasicArmor, 201//sae_ArmorXTRM
+	Else InInventory sae_ArmorXTRM//sae_ArmorXTRM
 	{
 	DrawSwitchableImage udv_LQ, "ADMG4300", "LQAD4300", 0, 0;
 	DrawImage "EXTREM01", 30, 184;
@@ -142,7 +142,7 @@ Aspectratio "4:3"
    	Alpha 0.75
   	DrawNumber 3, digifont_large, WHITE, Armor, Alignment(right), whennotzero, 94, 188;
  	}		
-	Else InInventory BasicArmor, 101//sae_ArmorBlue
+	Else InInventory sae_ArmorBlue//sae_ArmorBlue
 	{
 	DrawSwitchableImage udv_LQ, "ADMG4300", "LQAD4300", 0, 0;
 	DrawImage "ArmorBl", 44, 184;
@@ -153,7 +153,7 @@ Aspectratio "4:3"
    	Alpha 0.75
   	DrawNumber 3, digifont_large, cyan, Armor, Alignment(right), whennotzero, 94, 188;
  	}
-	Else InInventory BasicArmor, 80//sae_ArmorGreen
+	Else InInventory sae_ArmorGreen//sae_ArmorGreen
 	{
 	DrawSwitchableImage udv_LQ, "ADMG4300", "LQAD4300", 0, 0;
 	DrawImage "ArmorGr", 44, 184;
@@ -162,7 +162,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 60//sae_Armor80d
+	Else InInventory sae_Armor80d//sae_Armor80d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -178,7 +178,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 50//sae_Armor60d
+	Else InInventory sae_Armor60d//sae_Armor60d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -194,7 +194,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 40//sae_ArmorYellow
+	Else InInventory sae_ArmorYellow//sae_ArmorYellow
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -210,7 +210,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 30//sae_Armor40d
+	Else InInventory sae_Armor40d//sae_Armor40d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -226,7 +226,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 20//sae_ArmorRed
+	Else InInventory sae_ArmorRed//sae_ArmorRed
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -242,7 +242,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 10//sae_Armor20d
+	Else InInventory sae_Armor20d//sae_Armor20d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -258,7 +258,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 1//sae_Armor10d
+	Else InInventory sae_Armor10d//sae_Armor10d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -393,21 +393,21 @@ Aspectratio "4:3"
 		{
 		InInventory sae_DynamicMug
 		{
-			InInventory BasicArmor, 80
+			InInventory sae_ArmorGreen
 			{
 				Alpha 0.35
 				DrawImage "mugshotb", 0, 114;
 				Alpha 0.35
 				drawmugshot 5, animatedgodmode, 7, 125;
 			}
-			Else InInventory BasicArmor, 10
+			Else InInventory sae_Armor20d
 			{
 				Alpha 0.5
 				DrawImage "MUGBCK01", 0, 114;
 				Alpha 0.35
 				drawmugshot 5, animatedgodmode, 7, 125;
 			}
-			Else InInventory BasicArmor, 1
+			Else InInventory sae_Armor10d
 			{
 				Alpha 0.5
 				DrawImage "STATIC01", 0, 114;
@@ -1394,7 +1394,7 @@ ELSE
 		DrawSwitchableImage udv_LQ, "A_DMG00", "LQADMG00", -54, 0;
 		Alpha 0.75
 		{
-		InInventory BasicArmor, 201
+		InInventory sae_ArmorXTRM
 		{
 			DrawImage "ArmorBl", 10, 183;
 			Alpha 0.2
@@ -1402,7 +1402,7 @@ ELSE
 			DrawBar "HealthWh", "HealthTR", Armor (400), horizontal, interpolate(8), -2, 183;
 			DrawNumber 3, DIGIFONT_LARGE, WHITE, Armor, Alignment(right), whennotzero, 65, 185;
 		}
-		Else InInventory BasicArmor, 101
+		Else InInventory sae_ArmorBlue
 		{
 			DrawImage "ArmorBl", 10, 183;
 			DrawBar "HealthFu", "HealthEm", Armor (100), horizontal, interpolate(8), 23, 183;
@@ -1421,7 +1421,7 @@ ELSE
 	}
 	
 	
-	Else InInventory BasicArmor, 201//sae_ArmorXTRM
+	Else InInventory sae_ArmorXTRM//sae_ArmorXTRM
 	{
 	DrawSwitchableImage udv_LQ, "A_DMG00", "LQADMG00", -54, 0;
 		DrawImage "EXTREM01", -2, 183;
@@ -1433,7 +1433,7 @@ ELSE
 		Alpha 0.75
 		DrawNumber 3, DIGIFONT_LARGE, WHITE, Armor, Alignment(right), whennotzero, 65, 185;
  	}		
-	Else InInventory BasicArmor, 101//sae_ArmorBlue
+	Else InInventory sae_ArmorBlue//sae_ArmorBlue
 	{
 	DrawSwitchableImage udv_LQ, "A_DMG00", "LQADMG00", -54, 0;
 		DrawImage "ArmorBl", 10, 183;
@@ -1444,7 +1444,7 @@ ELSE
 		Alpha 0.75
 		DrawNumber 3, DIGIFONT_LARGE, cyan, Armor, Alignment(right), whennotzero, 65, 185;
  	}
-	Else InInventory BasicArmor, 80//sae_ArmorGreen
+	Else InInventory sae_ArmorGreen//sae_ArmorGreen
 	{
 	DrawSwitchableImage udv_LQ, "A_DMG00", "LQADMG00", -54, 0;
 		DrawImage "ArmorGr", 10, 183;
@@ -1453,7 +1453,7 @@ ELSE
 		Alpha 0.75
 		drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 60//sae_Armor80d
+	Else InInventory sae_Armor80d//sae_Armor80d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -1469,7 +1469,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 50//sae_Armor60d
+	Else InInventory sae_Armor60d//sae_Armor60d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -1485,7 +1485,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 40//sae_ArmorYellow
+	Else InInventory sae_ArmorYellow//sae_ArmorYellow
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -1501,7 +1501,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 30//sae_Armor40d
+	Else InInventory sae_Armor40d//sae_Armor40d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -1517,7 +1517,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 20//sae_ArmorRed
+	Else InInventory sae_ArmorRed//sae_ArmorRed
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -1533,7 +1533,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 10//sae_Armor20d
+	Else InInventory sae_Armor20d//sae_Armor20d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -1549,7 +1549,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 1//sae_Armor10d
+	Else InInventory sae_Armor10d//sae_Armor10d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -1684,21 +1684,21 @@ ELSE
 		{
 		InInventory sae_DynamicMug
 		{
-			InInventory BasicArmor, 80
+			InInventory sae_ArmorGreen
 			{
 				Alpha 0.35
 				DrawImage "mugshotb", -40, 114;
 				Alpha 0.35
 				drawmugshot 5, animatedgodmode, -33, 125;
 			}
-			Else InInventory BasicArmor, 10
+			Else InInventory sae_Armor20d
 			{
 				Alpha 0.5
 				DrawImage "MUGBCK01", -40, 114;
 				Alpha 0.35
 				drawmugshot 5, animatedgodmode, -33, 125;
 			}
-			Else InInventory BasicArmor, 1
+			Else InInventory sae_Armor10d
 			{
 				Alpha 0.5
 				DrawImage "STATIC01", -40, 114;
@@ -2721,7 +2721,7 @@ Aspectratio "4:3"
 	}
 	
 	
-	/*Else*/ InInventory BasicArmor, 201//sae_ArmorXTRM
+	/*Else*/ InInventory sae_ArmorXTRM//sae_ArmorXTRM
 	{
 	//DrawImage "ADMG4300", 0, 0;
 	DrawImage "EXTREM01", 30, 184;
@@ -2733,7 +2733,7 @@ Aspectratio "4:3"
    	Alpha 0.75
   	DrawNumber 3, digifont_large, WHITE, Armor, Alignment(right), whennotzero, 94, 188;
  	}		
-	Else InInventory BasicArmor, 101//sae_ArmorBlue
+	Else InInventory sae_ArmorBlue//sae_ArmorBlue
 	{
 	//DrawImage "ADMG4300", 0, 0;
 	DrawImage "ArmorBl", 44, 184;
@@ -2744,7 +2744,7 @@ Aspectratio "4:3"
    	Alpha 0.75
   	DrawNumber 3, digifont_large, cyan, Armor, Alignment(right), whennotzero, 94, 188;
  	}
-	Else InInventory BasicArmor, 80//sae_ArmorGreen
+	Else InInventory sae_ArmorGreen//sae_ArmorGreen
 	{
 	//DrawImage "ADMG4300", 0, 0;
 	DrawImage "ArmorGr", 44, 184;
@@ -2753,7 +2753,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 60//sae_Armor80d
+	Else InInventory sae_Armor80d//sae_Armor80d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -2769,7 +2769,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 50//sae_Armor60d
+	Else InInventory sae_Armor60d//sae_Armor60d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -2785,7 +2785,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 40//sae_ArmorYellow
+	Else InInventory sae_ArmorYellow//sae_ArmorYellow
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -2801,7 +2801,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 30//sae_Armor40d
+	Else InInventory sae_Armor40d//sae_Armor40d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -2817,7 +2817,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 20//sae_ArmorRed
+	Else InInventory sae_ArmorRed//sae_ArmorRed
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -2833,7 +2833,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 10//sae_Armor20d
+	Else InInventory sae_Armor20d//sae_Armor20d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -2849,7 +2849,7 @@ Aspectratio "4:3"
 	Alpha 0.75
 	drawnumber 3, digifont_large, SaeHUDGr, Armor, whennotzero, 94, 188;
 	}
-	Else InInventory BasicArmor, 1//sae_Armor10d
+	Else InInventory sae_Armor10d//sae_Armor10d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -2882,21 +2882,21 @@ Aspectratio "4:3"
 		{
 		InInventory sae_DynamicMug
 		{
-			InInventory BasicArmor, 80
+			InInventory sae_ArmorGreen
 			{
 				Alpha 0.35
 				DrawImage "mugshotb", 0, 114;
 				Alpha 0.35
 				drawmugshot 5, animatedgodmode, 7, 125;
 			}
-			Else InInventory BasicArmor, 10
+			Else InInventory sae_Armor20d
 			{
 				Alpha 0.5
 				DrawImage "MUGBCK01", 0, 114;
 				Alpha 0.35
 				drawmugshot 5, animatedgodmode, 7, 125;
 			}
-			Else InInventory BasicArmor, 1
+			Else InInventory sae_Armor10d
 			{
 				Alpha 0.5
 				DrawImage "STATIC01", 0, 114;
@@ -3879,7 +3879,7 @@ ELSE
 		DrawString digifont_small, saehudgr, "Active Camo", 61, 192;
 		}
 	}
-	/*Else*/ InInventory BasicArmor, 201//sae_ArmorXTRM
+	/*Else*/ InInventory sae_ArmorXTRM//sae_ArmorXTRM
 	{
 		//DrawImage "A_DMG00", -54, 0;
 		DrawImage "EXTREM01", -2, 183;
@@ -3891,7 +3891,7 @@ ELSE
 		Alpha 0.75
 		DrawNumber 3, DIGIFONT_LARGE, WHITE, Armor, Alignment(right), whennotzero, 65, 185;
  	}		
-	Else InInventory BasicArmor, 101//sae_ArmorBlue
+	Else InInventory sae_ArmorBlue//sae_ArmorBlue
 	{
 		//DrawImage "A_DMG00", -54, 0;
 		DrawImage "ArmorBl", 10, 183;
@@ -3902,7 +3902,7 @@ ELSE
 		Alpha 0.75
 		DrawNumber 3, DIGIFONT_LARGE, cyan, Armor, Alignment(right), whennotzero, 65, 185;
  	}
-	Else InInventory BasicArmor, 80//sae_ArmorGreen
+	Else InInventory sae_ArmorGreen//sae_ArmorGreen
 	{
 		//DrawImage "A_DMG00", -54, 0;
 		DrawImage "ArmorGr", 10, 183;
@@ -3911,7 +3911,7 @@ ELSE
 		Alpha 0.75
 		drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 60//sae_Armor80d
+	Else InInventory sae_Armor80d//sae_Armor80d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -3927,7 +3927,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 50//sae_Armor60d
+	Else InInventory sae_Armor60d//sae_Armor60d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -3943,7 +3943,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 40//sae_ArmorYellow
+	Else InInventory sae_ArmorYellow//sae_ArmorYellow
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -3959,7 +3959,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 30//sae_Armor40d
+	Else InInventory sae_Armor40d//sae_Armor40d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -3975,7 +3975,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 20//sae_ArmorRed
+	Else InInventory sae_ArmorRed//sae_ArmorRed
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -3991,7 +3991,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 10//sae_Armor20d
+	Else InInventory sae_Armor20d//sae_Armor20d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -4007,7 +4007,7 @@ ELSE
 	Alpha 0.75
 	drawnumber 3, DIGIFONT_LARGE, SaeHUDGr, Armor, whennotzero, 65, 185;
 	}
-	Else InInventory BasicArmor, 1//sae_Armor10d
+	Else InInventory sae_Armor10d//sae_Armor10d
 	{
 	InInventory sae_ToggleDamage
 	{
@@ -4040,21 +4040,21 @@ ELSE
 		{
 		InInventory sae_DynamicMug
 		{
-			InInventory BasicArmor, 80
+			InInventory sae_ArmorGreen
 			{
 				Alpha 0.35
 				DrawImage "mugshotb", -40, 114;
 				Alpha 0.35
 				drawmugshot 5, animatedgodmode, -33, 125;
 			}
-			Else InInventory BasicArmor, 10
+			Else InInventory sae_Armor20d
 			{
 				Alpha 0.5
 				DrawImage "MUGBCK01", -40, 114;
 				Alpha 0.35
 				drawmugshot 5, animatedgodmode, -33, 125;
 			}
-			Else InInventory BasicArmor, 1
+			Else InInventory sae_Armor10d
 			{
 				Alpha 0.5
 				DrawImage "STATIC01", -40, 114;

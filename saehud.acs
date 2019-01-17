@@ -151,6 +151,57 @@ function VOID DisplayBulletHoles (void) //preload the bulletholes on entering ga
 
 // Scripts ---------------------------------------------------
 
+Script "DamageFactor" Enter
+{
+While(true)
+{
+If(GetUserCvar(PlayerNumber(), "udv_enabledf")) SetActorProperty(ActivatorTID(), APROP_DamageFactor, GetUserCVAR(PlayerNumber(), "udv_damagefactor"));
+//PrintBold(d:GetActorProperty(ActivatorTID(),APROP_DamageFactor));
+Delay(1);
+}
+}
+/*
+Script "TestThings" Enter
+{
+While(true)
+{
+If(GetUserCvar(PlayerNumber(), "udv_enabledf")) SetActorProperty(ActivatorTID(), APROP_DamageFactor, GetUserCVAR(PlayerNumber(), "udv_damagefactor"));
+PrintBold(d:GetActorProperty(ActivatorTID(),APROP_DamageFactor));
+Delay(1);
+}
+}
+*/
+
+bool invehicle = false;
+bool onbike = false;
+script "vehiclecheck" Enter
+{
+	While(True)
+	{
+	If(CheckInventory("isinatank") || CheckInventory("mechgun") || CheckInventory("attackhelicoptergun")) 
+	{
+	invehicle = true;
+	totaldamage[PlayerNumber()] = 0;
+	}
+	else 
+	{
+	delay(5);
+	invehicle = false;
+	}
+	If(CheckInventory("bikehud")) 
+	{
+	onbike = true;
+	totaldamage[PlayerNumber()] = 0;
+	}
+	else 
+	{
+	Delay(5);
+	onbike = false;
+	}
+	Delay(1);
+	}
+}
+
 Script "AssignTID" Enter
 {
 	While(True)
@@ -261,7 +312,7 @@ Script "StartupMessage" (void)
 {
 Delay(1);
 		bool helmetmessage;
-		If( !CheckInventory("sae_extcam") && !CheckInventory("D4BaronHUD") && !CheckInventory("Revenant_Rune") ) helmetmessage = TRUE;
+		If( !CheckInventory("sae_extcam") && !CheckInventory("D4BaronHUD") && !CheckInventory("Revenant_Rune")  ) helmetmessage = TRUE;
 		Else helmetmessage = FALSE; 
 
 	
@@ -459,6 +510,7 @@ Script "MainUDVScript" Enter
 		int sae_health = 100 * GetActorProperty(ActivatorTID(), APROP_Health) / maxhealthstam; //health percentage
 		int sae_actualhealth = GetActorProperty(ActivatorTID(), APROP_Health); //Actual Health number
 		int sae_armor = CheckInventory("Armor");
+		int sae_storedarmor = CheckInventory("StoredArmorInsideVehicle");
 		If(sae_armor >= 1 && damcount < 1)
 			{
 				GiveInventory("sae_armordamage", 1);
@@ -476,19 +528,35 @@ Script "MainUDVScript" Enter
 		Else GiveInventory("sae_HealthExtreme", 1);
 		
 		// Armor --------------------------------------------------------------
-		If(sae_armor <= D_ARMORZERO) GiveInventory("sae_ArmorZero", 1);
-		Else If(sae_armor > D_ARMORZERO && sae_armor <= D_ARMOR10) GiveInventory("sae_Armor10", 1);
-		Else If(sae_armor > D_ARMOR10 && sae_armor <= D_ARMOR20) GiveInventory("sae_Armor20", 1);
-		Else If(sae_armor > D_ARMOR20 && sae_armor <= D_ARMORVERYLOW) GiveInventory("sae_ArmorVeryLow", 1);
-		Else If(sae_armor > D_ARMORVERYLOW && sae_armor <= D_ARMOR30) GiveInventory("sae_Armor40", 1);
-		Else If(sae_armor > D_ARMOR30 && sae_armor <= D_ARMORLOW) GiveInventory("sae_ArmorLow", 1);
-		Else If(sae_armor > D_ARMORLOW && sae_armor <= D_ARMOR60) GiveInventory("sae_Armor60", 1);
-		Else If(sae_armor > D_ARMOR60 && sae_armor <= D_ARMOR80) GiveInventory("sae_Armor80", 1);
-		Else If(sae_armor > D_ARMOR80 && sae_armor <= D_ARMORABOVEHUNDRED) GiveInventory("sae_ArmorOk", 1);
-		Else If(sae_armor > D_ARMORABOVEHUNDRED && sae_armor <= D_ARMOREXTREME) GiveInventory("sae_ArmorAboveHundred", 1);
-		Else GiveInventory("sae_ArmorExtreme", 1);
+		If(invehicle==true || onbike==true)
+		{
+			If(sae_storedarmor <= D_ARMORZERO) GiveInventory("sae_ArmorZero", 1);
+			Else If(sae_storedarmor > D_ARMORZERO && sae_storedarmor <= D_ARMOR10) GiveInventory("sae_Armor10", 1);
+			Else If(sae_storedarmor > D_ARMOR10 && sae_storedarmor <= D_ARMOR20) GiveInventory("sae_Armor20", 1);
+			Else If(sae_storedarmor > D_ARMOR20 && sae_storedarmor <= D_ARMORVERYLOW) GiveInventory("sae_ArmorVeryLow", 1);
+			Else If(sae_storedarmor > D_ARMORVERYLOW && sae_storedarmor <= D_ARMOR30) GiveInventory("sae_Armor40", 1);
+			Else If(sae_storedarmor > D_ARMOR30 && sae_storedarmor <= D_ARMORLOW) GiveInventory("sae_ArmorLow", 1);
+			Else If(sae_storedarmor > D_ARMORLOW && sae_storedarmor <= D_ARMOR60) GiveInventory("sae_Armor60", 1);
+			Else If(sae_storedarmor > D_ARMOR60 && sae_storedarmor <= D_ARMOR80) GiveInventory("sae_Armor80", 1);
+			Else If(sae_storedarmor > D_ARMOR80 && sae_storedarmor <= D_ARMORABOVEHUNDRED) GiveInventory("sae_ArmorOk", 1);
+			Else If(sae_storedarmor > D_ARMORABOVEHUNDRED && sae_storedarmor <= D_ARMOREXTREME) GiveInventory("sae_ArmorAboveHundred", 1);
+			Else GiveInventory("sae_ArmorExtreme", 1);
+		}
+		Else
+		{
+			If(sae_armor <= D_ARMORZERO) GiveInventory("sae_ArmorZero", 1);
+			Else If(sae_armor > D_ARMORZERO && sae_armor <= D_ARMOR10) GiveInventory("sae_Armor10", 1);
+			Else If(sae_armor > D_ARMOR10 && sae_armor <= D_ARMOR20) GiveInventory("sae_Armor20", 1);
+			Else If(sae_armor > D_ARMOR20 && sae_armor <= D_ARMORVERYLOW) GiveInventory("sae_ArmorVeryLow", 1);
+			Else If(sae_armor > D_ARMORVERYLOW && sae_armor <= D_ARMOR30) GiveInventory("sae_Armor40", 1);
+			Else If(sae_armor > D_ARMOR30 && sae_armor <= D_ARMORLOW) GiveInventory("sae_ArmorLow", 1);
+			Else If(sae_armor > D_ARMORLOW && sae_armor <= D_ARMOR60) GiveInventory("sae_Armor60", 1);
+			Else If(sae_armor > D_ARMOR60 && sae_armor <= D_ARMOR80) GiveInventory("sae_Armor80", 1);
+			Else If(sae_armor > D_ARMOR80 && sae_armor <= D_ARMORABOVEHUNDRED) GiveInventory("sae_ArmorOk", 1);
+			Else If(sae_armor > D_ARMORABOVEHUNDRED && sae_armor <= D_ARMOREXTREME) GiveInventory("sae_ArmorAboveHundred", 1);
+			Else GiveInventory("sae_ArmorExtreme", 1);
+		}
 		
-
 
 		//PB Dual Carbine Checker
 		If(GetUserCVAR(PlayerNumber(), "bd_RestoreCarbines")) GiveInventory("udv_restorecarbines", 1);
@@ -552,7 +620,7 @@ Script "MainUDVScript" Enter
 		// Armor Warning
 		
 		//If( CheckInventory("sae_ArmorZero") && CheckInventory("sae_armordamage"))
-		If( sae_armor <= D_ARMORZERO && !CheckActorClass(0, "BaronPlayer") && !CheckActorClass(0, "RevenantPlayer") )
+		If( sae_armor <= D_ARMORZERO && !CheckActorClass(0, "BaronPlayer") && !CheckActorClass(0, "RevenantPlayer") && invehicle == false && onbike == false)
 		{
 		Until ( armcount > 1 )
 			{
@@ -1021,7 +1089,7 @@ script 4750 ENTER //Script to get Initial speeds
 
 script "CriticalEnergize" ENTER//4755 ENTER//(void) // -- Critical/Energized Speed Modifications
 {
-	If( !(is_brutal64 && CheckInventory("IsTacticalClass")) )
+	If( !is_brutal64 && !CheckInventory("IsTacticalClass") )
 	{
 		Delay(10);
 		int CheckBarrel; //
@@ -1034,7 +1102,7 @@ script "CriticalEnergize" ENTER//4755 ENTER//(void) // -- Critical/Energized Spe
 		
 		While(true)
 		{
-			if ( !CheckActorClass(0, "BaronPlayer") && !CheckActorClass(0, "RevenantPlayer") )
+			if ( !CheckActorClass(0, "BaronPlayer") && !CheckActorClass(0, "RevenantPlayer") && invehicle == false && onbike == false )
 			{
 				if (GetCVAR("UDV_ToggleBleeding")) //( GameSkill () > SKILL_UDVBRUTAL || GetCVAR("UDV_ToggleBleeding") )
 				{
@@ -1219,7 +1287,7 @@ script "UDVActivateEMS" (void) net
 {
    // if (GameSkill () > SKILL_UDVBRUTAL )
 	//{
-		If ( GetActorProperty(ActivatorTID(), APROP_Health) <= GetCVAR("UDV_EMSHealth") && CheckInventory("Armor") >= GetCVAR("UDV_ToolArmor") && CheckInventory("UDV_AccBattery") >= GetCVAR("UDV_EMSBattery") )
+		If ( GetActorProperty(ActivatorTID(), APROP_Health) <= GetCVAR("UDV_EMSHealth") && CheckInventory("Armor") >= GetCVAR("UDV_ToolArmor") && CheckInventory("UDV_AccBattery") >= GetCVAR("UDV_EMSBattery") && GetActorProperty(ActivatorTID(), APROP_Health) > 0 )
 		{
 			HudMessage(s:"Activating EMS";
 				HUDMSG_FADEINOUT, 156, CR_ORANGE, 1.5, 0.6, 0.5,
@@ -1230,7 +1298,10 @@ script "UDVActivateEMS" (void) net
 			ActivatorSound("INJECT", 127);
 			For(int i = 0; i<random(21,40); i++)
 			{
+			If(GetActorProperty(ActivatorTID(), APROP_Health) > 0)
+			{
 			HealThing(1, 100);
+			}
 			Delay(7);
 			}
 			//GiveInventory("HealthBonus", 20);
@@ -1251,6 +1322,18 @@ script "UDVActivateEMS" (void) net
 			LocalAmbientSound("GenAlert", 127);
 		}
 	//}
+}
+
+SCRIPT "UDVAutoEMS" ENTER
+{
+While(true)
+{
+	If (GetCVAR("UDV_ToolArmor") && CheckInventory("UDV_AccBattery") >= GetCVAR("UDV_EMSBattery") && CheckInventory("Armor") >= GetCVAR("UDV_ToolArmor") && GetUserCVAR(PlayerNumber(), "UDV_AutoEMS"))
+	{
+		If(GetActorProperty(ActivatorTID(), APROP_Health) <= GetCvar("udv_emshealth") && GetActorProperty(ActivatorTID(), APROP_Health) > 0 ) ACS_NamedExecute("UDVActivateEMS",0);
+	}
+	Delay(1);
+}
 }
 
 Script "ScreenShake" ENTER //(void) net
@@ -1275,7 +1358,8 @@ Script "ScreenShake" ENTER //(void) net
 
 script "AimingMomentum" ENTER //(void) net
 {
-    if ( GameSkill () >= SKILL_UDVBRUTAL && !(is_brutal64 && CheckInventory("IsTacticalClass")) ) SetActorProperty (ActivatorTID(), APROP_Speed, 0.6); //slower movement
+    if ( GameSkill () >= SKILL_UDVBRUTAL && !(is_brutal64 && CheckInventory("IsTacticalClass")) || GetCVAR("udv_speedlimit") ) SetActorProperty (ActivatorTID(), APROP_Speed, GetCVAR("udv_speedvalue"));//slower movement
+	/*
 	int true_angle = GetActorAngle(0);
 	int true_pitch = GetActorPitch(0);
 	int angle;
@@ -1325,7 +1409,7 @@ script "AimingMomentum" ENTER //(void) net
 			if (mx < -0.9) mx = -0.9;
 			if (mx > 0.9) mx = 0.9;
 			if (my < -0.24) my = -0.24;
-			if (my > 0.24) my = 0.25;*/
+			if (my > 0.24) my = 0.25;
 			dx += mx;
 			dy += my;
 			if (new_angle < true_angle)
@@ -1354,6 +1438,7 @@ script "AimingMomentum" ENTER //(void) net
 		Delay(1);
 		}
 	}
+	*/
 }
 
 script "armorcheck" ENTER
@@ -1376,7 +1461,7 @@ script "armorcheck" ENTER
 					totaldamage[PlayerNumber()] = totaldamage[PlayerNumber()] - ArmorChange;
 					If (totaldamage[PlayerNumber()] < 0) totaldamage[PlayerNumber()] = 0;
 				}
-				Else If ( ArmorChange >= 10 && ( CheckInventory("Armor") == 100 || CheckInventory("Armor") == 200 || CheckInventory("Armor") == 125 || CheckInventory("Armor") == 150 ) ) 
+				Else If ( ArmorChange >= 10 && ( CheckInventory("Armor") == 100 || CheckInventory("Armor") == 200 || CheckInventory("Armor") == 125 || CheckInventory("Armor") == 150 ) && invehicle == false && onbike == false ) 
 				{
 				//Helmet Animation
 					//str udvArmorType = GetArmorInfo(ARMORINFO_CLASSNAME);
@@ -1404,7 +1489,7 @@ script "armorcheck" ENTER
 				}
 				//If(!GetUserCVAR(PlayerNumber(),"udv_autoclean"))
 				//{
-					If ( abuttons & BT_FORWARD && abuttons & BT_BACK && totaldamage[PlayerNumber()] > 0 && GetActorProperty(ActivatorTID(), APROP_Health) > 0 && GetUserCVAR(PlayerNumber(), "udv_splatter") )
+					If ( abuttons & BT_FORWARD && abuttons & BT_BACK && totaldamage[PlayerNumber()] > 0 && GetActorProperty(ActivatorTID(), APROP_Health) > 0 && GetUserCVAR(PlayerNumber(), "udv_splatter"))
 					{
 					totaldamage[PlayerNumber()] = totaldamage[PlayerNumber()] - 2;
 					If (totaldamage[PlayerNumber()] < 0) totaldamage[PlayerNumber()] = 0;
@@ -1422,8 +1507,9 @@ script "armorcheck" ENTER
 					LocalAMbientSound("GenAlert",87);
 					}
 				//}
-				If ( GetUserCVAR(PlayerNumber(), "udv_splatter") )
+				If ( GetUserCVAR(PlayerNumber(), "udv_splatter") && invehicle == false && onbike == false )
 				{
+					//Delay(2);
 					If ( healthdamage[PlayerNumber()] > 0 ) totaldamage[PlayerNumber()] = healthdamage[PlayerNumber()] + totaldamage[PlayerNumber()];
 					If ( totaldamage[PlayerNumber()] > 220 ) totaldamage[PlayerNumber()] = 220 ;
 					//Delay(3);
@@ -1480,7 +1566,7 @@ Script "Checksky" Enter
 		While(true)
 		{
 			int skyarmor = GetCVAR("udv_skyarmor");
-			If (CheckActorCeilingTexture(ActivatorTID(), "F_SKY1") && CheckInventory("Armor") <= skyarmor && GetActorProperty(ActivatorTID(), APROP_HEALTH) > 0 && GetCVAR("udv_skydamage") && !CheckInventory("HEVProtect") && !CheckActorClass(0, "BaronPlayer") && !CheckActorClass(0, "RevenantPlayer")  ) 
+			If (CheckActorCeilingTexture(ActivatorTID(), "F_SKY1") && CheckInventory("Armor") <= skyarmor && CheckInventory("storedarmorinsidevehicle") <= skyarmor && GetActorProperty(ActivatorTID(), APROP_HEALTH) > 0 && GetCVAR("udv_skydamage") && !CheckInventory("HEVProtect") && !CheckActorClass(0, "BaronPlayer") && !CheckActorClass(0, "RevenantPlayer") && invehicle == false ) 
 				{
 					//PrintBold(s:"OUTSIDE!");
 					SetMugshotState("OUCH");
@@ -1551,7 +1637,7 @@ Script "hole" (void) net//(void) // -- Add broken hole to visor for effect
 	int holey = 0;
 	While(true)
 	{
-		If( (CheckInventory("Armor") <= GetCVAR("udv_skyarmor")) && GetUserCVar(PlayerNumber(),"saehud_toggledamage") )
+		If( (CheckInventory("Armor") <= GetCVAR("udv_skyarmor")) && GetUserCVar(PlayerNumber(),"saehud_toggledamage") && CheckInventory("storedarmorinsidevehicle") <= GetCVAR("udv_skyarmor")  )
 		{
 		//Until( holex > 0 && holey > 0 )
 			//{
@@ -1584,8 +1670,9 @@ Script "hole" (void) net//(void) // -- Add broken hole to visor for effect
 					1.0);				
 				}
 				//ACS_NamedExecuteAlways("dangeralarm",0);
-				If(GetUserCVAR(PlayerNumber(), "udv_dangeralarm") && !CheckActorClass(0, "BaronPlayer") && !CheckActorClass(0, "RevenantPlayer") )
+				If(GetUserCVAR(PlayerNumber(), "udv_dangeralarm") && !CheckActorClass(0, "BaronPlayer") && !CheckActorClass(0, "RevenantPlayer") && invehicle == false )
 				{
+					Delay(1);
 					Until(alarmcnt[PlayerNumber()]>0)
 					{
 					PlaySound(ActivatorTID(),"DANGER", 6, 0.2);
@@ -1598,7 +1685,7 @@ Script "hole" (void) net//(void) // -- Add broken hole to visor for effect
 			holex = 0;
 			holey = 0;
 			//ACS_NamedTerminate("dangeralarm",0);
-			If(alarmcnt[PlayerNumber()] > 0)
+			If(alarmcnt[PlayerNumber()] > 0 )
 			{
 			StopSound(ActivatorTID(),6);
 			alarmcnt[PlayerNumber()] = 0;

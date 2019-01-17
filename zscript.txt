@@ -1,3 +1,5 @@
+version "2.5"
+
 class UDVDamage : Actor
 {
     static void DoDamage (Actor activator, int dmg, name dmgType)
@@ -8,4 +10,160 @@ class UDVDamage : Actor
             activator.DamageMobj(null, null, dmg, dmgType, DMG_FORCED);
         }
     }
+}
+
+class radiation_counter : eventhandler
+{
+	override void WorldThingSpawned(WorldEvent e)
+	{
+	if(e.thing is "playerpawn") {e.thing.giveinventory("scintillator", 1); }
+	}
+}
+
+class scintillator : inventory
+{
+	actor loudspeaker;
+	actor base_checker;
+	
+	int amount_of_damage;
+	int damage_interval;
+	int chance_of_leaky;
+
+	double what_sound_play;
+
+override void doeffect()
+{
+	if(loudspeaker == null){loudspeaker = actor.spawn("beeper", owner.pos); loudspeaker.target = owner; beeper(loudspeaker).pointer_to_scintillator_from_beeper = self;}
+	if(base_checker == null){base_checker = actor.spawn("foot_checker", owner.pos); base_checker.target = owner; foot_checker(base_checker).pointer_to_scintillator = self;}
+}
+
+}
+
+class foot_checker : actor
+{
+	actor  temporary_pointer;
+	inventory pointer_to_scintillator;
+	
+	bool inner_circle;
+	bool outter_circle;
+	
+	vector3 radius_vector;
+
+default
+{+nointeraction; +noclip;}
+
+states
+{
+	spawn:
+		tnt1 a 1
+		{
+			setorigin(target.pos, false );
+
+			if(inner_circle == false)
+			{
+				for(double angle = 0; angle <=360; angle += 360/16)
+				{
+					radius_vector =(cos(angle) * 100, sin(angle) * 100, 0);
+					temporary_pointer = spawn("geiger_sensor", self.pos + radius_vector);
+
+					geiger_sensor(temporary_pointer).warping_distance = radius_vector;
+					geiger_sensor(temporary_pointer).target = self.target;
+					geiger_sensor(temporary_pointer).pointer_to_scintillator_from_sensor = self.pointer_to_scintillator;
+					geiger_sensor(temporary_pointer).is_inner_circle = true;
+				}
+				inner_circle = true;
+			}
+
+			if(outter_circle == false)
+			{
+				for(double angle = 0; angle <=360; angle += 360/16)
+				{
+					radius_vector =(cos(angle) * 200, sin(angle) * 200, 0);
+					temporary_pointer = spawn("geiger_sensor", self.pos + radius_vector);
+
+					geiger_sensor(temporary_pointer).warping_distance = radius_vector;
+					geiger_sensor(temporary_pointer).target = self.target;
+					geiger_sensor(temporary_pointer).pointer_to_scintillator_from_sensor = self.pointer_to_scintillator;
+					geiger_sensor(temporary_pointer).is_inner_circle = false;
+				}
+				outter_circle = true;
+			}
+
+			if(floorsector.damageamount > 0)
+			{
+				if(scintillator(pointer_to_scintillator).what_sound_play < 3)
+				{
+				scintillator(pointer_to_scintillator).what_sound_play = 3;
+				}
+			}
+		}
+	loop;
+}
+}
+
+class beeper : actor
+{
+	inventory pointer_to_scintillator_from_beeper;
+
+default
+{+nointeraction; +noclip;}
+
+states
+{
+	spawn:
+		tnt1 a 1 
+		{
+			setorigin(target.pos, false);
+			if( pointer_to_scintillator_from_beeper)
+			{
+				CVar geigersetting = CVar.FindCVar('udv_geiger');
+				if( geigersetting.getbool())
+				{
+					switch(scintillator(pointer_to_scintillator_from_beeper).what_sound_play)				
+					{
+						case 1: a_playsound("far_away_from_radiaton", 7, 0.5); scintillator(pointer_to_scintillator_from_beeper).what_sound_play = 0; return;
+						case 2: a_playsound("near_radiation", 7, 0.5); scintillator(pointer_to_scintillator_from_beeper).what_sound_play = 0; return;
+						case 3: a_playsound("touch_radiation", 7, 0.5); scintillator(pointer_to_scintillator_from_beeper).what_sound_play = 0; return;
+
+						default: scintillator(pointer_to_scintillator_from_beeper).what_sound_play = 0; return;
+					}
+				}
+			}
+		}
+	loop;
+}
+
+}
+
+class geiger_sensor : actor
+{
+	vector3 warping_distance;
+	inventory pointer_to_scintillator_from_sensor;
+	bool is_inner_circle;
+
+default
+{+nointeraction; +noclip;}
+
+states
+{
+	spawn:
+		tnt1 q 1
+		{
+			setorigin(target.pos + warping_distance, false);
+
+			if(floorsector.damageamount > 0)
+			{
+				if(is_inner_circle == true && scintillator(pointer_to_scintillator_from_sensor).what_sound_play < 2)
+				{
+					scintillator(pointer_to_scintillator_from_sensor).what_sound_play = 2;
+				}
+
+				if(is_inner_circle == false && scintillator(pointer_to_scintillator_from_sensor).what_sound_play < 1)
+				{
+					scintillator(pointer_to_scintillator_from_sensor).what_sound_play = 1;
+				}
+			}
+		}
+}
+
 }

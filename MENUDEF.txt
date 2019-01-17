@@ -148,6 +148,8 @@ Option "Spawn Accessory Batteries", "udv_spawnbattery", "YesNo"
 Slider "Max AMT Accessory Batt. Spawns", "udv_accamt", 0, 20, 1, 0
 Slider "Max AMT EX Accessory Batt. Spawns", "udv_accexamt", 0, 20, 1, 0
 StaticText " "
+Option "Detect Damaging Floors", "udv_geiger", "YesNo"
+StaticText " "
 StaticText  "Flashlight Options"
 StaticText " "
   Control "Toggle Flashlight Key", "UDVToggleFlashlight"
@@ -157,6 +159,7 @@ StaticText " "
 StaticText " "
 StaticText  "Emergency Medical System Options"
 StaticText " "
+  Option "Automatic EMS", "UDV_AutoEMS", "YesNo"
   Control "Activate EMS Key", "UDVActivateEMS"
   //Slider "Min Armor for EMS", "UDV_EMSArmor", 0, 200, 1, 0
   Slider "Min Health for EMS", "UDV_EMSHealth", 1, 99, 1, 0
@@ -206,7 +209,13 @@ OptionMenu "UDVGameplayOptions"
 	Slider "Critical Health", "UDV_HealthCritical", 1, 99, 1, 0
 	Slider "Energized Health", "UDV_HealthEnergize", 101, 500, 1, 0
 	StaticText " "
-  Option "Aiming Momentum", "UDV_toggleRealAim", "YesNo"
+  //Option "Aiming Momentum", "UDV_toggleRealAim", "YesNo"
+  Option "*Speed Modifier", "udv_speedlimit", "YesNo"
+  Slider "*Walk Speed", "udv_speedvalue", 0.1, 2.0, 0.1, 1
+  Option "*Fast Monsters", "sv_fastmonsters", "YesNo"
+  Option "Enable Damage Factor", "udv_enabledf", "YesNo"
+  Slider "Damage Factor", "udv_damagefactor", 0.1, 50.0, 0.1, 1
+  StaticText " "
   Option "Screen Shake on Damage", "UDV_ToggleShake", "YesNo"
   StaticText " "
   Option "Outdoor Air Loss Damage", "udv_skydamage", "YesNo"

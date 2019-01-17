@@ -1,0 +1,64 @@
+$pitchshiftrange			0
+
+far_away_from_radiaton0						"sounds/geiger_counter/geiger_00.mp3"
+far_away_from_radiaton1						"sounds/geiger_counter/geiger_01.mp3"
+far_away_from_radiaton2						"sounds/geiger_counter/geiger_02.mp3"
+far_away_from_radiaton3						"sounds/geiger_counter/geiger_03.mp3"
+far_away_from_radiaton4						"sounds/geiger_counter/geiger_04.mp3"
+
+$random far_away_from_radiaton
+{
+far_away_from_radiaton0
+far_away_from_radiaton1
+far_away_from_radiaton2
+far_away_from_radiaton3
+far_away_from_radiaton4
+}
+
+near_radiation0						"sounds/geiger_counter/geiger_05.mp3"
+near_radiation1						"sounds/geiger_counter/geiger_06.mp3"
+near_radiation2						"sounds/geiger_counter/geiger_07.mp3"
+near_radiation3						"sounds/geiger_counter/geiger_08.mp3"
+near_radiation4						"sounds/geiger_counter/geiger_09.mp3"
+near_radiation5						"sounds/geiger_counter/geiger_10.mp3"
+near_radiation6						"sounds/geiger_counter/geiger_11.mp3"
+
+$random near_radiation
+{
+near_radiation0
+near_radiation1
+near_radiation2
+near_radiation3
+near_radiation4
+near_radiation5
+near_radiation6
+}
+
+/*						"sounds/geiger_counter/geiger_12.mp3"
+						"sounds/geiger_counter/geiger_13.mp3"
+						"sounds/geiger_counter/geiger_14.mp3"
+						"sounds/geiger_counter/geiger_15.mp3"*/
+
+touch_radiation0 						"sounds/geiger_counter/geiger_16.mp3"
+touch_radiation1						"sounds/geiger_counter/geiger_17.mp3"
+touch_radiation2						"sounds/geiger_counter/geiger_18.mp3"
+touch_radiation3						"sounds/geiger_counter/geiger_19.mp3"
+touch_radiation4						"sounds/geiger_counter/geiger_20.mp3"
+touch_radiation5						"sounds/geiger_counter/geiger_21.mp3"
+touch_radiation6						"sounds/geiger_counter/geiger_22.mp3"
+touch_radiation7						"sounds/geiger_counter/geiger_23.mp3"
+
+$random touch_radiation
+{
+touch_radiation0
+touch_radiation1
+touch_radiation2
+touch_radiation3
+touch_radiation4
+touch_radiation5
+touch_radiation6
+touch_radiation7
+}
+
+/*						"sounds/geiger_counter/geiger_24.mp3"
+						"sounds/geiger_counter/geiger_25.mp3"*/

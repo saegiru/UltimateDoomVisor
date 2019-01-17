@@ -34,7 +34,7 @@ bool is_bpv9 = false;
 
 Script "GameChecker" Enter
 {
-	//Delay(5);
+	//Delay(3);
 		is_vanilla = CheckInventory("Fist") && (GetBaseGame()==BASEGAME_DOOM || GetBaseGame()==BASEGAME_UNKNOWN);
 		is_heretic = CheckInventory("Staff") && (GetBaseGame()==BASEGAME_HERETIC || GetBaseGame()==BASEGAME_UNKNOWN);
 		is_blasphemer = CheckInventory("Staff") && (GetBaseGame()==BASEGAME_BLASPHEMER || GetBaseGame()==BASEGAME_UNKNOWN);
@@ -47,7 +47,7 @@ Script "GameChecker" Enter
 		is_PB203 = ( !CheckInventory("QSSGAmmoCounter") && CheckInventory("IsPlayingAsProjectBrutality") );
 		is_PB3 = ( ( CheckInventory("QSSGAmmoCounter") && CheckInventory("IsPlayingAsProjectBrutality") ) || ( CheckInventory("VanillaRifle") && CheckInventory("IsPlayingAsPurist") ) || ( CheckInventory("Traditional_Fist") && CheckInventory("IsPlayingAsTraditional") ) );
 		is_brutalv20 = ( ( GetActorProperty(ActivatorTID(),APROP_Mass)==100 && !CheckInventory("IsPlayingAsPurist") && CheckInventory("Melee_Attacks") ) || ( GetActorProperty(ActivatorTID(),APROP_Mass)==100 && CheckInventory("ClassicFist") ) );
-		is_brutalv21 = ( ( GetActorProperty(ActivatorTID(),APROP_Mass)==130 && !CheckInventory("BP_Pistol") && !CheckInventory("IsTacticalClass") && CheckInventory("Melee_Attacks") ) || CheckInventory("BrutalPistol") || CheckInventory("IsTacticalClass") || ( GetActorProperty(ActivatorTID(),APROP_Mass)==500 && CheckInventory("IsPlayingAsPurist") ) );
+		is_brutalv21 = ( ( GetActorProperty(ActivatorTID(),APROP_Mass)==130 && !CheckInventory("BP_Pistol") && !CheckInventory("IsTacticalClass") && CheckInventory("Melee_Attacks") ) || CheckInventory("BrutalPistol") || CheckInventory("IsTacticalClass") || ( GetActorProperty(ActivatorTID(),APROP_Mass)==130 && CheckInventory("IsPlayingAsPurist") ) );
 		is_bpv9 = ( CheckInventory("BP_Pistol") && GetActorProperty(ActivatorTID(),APROP_Mass)==500 );
 		//is_brutal = (((CheckInventory("Melee_Attacks")&&!CheckInventory("TargetIsAMarine")&&!CheckInventory("IsPlayingAsPurist")&&!CheckInventory("IsPlayingAsProjectBrutality")) || CheckInventory("ClassicFist"))&&GetActorProperty(ActivatorTID(),APROP_Mass)==100);
 		//is_brutalv20 = ( (CheckInventory("Melee_Attacks") && !CheckInventory("TargetIsAMarine") && GetActorProperty(ActivatorTID(), APROP_Mass) == 100)  )
@@ -64,6 +64,7 @@ Script "GameChecker" Enter
 		is_zion = CheckInventory("DUMB4Fist");
 		is_overkill = (CheckInventory("YuriTrigger") || CheckInventory("AloszaTrigger") || CheckInventory("MartyTrigger"));
 		is_harmony = (GetBaseGame()==BASEGAME_HARMONY || (GetBaseGame()==BASEGAME_UNKNOWN&&!is_vanilla&&!is_heretic&&!is_blasphemer&&!is_hexen&&!is_strife&&!is_chex&&!is_action&&!is_hacx&&!is_square&&!is_brutal&&!is_d4&&!is_brutalpack&&!is_brutality&&!is_smooth&&!is_complex&&!is_lca&&!is_trailblazer&&!is_zion&&!is_overkill));	// There is no melee weapon in this game that the player always has
+		//is_brutalv21 = ( GetActorProperty(ActivatorTID(),APROP_Mass)==130 && CheckInventory("IsPlayer") );
 		
 		If(is_PB203 || is_PB3) GiveInventory("sae_pa1n",1);
 		If(is_brutalv20 || is_brutalv21 || is_bpv9) GiveInventory("sae_bdv20",1);

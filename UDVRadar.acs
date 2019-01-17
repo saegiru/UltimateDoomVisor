@@ -1147,7 +1147,8 @@ Script "RadarChanger" (Void) NET
 				SetActorProperty(0, APROP_NameTag, sae_nameslist[random(29,44)][1]);
 			}
 		}
-			Thing_ChangeTID(ActivatorTID(), tidcounter++);
+			Thing_ChangeTID(ActivatorTID(), uniquetid(tidcounter++,-1));
+			//tidcounter++;
 	}
 }
 

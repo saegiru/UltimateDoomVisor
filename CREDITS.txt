@@ -7,6 +7,7 @@ cybermind for the radar
 Lightsource for the Alternate Visor graphics
 Yamil for the Alternate Visor 2 graphics
 Whoever made Weapon Wheel - for the idea to combine the weapon modules and game checker capability.
+Apeirogon for the damaging floor detector zscript.
 
 Countless zdoom posts and the ZDoom wiki for all the learnin'!
 

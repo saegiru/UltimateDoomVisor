@@ -68,8 +68,8 @@ str VANILLA_weaponslist[VANILLA_NumOfWeap][6] =
   {"Fist",		          		"NoPrimary",        "NoSecondary", "No",	"FIST", "PlaceHolder"},
 };
 
-#define BDV21_NumOfWeap	45
-#define BDV21_StandWeap 18 //Number of standard weapons to show in weaponslist starting from 0
+#define BDV21_NumOfWeap	46
+#define BDV21_StandWeap 19 //Number of standard weapons to show in weaponslist starting from 0
 
 // Weapons list - Columns descriptions are as follows:
 // 1st column ---> weapon.
@@ -116,7 +116,7 @@ str BDV21_weaponslist[BDV21_NumOfWeap][6] =
   {"SguyShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
   {"ClassicFist",          "NoPrimary",          	"NoSecondary", 			"No",	"FIST", "PlaceHolder"},
   {"ClassicSaw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
-  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"Pistol", "Pistol"},
+  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"PISTL", "Pistol"},
   {"ClassicShotgun",               "AmmoShell",              	"NoSecondary",  		"No",	"SHOT", "Shotgun"},
   {"ClassicSSG",                    "AmmoShell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
   {"ClassicChaingun",               "Clip2",               	"NoSecondary",  		"No",	"CHGUN", "Chain Gun"},
@@ -128,17 +128,18 @@ str BDV21_weaponslist[BDV21_NumOfWeap][6] =
   {"DualSMG",			"Clip1",				"BDDualSMGAmmo",		"Yes",	"DUAL",	"PlaceHoler"},
   {"MP40",      			"Clip1",               	"MP40Ammo",  				"Yes",	"MP40", "MP40"},
   {"NukeLauncher",			"Nuke",					"NoSecondary",				"No",	"NUKE",	"Nuke Launcher"},
+  {"ClassicSMG",					"Clip2",				"NoSecondary",			"No",	"SMG", "SMG"},
 };
 
 // The array below is a special case for v20's "Purist" class vanilla weapons and weaponlist.
 
-#define BDV21_PURIST_NumOfWeap	11
-#define BDV21_PURIST_StandWeap 8 //Number of standard weapons to show in weaponslist
+#define BDV21_PURIST_NumOfWeap	12
+#define BDV21_PURIST_StandWeap 9 //Number of standard weapons to show in weaponslist
 
 str BDV21_PURIST_weaponslist[BDV21_PURIST_NumOfWeap][6] =
 {
   {"ClassicSaw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
-  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"Pistol", "Pistol"},
+  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"PISTL", "Pistol"},
   {"ClassicSMG",					"Clip2",				"NoSecondary",			"No",	"SMG", "SMG"},
   {"ClassicShotgun",               "AmmoShell",              	"NoSecondary",  		"No",	"SHOT", "Shotgun"},
   {"ClassicSSG",                    "AmmoShell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
@@ -146,6 +147,7 @@ str BDV21_PURIST_weaponslist[BDV21_PURIST_NumOfWeap][6] =
   {"ClassicRocketLauncher",       "AmmoRocket",         	"NoSecondary",  			"No",	"RCKTL", "Rocket Launcher"}, //v20
   {"ClassicPlasmaRifle",        "AmmoCell",         	"NoSecondary", 		"No",	"PLSMA", "Plasma Rifle"},
   {"VanillaBFG9000",        "AmmoCell",               	"NoSecondary",  		"No",	"BFG9K", "BFG 9000"},
+  {"Flamethrower2",			"Gas",					"NoSecondary",			"No",	"FTHRW", "Flame Thrower"},
 // My pipebomb goes under this line, specifically for my pipebomb mod - doesn't affect normal display unless pipebomb mod is loaded.
   {"det_pipebomb",			 "pipebombammo",		"pipebombammo",			"No",	"PIPE", "PB Detonator"},
   {"det_satchelcharge",		 "satchelchargeammo",	"satchelchargeammo",	"No",	"STCHG",	"SC Detonator"},
@@ -354,7 +356,7 @@ str BP_weaponslist[BP_NumOfWeap][6] =
 str BP_PURIST_weaponslist[BP_PURIST_NumOfWeap][6] =
 {
   {"ClassicSaw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
-  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"Pistol", "Pistol"},
+  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"PISTL", "Pistol"},
   {"ClassicShotgun",               "Shell",              	"NoSecondary",  		"No",	"SHOT", "Shotgun"},
   {"ClassicSSG",                    "Shell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
   {"ClassicChaingun",               "Clip2",               	"NoSecondary",  		"No",	"CHGUN", "Chain Gun"},
@@ -619,7 +621,7 @@ str BRUTALV20_weaponslist[BRUTALV20_NumOfWeap][7] =
   {"SguyShield",			 "Meatshieldgunammo",	"MeatAmmo",				"No",	"RIFLE", "PlaceHolder"},
   {"ClassicFist",          "NoPrimary",          	"NoSecondary", 			"No",	"FIST", "PlaceHolder"},
   {"ClassicSaw",              "NoPrimary",          	"NoSecondary", 			"No",	"SAW", "Chain Saw"},
-  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"Pistol", "Pistol"},
+  {"ClassicPistol",                  "Clip2",               	"NoSecondary",    		"No",	"PISTL", "Pistol"},
   {"ClassicShotgun",               "Shell",              	"NoSecondary",  		"No",	"SHOT", "Shotgun"},
   {"ClassicSSG",                    "Shell",              	"NoSecondary",  		"No",	"SSG", "Super Shotgun"},
   {"ClassicChaingun",               "Clip2",               	"NoSecondary",  		"No",	"CHGUN", "Chain Gun"},

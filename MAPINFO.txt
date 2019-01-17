@@ -10,21 +10,22 @@ gameinfo
    statusbar = "UDVSB"
 DimColor = "Black"
 DimAmount = 0.80
+	addeventhandlers="radiation_counter"
 }
 
 skill UDVBrutal
 {
-   DamageFactor = 2.0
+   //DamageFactor = 1.3
    AmmoFactor = 1
    Aggressiveness = 1.0
    ACSReturn = 10000
-   FastMonsters
-   MonsterHealth = 1.5
+   //FastMonsters
+   MonsterHealth = 1.6
    SpawnFilter = Nightmare
    Picname = "UDV_HC"
    Textcolor = "GRAY"
    name = "UDV - Hardcore"
-   mustconfirm = "Slower movement, take more damage, faster, stronger, more agressive enemies. Can you survive? Press Y or N"
+   mustconfirm = "Stronger, more agressive enemies. Can you survive? Press Y or N"
 }
 
 /*
