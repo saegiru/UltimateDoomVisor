@@ -111,3 +111,6 @@ texture STATIC01
 texture EXTREM01
   range EXTREM13 tics 2.5 Oscillate
 
+//Wipers
+texture wipers00
+  range wipers33 tics 0.5 Oscillate
