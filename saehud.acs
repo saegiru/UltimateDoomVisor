@@ -12,7 +12,7 @@ global int 43:totaldamage[];//totaldamage counter
 global int 49:givestartarmor;
 global int 51:givestartbattery;
 
-str UDV_Version = "2.12c"; //Current UDV Version
+str UDV_Version = "2.13"; //Current UDV Version
 
 int	UDV_SpeedFatigued[8]; //global fatigued speed variable
 int	UDV_SpeedEnergized[8]; //global energized speed variable
@@ -1358,7 +1358,7 @@ Script "ScreenShake" ENTER //(void) net
 
 script "AimingMomentum" ENTER //(void) net
 {
-    if ( GameSkill () >= SKILL_UDVBRUTAL && !(is_brutal64 && CheckInventory("IsTacticalClass")) || GetCVAR("udv_speedlimit") ) SetActorProperty (ActivatorTID(), APROP_Speed, GetCVAR("udv_speedvalue"));//slower movement
+    if ( GetCVAR("udv_speedlimit") ) SetActorProperty (ActivatorTID(), APROP_Speed, GetCVAR("udv_speedvalue"));//slower movement
 	/*
 	int true_angle = GetActorAngle(0);
 	int true_pitch = GetActorPitch(0);
@@ -1493,7 +1493,10 @@ script "armorcheck" ENTER
 					{
 					totaldamage[PlayerNumber()] = totaldamage[PlayerNumber()] - 2;
 					If (totaldamage[PlayerNumber()] < 0) totaldamage[PlayerNumber()] = 0;
-					Print(s:"Nano Cleaning Engaged...");
+					//Print(s:"Wipers Cleaning Engaged...");
+					SetHudSize(400, 330, 1);
+					SETFONT("wipers00");
+					HudMessage(s:"A"; HUDMSG_PLAIN | HUDMSG_ALPHA | HUDMSG_LAYER_UNDERHUD, 0, CR_BLACK, 200.0, 140.0, 2.0);
 					LocalAmbientSound("CLEAN",57);
 					NoiseAlert(0,0);
 					//SetHudSize(1, 1, 1);
